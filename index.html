@@ -1,18 +1,3756 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Moodio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: -apple-system, sans-serif; text-align: center; padding: 60px; }
-    h1 { font-size: 48px; }
-    p { color: #555; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodio Research-driven AI for ads and films</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,700&family=Syne:wght@400;500;600;700&family=DM+Mono:wght@300;400;500&family=Noto+Serif+SC:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:          #ffffff;
+    --bg2:         #f6f5f2;
+    --bg3:         #ecebe6;
+    --ink:         #0f0f0f;
+    --ink-mid:     #3a3a3a;
+    --ink-dim:     #6a6a68;
+    --ink-faint:   #a8a8a4;
+    --accent:      #2348d6;
+    --accent-ink:  #1a36a8;
+    --warm:        #b84a1b;
+    --border:      rgba(0,0,0,0.08);
+    --border-mid:  rgba(0,0,0,0.14);
+    --grain:       url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.05 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Syne', sans-serif;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body[data-lang="zh"] { font-family: 'Noto Sans SC', sans-serif; }
+  body.modal-open { overflow: hidden; }
+
+  img { max-width: 100%; display: block; }
+  a { color: inherit; }
+
+  /* ═════════ NAV ═════════ */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 48px;
+    height: 64px;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+  }
+
+  .beta-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    padding: 2px 7px;
+    border-radius: 2px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2px;
+    list-style: none;
+    align-items: center;
+  }
+
+  .nav-link {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    padding: 8px 14px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: 'Syne', sans-serif;
+  }
+  body[data-lang="zh"] .nav-link { font-family: 'Noto Sans SC', sans-serif; letter-spacing: 0.06em; }
+  .nav-link:hover { color: var(--ink); }
+
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    border: 1px solid var(--border-mid);
+    border-radius: 3px;
+    padding: 2px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+  }
+
+  .lang-btn {
+    background: none;
+    border: none;
+    padding: 4px 9px;
+    cursor: pointer;
+    color: var(--ink-dim);
+    font-family: inherit;
+    font-size: inherit;
+    border-radius: 2px;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .lang-btn.active { background: var(--ink); color: #fff; }
+
+  .btn-ghost {
+    color: var(--ink-dim);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    padding: 8px 14px;
+  }
+  .btn-ghost:hover { color: var(--ink); }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--ink);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border-radius: 2px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+  /* ═════════ HERO ═════════ */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    padding: 120px 48px 110px;
+    overflow: hidden;
+    background: #0a0a0a;
+    cursor: crosshair;
+    display: flex;
+    align-items: center;
+  }
+
+  .hero-moods { position: absolute; inset: 0; z-index: 1; }
+
+  .mood {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.6s cubic-bezier(.4,.0,.2,1);
+    pointer-events: none;
+  }
+
+  .mood::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+  }
+
+  /* TODO: Replace these 5 gradient moods with <video> elements loading cinematic reference clips */
+  .mood-1 {
+    background:
+      radial-gradient(ellipse 80% 60% at 30% 30%, #3a5a7c 0%, transparent 70%),
+      radial-gradient(ellipse 60% 80% at 70% 80%, #6d8aa8 0%, transparent 60%),
+      linear-gradient(160deg, #1a2436 0%, #2f4464 50%, #8ba3c0 100%);
+  }
+  .mood-2 {
+    background:
+      radial-gradient(ellipse 70% 70% at 60% 40%, #d47c3c 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 20% 80%, #8a2e1a 0%, transparent 70%),
+      linear-gradient(180deg, #2b1404 0%, #6b2f13 40%, #c97136 100%);
+  }
+  .mood-3 {
+    background:
+      radial-gradient(ellipse 60% 80% at 50% 50%, #2a6d7a 0%, transparent 70%),
+      radial-gradient(ellipse 80% 40% at 80% 20%, #58b8c4 0%, transparent 70%),
+      linear-gradient(200deg, #0a2a2f 0%, #144048 50%, #2d7d8a 100%);
+  }
+  .mood-4 {
+    background:
+      radial-gradient(ellipse 70% 50% at 40% 40%, #383838 0%, transparent 70%),
+      radial-gradient(ellipse 60% 70% at 80% 70%, #1a1a1a 0%, transparent 60%),
+      linear-gradient(140deg, #060606 0%, #2a2a2a 50%, #4d4d4d 100%);
+  }
+  .mood-5 {
+    background:
+      radial-gradient(ellipse 50% 60% at 70% 30%, #c8328f 0%, transparent 65%),
+      radial-gradient(ellipse 70% 50% at 20% 70%, #3a1a8a 0%, transparent 70%),
+      linear-gradient(220deg, #0e0520 0%, #3a1166 50%, #a8278a 100%);
+  }
+
+  .mood-label {
+    position: absolute;
+    bottom: 32px;
+    right: 48px;
+    z-index: 20;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+  }
+
+  .mood-label-text { transition: opacity 0.4s; }
+  .mood-dots { display: flex; gap: 6px; }
+  .mood-dot {
+    width: 20px;
+    height: 2px;
+    background: rgba(255,255,255,0.2);
+    transition: background 0.3s;
+  }
+  .mood-dot.active { background: rgba(255,255,255,0.9); }
+
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.0) 70%, rgba(0,0,0,0.25) 100%);
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.2s forwards;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .hero-eyebrow .dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 6.5vw, 92px);
+    font-weight: 400;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 30px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.4s forwards;
+  }
+  body[data-lang="zh"] .hero-title { font-family: 'Noto Serif SC', serif; }
+
+  .hero-title em {
+    font-style: italic;
+    color: #fff;
+    display: inline-block;
+    position: relative;
+  }
+
+  .hero-title em::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 0.08em;
+    height: 2px;
+    background: #fff;
+    opacity: 0.35;
+  }
+
+  .hero-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: rgba(255,255,255,0.85);
+    max-width: 640px;
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.6s forwards;
+    font-weight: 400;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.9s ease 0.8s forwards;
+  }
+
+  .btn-hero-primary {
+    background: #fff;
+    color: #0a0a0a;
+    padding: 14px 26px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: transform 0.2s, background 0.2s, color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-hero-primary:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+
+  .btn-hero-ghost {
+    border: 1px solid rgba(255,255,255,0.4);
+    color: #fff;
+    padding: 14px 26px;
+    border-radius: 2px;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.2s, border-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .btn-hero-ghost:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
+
+  .hero-scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 48px;
+    z-index: 10;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .hero-scroll-hint .line {
+    width: 40px;
+    height: 1px;
+    background: rgba(255,255,255,0.3);
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═════════ COMMON SECTION STYLES ═════════ */
+  section { padding: 72px 48px; position: relative; }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::before {
+    content: '';
+    display: inline-block;
+    width: 24px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4.5vw, 58px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    margin-bottom: 24px;
+    max-width: 920px;
+  }
+  body[data-lang="zh"] .section-title { font-family: 'Noto Serif SC', serif; }
+
+  .section-title em { font-style: italic; color: var(--accent); }
+
+  .section-sub {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--ink-dim);
+    max-width: 680px;
+    margin-bottom: 56px;
+  }
+
+  /* ═════════ COLLABORATORS STRIP ═════════ */
+  .collab-strip {
+    padding: 50px 48px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+  }
+
+  .collab-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .collab-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+  }
+
+  .collab-logos {
+    display: flex;
+    gap: 56px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .collab-logo {
+    display: flex;
+    align-items: center;
+    color: var(--ink-mid);
+    fill: var(--ink-mid);
+    opacity: 0.62;
+    transition: opacity 0.2s;
+  }
+  .collab-logo:hover { opacity: 1; }
+  .collab-logo svg { height: 22px; width: auto; fill: currentColor; overflow: visible; }
+
+  /* ═════════ MISSION ═════════ */
+  .mission { padding: 72px 48px; background: #fff; position: relative; }
+
+  .mission-inner {
+    max-width: 1100px;
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .mission-left { position: sticky; top: 120px; }
+
+  .mission-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 20px;
+    line-height: 1.5;
+    color: var(--ink-mid);
+    padding-left: 18px;
+    border-left: 2px solid var(--accent);
+    margin-top: 40px;
+  }
+  body[data-lang="zh"] .mission-quote { font-family: 'Noto Serif SC', serif; }
+
+  .mission-body {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 2.2vw, 32px);
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+  }
+  body[data-lang="zh"] .mission-body { font-family: 'Noto Serif SC', serif; font-size: clamp(20px, 2vw, 28px); }
+
+  .mission-body em { font-style: italic; color: var(--accent); }
+  .mission-body strong {
+    font-weight: 500;
+    background: linear-gradient(180deg, transparent 60%, rgba(35,72,214,0.18) 60%);
+  }
+
+  /* ═════════ AGENT STORY ═════════ */
+  .agent-section {
+    padding: 72px 48px;
+    background: #0a0a0a;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .agent-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  .agent-section .section-label { color: #fff; opacity: 0.7; }
+  .agent-section .section-label::before { background: #fff; opacity: 0.5; }
+
+  .agent-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 28px;
+    max-width: 1000px;
+    position: relative;
+  }
+  body[data-lang="zh"] .agent-title { font-family: 'Noto Serif SC', serif; }
+
+  .agent-title em { font-style: normal; color: #9db4ff; font-size: 0.55em; font-weight: 400; display: block; margin-top: 14px; letter-spacing: 0.01em; line-height: 1.4; }
+
+  .agent-sub {
+    font-size: 18px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.75);
+    max-width: 780px;
+    margin-bottom: 64px;
+    position: relative;
+  }
+
+  .agent-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    position: relative;
+  }
+
+  .agent-demo {
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a44 100%);
+    border: 1px solid rgba(255,255,255,0.1);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .agent-demo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 40%, rgba(100,130,220,0.2) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(200,120,180,0.15) 0%, transparent 60%);
+  }
+
+  .agent-demo-scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(157,180,255,0.8), transparent);
+    animation: scanline 5s linear infinite;
+  }
+  @keyframes scanline {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(4000%); }
+  }
+
+  .agent-demo-label {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+  }
+
+  .agent-demo-label-main {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 8px;
+  }
+
+  .agent-demo-label-sub {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .agent-features {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .agent-feature {
+    padding-left: 24px;
+    border-left: 1px solid rgba(255,255,255,0.15);
+    position: relative;
+  }
+
+  .agent-feature::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 7px;
+    height: 7px;
+    background: #9db4ff;
+    border-radius: 50%;
+  }
+
+  .agent-feature-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  body[data-lang="zh"] .agent-feature-title { font-family: 'Noto Sans SC', sans-serif; }
+
+  .agent-feature-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.65);
+  }
+
+  /* ═════════ REFERENCE LIBRARY ═════════ */
+  .reference-section { padding: 72px 48px; background: var(--bg2); position: relative; }
+
+  .reference-demo {
+    aspect-ratio: 16 / 8;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a44 100%);
+    border: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 56px;
+  }
+
+  .reference-demo::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 60% at 25% 50%, rgba(100,130,220,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 75% 50%, rgba(200,120,180,0.18) 0%, transparent 65%);
+  }
+
+  .reference-demo-scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(157,180,255,0.8), transparent);
+    animation: scanline 5s linear infinite;
+  }
+
+  .reference-demo-label {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    font-family: 'DM Mono', monospace;
+    color: #fff;
+  }
+
+  .reference-demo-label-main {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    margin-bottom: 8px;
+  }
+
+  .reference-demo-label-sub {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .reference-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-top: 0;
+    border-top: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ref-point {
+    padding: 44px 32px 40px;
+    border-right: 1px solid var(--border);
+    border-top: 1px solid var(--border);
+    position: relative;
+  }
+  .ref-point:last-child { border-right: none; }
+
+  .ref-point-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+
+  .ref-point-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    line-height: 1.2;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 14px;
+  }
+  body[data-lang="zh"] .ref-point-title { font-family: 'Noto Serif SC', serif; }
+
+  .ref-point-title em { font-style: italic; color: var(--accent); }
+
+  .ref-point-text {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--ink-dim);
+  }
+
+  /* ═════════ WORKFLOW ═════════ */
+  .workflow-section { padding: 72px 48px 64px; background: #0a0a0a; color: #fff; }
+
+  /* Dark overrides for workflow section */
+  .workflow-section .section-label { color: rgba(255,255,255,0.5); }
+  .workflow-section .section-label::before { background: rgba(255,255,255,0.3); }
+  .workflow-section .section-title { color: #fff; }
+  .workflow-section .section-title em { color: #9db4ff; }
+  .workflow-section .section-sub { color: rgba(255,255,255,0.6); }
+
+  .workflow-section .workflow-stages::before {
+    background: linear-gradient(90deg, #9db4ff, rgba(255,255,255,0.15) 90%);
+  }
+
+  .workflow-section .stage-num {
+    background: #0a0a0a;
+    border-color: rgba(255,255,255,0.35);
+    color: #fff;
+  }
+  .workflow-section .stage:hover .stage-num {
+    background: #9db4ff;
+    border-color: #9db4ff;
+    color: #0a0a0a;
+  }
+  .workflow-section .stage.active .stage-num {
+    background: #fff;
+    border-color: #fff;
+    color: #0a0a0a;
+  }
+  .workflow-section .stage-label { color: rgba(255,255,255,0.4); }
+  .workflow-section .stage-title { color: #fff; }
+  .workflow-section .stage-text { color: rgba(255,255,255,0.55); }
+  .workflow-section .stage-hint { color: #9db4ff; }
+  .workflow-section .stage.active .stage-hint { color: rgba(255,255,255,0.8); }
+
+  .workflow-section .stage-demo-inner {
+    background: #141414;
+    border-color: rgba(255,255,255,0.08);
+  }
+  .workflow-section .stage-demo-label { color: #9db4ff; }
+  .workflow-section .stage-demo-title { color: #fff; }
+  .workflow-section .stage-demo-desc { color: rgba(255,255,255,0.6); }
+  .workflow-section .stage-demo-bullets li { color: rgba(255,255,255,0.5); }
+  .workflow-section .stage-demo-bullets li::before { background: #9db4ff; }
+
+  .workflow-section .workflow-tag {
+    background: #141414;
+    border-color: #9db4ff;
+  }
+  .workflow-section .workflow-tag-icon { color: #9db4ff; }
+  .workflow-section .workflow-tag-text { color: rgba(255,255,255,0.65); }
+  .workflow-section .workflow-tag-text strong { color: #fff; }
+
+  .workflow-stages {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    margin-top: 36px;
+    position: relative;
+  }
+
+  .workflow-stages::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), var(--ink-faint) 90%);
+    z-index: 0;
+  }
+
+  .stage {
+    position: relative;
+    padding: 0 16px;
+    z-index: 2;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    background: none;
+    border: none;
+    font-family: inherit;
+    color: inherit;
+    text-align: inherit;
+    width: 100%;
+  }
+  .stage:focus { outline: none; }
+  .stage:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
+
+  .stage-num {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: var(--ink);
+    margin: 0 auto 22px;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+  }
+
+  .stage:hover .stage-num {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+
+  .stage.active .stage-num {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+    transform: scale(1.05);
+  }
+
+  .stage-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .stage-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 500;
+    text-align: center;
+    margin-bottom: 14px;
+    color: var(--ink);
+  }
+  body[data-lang="zh"] .stage-title { font-family: 'Noto Serif SC', serif; }
+
+  .stage-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-dim);
+    text-align: center;
+    margin-bottom: 16px;
+  }
+
+  .stage-hint {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    opacity: 0.7;
+    transition: opacity 0.2s, gap 0.2s;
+  }
+  .stage:hover .stage-hint { opacity: 1; gap: 10px; }
+  .stage.active .stage-hint { opacity: 1; color: var(--ink); }
+  .stage-hint::after { content: '▸'; font-size: 9px; }
+  .stage.active .stage-hint::after { content: '▾'; }
+
+  /* ══ Stage demo panel ══ */
+  .stage-demo-panel {
+    margin-top: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s cubic-bezier(.4,0,.2,1), margin-top 0.4s ease, opacity 0.3s ease;
+    opacity: 0;
+  }
+
+  .stage-demo-panel.open {
+    max-height: 900px;
+    margin-top: 40px;
+    opacity: 1;
+  }
+
+  .stage-demo-inner {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 40px;
+    padding: 40px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .stage-demo-visual {
+    aspect-ratio: 16 / 10;
+    background: linear-gradient(135deg, #1a1a2e 0%, #2a2a44 100%);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .stage-demo-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 40%, rgba(100,130,220,0.22) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 60% at 75% 70%, rgba(200,120,180,0.16) 0%, transparent 65%);
+  }
+  .stage-demo-visual-scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(157,180,255,0.8), transparent);
+    animation: scanline 5s linear infinite;
+  }
+  .stage-demo-visual-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    z-index: 2;
+    font-family: 'DM Mono', monospace;
+    color: #fff;
+  }
+  .stage-demo-visual-label-main {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+  }
+  .stage-demo-visual-label-sub {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .stage-demo-content { padding: 10px 0; }
+
+  .stage-demo-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .stage-demo-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 18px;
+    letter-spacing: -0.01em;
+  }
+  body[data-lang="zh"] .stage-demo-title { font-family: 'Noto Serif SC', serif; }
+
+  .stage-demo-desc {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    margin-bottom: 20px;
+  }
+
+  .stage-demo-bullets {
+    list-style: none;
+    padding: 0;
+  }
+  .stage-demo-bullets li {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink-dim);
+    padding: 8px 0 8px 18px;
+    position: relative;
+    border-top: 1px solid var(--border);
+  }
+  .stage-demo-bullets li:first-child { border-top: none; }
+  .stage-demo-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 10px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .workflow-tag {
+    margin-top: 32px;
+    padding: 28px 36px;
+    background: var(--bg2);
+    border-left: 2px solid var(--accent);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    max-width: 920px;
+  }
+
+  .workflow-tag-icon {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .workflow-tag-text {
+    font-size: 15px;
+    color: var(--ink-mid);
+    line-height: 1.6;
+  }
+
+  .workflow-tag-text strong { color: var(--ink); font-weight: 500; }
+
+  /* ═════════ TRACTION ═════════ */
+  .traction-section {
+    padding: 72px 48px;
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+
+  .traction-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .traction-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .traction-label::before, .traction-label::after {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .traction-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.5vw, 44px);
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    max-width: 820px;
+    margin: 0 auto 64px;
+  }
+  body[data-lang="zh"] .traction-heading { font-family: 'Noto Serif SC', serif; }
+
+  .traction-heading em { font-style: italic; color: var(--accent); }
+
+  .traction-stats {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    flex-wrap: wrap;
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .traction-stat {
+    flex: 1;
+    min-width: 220px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0 30px;
+    position: relative;
+  }
+
+  .traction-stat + .traction-stat::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15%;
+    bottom: 15%;
+    width: 1px;
+    background: var(--border-mid);
+  }
+
+  .traction-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(56px, 7vw, 88px);
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .traction-stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    text-align: center;
+  }
+
+  /* ═════════ SHOWCASE ═════════ */
+  .showcase-section {
+    padding: 72px 48px;
+    background: #000;
+  }
+
+  /* Override section-level text colors for the dark showcase section */
+  .showcase-section .section-label { color: rgba(255,255,255,0.5); }
+  .showcase-section .section-label::before { background: rgba(255,255,255,0.35); }
+  .showcase-section .section-title { color: #fff; }
+  .showcase-section .section-title em { color: #9db4ff; }
+  .showcase-section .section-sub { color: rgba(255,255,255,0.6); }
+
+  .showcase-subheading {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin: 60px 0 24px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .showcase-subheading:first-of-type {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: none;
+  }
+
+  .films-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: 130px;
+    gap: 14px;
+  }
+
+  .film-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s;
+    display: block;
+  }
+  .film-card:hover { transform: scale(1.01); }
+
+  .film-visual {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .film-visual video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .film-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.3;
+  }
+
+  .film-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%);
+  }
+
+  .film-content {
+    position: absolute;
+    left: 16px;
+    right: 16px;
+    bottom: 14px;
+    z-index: 2;
+    color: #fff;
+  }
+
+  .film-top {
+    position: absolute;
+    top: 14px;
+    left: 16px;
+    right: 16px;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .film-award {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #ffd074;
+    padding: 4px 8px;
+    border: 1px solid rgba(255, 208, 116, 0.6);
+    background: rgba(0,0,0,0.3);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .film-award::before { content: '★'; font-size: 10px; }
+
+  .film-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+    padding: 3px 7px;
+    border: 1px solid rgba(255,255,255,0.3);
+    background: rgba(0,0,0,0.3);
+  }
+
+  .film-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 4px;
+  }
+  body[data-lang="zh"] .film-title { font-family: 'Noto Serif SC', serif; }
+
+  .film-meta {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .film-meta-arrow {
+    margin-left: auto;
+    opacity: 0.5;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+
+  .film-card:hover .film-meta-arrow {
+    opacity: 1;
+    transform: translateX(3px);
+  }
+
+  /* film card sizing + placeholder backgrounds (replace visuals with video or image per card) */
+  /* film card sizing + placeholder backgrounds (replace visuals with video or image per card) */
+  /* Row 1 — Featured */
+  .f-1 { grid-column: span 7; grid-row: span 3; }
+  .f-1 .film-visual { background: linear-gradient(135deg, #2e1a48 0%, #5c2a4e 50%, #a8278a 100%); }
+  .f-2 { grid-column: span 5; grid-row: span 3; }
+  .f-2 .film-visual { background: linear-gradient(140deg, #3a1a2e 0%, #6b2420 50%, #d4a848 100%); }
+  /* Row 2 — Festival Finalists */
+  .f-3 { grid-column: span 6; grid-row: span 2; }
+  .f-3 .film-visual { background: linear-gradient(160deg, #1a4638 0%, #3a6a58 50%, #8ac288 100%); }
+  .f-4 { grid-column: span 6; grid-row: span 2; }
+  .f-4 .film-visual { background: linear-gradient(180deg, #1a1a2e 0%, #2a2538 40%, #4d3a52 100%); }
+  /* Row 3 — Short film portfolio */
+  .f-5 { grid-column: span 3; grid-row: span 2; }
+  .f-5 .film-visual { background: linear-gradient(160deg, #1a2436 0%, #2f4464 50%, #8ba3c0 100%); }
+  .f-6 { grid-column: span 3; grid-row: span 2; }
+  .f-6 .film-visual { background: linear-gradient(180deg, #2b1404 0%, #6b2f13 40%, #c97136 100%); }
+  .f-7 { grid-column: span 3; grid-row: span 2; }
+  .f-7 .film-visual { background: linear-gradient(135deg, #2a2a2a 0%, #4d4d4d 100%); }
+  .f-8 { grid-column: span 3; grid-row: span 2; }
+  .f-8 .film-visual { background: linear-gradient(200deg, #0a2a2f 0%, #144048 50%, #2d7d8a 100%); }
+
+  /* Partner studios */
+  .clients-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .client-card {
+    background: #0d0d0d;
+    padding: 36px 28px;
+    min-height: 140px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .client-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #fff;
+    letter-spacing: -0.01em;
+  }
+  body[data-lang="zh"] .client-name { font-family: 'Noto Serif SC', serif; }
+
+  .client-brands {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .client-placeholder-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-top: 32px;
+  }
+
+  /* ═════════ RESEARCH FOUNDATION ═════════ */
+  .research-section { padding: 72px 48px; background: #fff; }
+
+  .research-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 16px;
+  }
+
+  .paper-card {
+    background: #fff;
+    padding: 36px 30px 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    text-decoration: none;
+    color: inherit;
+    transition: background 0.2s;
+    position: relative;
+  }
+
+  .paper-card:hover { background: var(--bg2); }
+
+  .paper-venue {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .paper-award {
+    display: inline-block;
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm);
+    background: rgba(184,74,27,0.08);
+    padding: 3px 8px;
+    margin-bottom: 14px;
+    border-radius: 2px;
+    align-self: flex-start;
+  }
+
+  .paper-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    line-height: 1.25;
+    font-weight: 500;
+    margin-bottom: 14px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  body[data-lang="zh"] .paper-title { font-family: 'Noto Serif SC', serif; }
+
+  .paper-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+    flex: 1;
+  }
+
+  .paper-arrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: gap 0.2s;
+  }
+  .paper-card:hover .paper-arrow { gap: 14px; }
+  .paper-arrow::after { content: '→'; }
+
+  /* ═════════ RESEARCH ADOPTION ═════════ */
+  .adoption-section {
+    padding: 72px 48px;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .adoption-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.25;
+    pointer-events: none;
+  }
+
+  .adoption-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .adoption-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3.2vw, 38px);
+    font-weight: 400;
+    line-height: 1.3;
+    max-width: 880px;
+    margin: 0 auto 52px;
+    letter-spacing: -0.01em;
+    position: relative;
+  }
+  body[data-lang="zh"] .adoption-headline { font-family: 'Noto Serif SC', serif; }
+
+  .adoption-headline em { font-style: italic; color: #9db4ff; }
+
+  .adoption-logos {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.08);
+    max-width: 1100px;
+    margin: 0 auto 40px;
+    position: relative;
+  }
+
+  .adoption-logo {
+    background: #0a0a0a;
+    padding: 28px 16px 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    color: rgba(255,255,255,0.75);
+    transition: color 0.2s, background 0.2s;
+  }
+  .adoption-logo svg {
+    height: 28px;
+    width: auto;
+    fill: currentColor;
+    flex-shrink: 0;
+    overflow: visible;
+  }
+  .adoption-logo-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.42);
+    text-align: center;
+    transition: color 0.2s;
+    line-height: 1.5;
+  }
+  .adoption-logo:hover { color: #fff; background: #141414; }
+  .adoption-logo:hover .adoption-logo-name { color: rgba(255,255,255,0.7); }
+
+  .adoption-stats {
+    display: flex;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.12em;
+    position: relative;
+  }
+
+  .adoption-stat strong { color: #fff; font-weight: 500; }
+  .adoption-stat-sep { color: rgba(255,255,255,0.25); }
+
+  /* ═════════ USE CASES ═════════ */
+  .usecases-section { padding: 72px 48px; background: #fff; }
+
+  .usecase-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    padding: 50px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .usecase-row:last-child { border-bottom: none; }
+  .usecase-row:nth-child(odd) .usecase-visual { order: 2; }
+
+  .usecase-visual {
+    aspect-ratio: 4 / 3;
+    position: relative;
+    overflow: hidden;
+    background: var(--bg2);
+  }
+
+  .usecase-v1 { background: linear-gradient(135deg, #2a1a3e 0%, #5c3a6e 100%); }
+  .usecase-v2 { background: linear-gradient(160deg, #1a3848 0%, #3a6878 100%); }
+  .usecase-v3 { background: linear-gradient(200deg, #8a3a1a 0%, #d4843c 100%); }
+  .usecase-v4 { background: linear-gradient(140deg, #1a3a28 0%, #3a6a48 100%); }
+  .usecase-v5 { background: linear-gradient(180deg, #2a2a4a 0%, #5a5a7a 100%); }
+
+  .usecase-visual::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.3;
+  }
+
+  .usecase-visual-label {
+    position: absolute;
+    bottom: 18px;
+    left: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    z-index: 2;
+  }
+
+  .usecase-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .usecase-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.15;
+    margin-bottom: 18px;
+    color: var(--ink);
+  }
+  body[data-lang="zh"] .usecase-title { font-family: 'Noto Serif SC', serif; }
+
+  .usecase-body {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-dim);
+    max-width: 480px;
+  }
+
+  /* ═════════ TESTIMONIALS ═════════ */
+  .testimonials-section { padding: 72px 48px; background: #fff; }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 56px;
+  }
+
+  .testimonial-card {
+    background: #fff;
+    padding: 40px 34px 32px;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+    position: relative;
+  }
+
+  .testimonial-mark {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.25;
+    font-style: italic;
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  .testimonial-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    line-height: 1.5;
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    flex: 1;
+    margin-bottom: 28px;
+  }
+  body[data-lang="zh"] .testimonial-quote { font-family: 'Noto Serif SC', serif; font-size: 18px; }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+
+  .testimonial-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--bg3);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: rgba(255,255,255,0.85);
+    overflow: hidden;
+  }
+  .testimonial-avatar.a-1 { background: linear-gradient(135deg,#2e1a48,#6b3a6c); }
+  .testimonial-avatar.a-2 { background: linear-gradient(160deg,#1a3848,#3a6878); }
+  .testimonial-avatar.a-3 { background: linear-gradient(140deg,#4a3a2a,#8a5a3a); }
+
+  .testimonial-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.01em;
+    margin-bottom: 2px;
+  }
+  body[data-lang="zh"] .testimonial-name { font-family: 'Noto Sans SC', sans-serif; }
+
+  .testimonial-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+
+  .testimonial-placeholder-note {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-top: 32px;
+  }
+
+  /* ═════════ COMPARISON ═════════ */
+  .comparison-section { padding: 72px 48px; background: var(--bg2); }
+
+  .comparison-table {
+    margin-top: 50px;
+    background: #fff;
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .comp-row {
+    display: grid;
+    grid-template-columns: 2fr repeat(6, 1fr);
+    border-bottom: 1px solid var(--border);
+  }
+  .comp-row:last-child { border-bottom: none; }
+
+  .comp-cell {
+    padding: 20px 16px;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--border);
+  }
+  .comp-cell:last-child { border-right: none; }
+
+  .comp-header {
+    background: var(--bg3);
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mid);
+    font-weight: 500;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .comp-header.moodio {
+    background: var(--ink);
+    color: #fff;
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: -0.01em;
+  }
+
+  .comp-label {
+    background: #fff;
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 14px;
+    letter-spacing: 0;
+    text-transform: none;
+    justify-content: flex-start;
+    font-family: 'Syne', sans-serif;
+  }
+  body[data-lang="zh"] .comp-label { font-family: 'Noto Sans SC', sans-serif; }
+
+  .comp-yes, .comp-no, .comp-partial {
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+  }
+
+  .comp-yes { color: var(--accent); font-weight: 500; }
+  .comp-no { color: var(--ink-faint); }
+  .comp-partial { color: var(--ink-dim); font-size: 11px; letter-spacing: 0.1em; }
+
+  .comp-moodio-cell { background: #fafaff; }
+
+  /* ═════════ TEAM ═════════ */
+  .team-section { padding: 72px 48px; background: #fff; }
+
+  .team-category {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 56px 0 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+  }
+
+  .team-category:first-of-type { margin-top: 56px; }
+
+  .team-advisors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+    max-width: 720px;
+  }
+
+  .team-core {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 40px;
+  }
+
+  .member {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s;
+    cursor: default;
+  }
+  .member.clickable { cursor: pointer; }
+  .member:hover { transform: translateY(-3px); }
+
+  .member-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    background: var(--bg3);
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .member-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 60px;
+    font-weight: 400;
+    font-style: italic;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: -0.02em;
+  }
+
+  .member-photo-placeholder.p-1 { background: linear-gradient(135deg,#2a3a5a,#4a6080); }
+  .member-photo-placeholder.p-2 { background: linear-gradient(160deg,#3a2a4a,#6a4a7a); }
+  .member-photo-placeholder.p-3 { background: linear-gradient(180deg,#2a4a3a,#4a7a5a); }
+  .member-photo-placeholder.p-4 { background: linear-gradient(140deg,#4a3a2a,#7a5a3a); }
+  .member-photo-placeholder.p-5 { background: linear-gradient(200deg,#3a3a4a,#5a5a7a); }
+  .member-photo-placeholder.p-6 { background: linear-gradient(160deg,#4a2a3a,#7a4a5a); }
+  .member-photo-placeholder.p-7 { background: linear-gradient(180deg,#2a4a4a,#4a7a7a); }
+  .member-photo-placeholder.p-8 { background: linear-gradient(140deg,#3a3a2a,#6a6a3a); }
+
+  .member-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  body[data-lang="zh"] .member-name { font-family: 'Noto Serif SC', serif; }
+
+  .member-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+    line-height: 1.5;
+  }
+
+  .member-bio-link {
+    margin-top: 8px;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: gap 0.2s;
+  }
+  .member-bio-link::after { content: '→'; }
+  .member.clickable:hover .member-bio-link { gap: 10px; }
+
+  .team-footnote {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--ink-dim);
+    margin-top: 40px;
+    padding: 20px 24px;
+    background: var(--bg2);
+    border-left: 2px solid var(--accent);
+  }
+
+  /* ═════════ BIO MODAL ═════════ */
+  .bio-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10,10,10,0.7);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 900;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .bio-modal-backdrop.open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .bio-modal {
+    position: fixed;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -40%);
+    width: min(860px, calc(100vw - 40px));
+    max-height: 86vh;
+    overflow-y: auto;
+    background: #fff;
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, transform 0.3s cubic-bezier(.4,0,.2,1), visibility 0.3s;
+    border: 1px solid var(--border);
+  }
+  .bio-modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(-50%, -50%);
+  }
+
+  .bio-modal-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 36px; height: 36px;
+    background: none;
+    border: 1px solid var(--border-mid);
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Mono', monospace;
+    font-size: 16px;
+    color: var(--ink);
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+    z-index: 2;
+  }
+  .bio-modal-close:hover {
+    background: var(--ink);
+    color: #fff;
+    transform: rotate(90deg);
+  }
+
+  .bio-modal-inner {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 40px;
+    padding: 48px 48px 40px;
+  }
+
+  .bio-modal-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--bg3);
+  }
+  .bio-modal-photo img {
+    width: 100%; height: 100%; object-fit: cover;
+  }
+
+  .bio-modal-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 500;
+    margin-bottom: 6px;
+    letter-spacing: -0.015em;
+  }
+  body[data-lang="zh"] .bio-modal-name { font-family: 'Noto Serif SC', serif; }
+
+  .bio-modal-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .bio-modal-body {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--ink-mid);
+  }
+
+  .bio-modal-body p { margin-bottom: 14px; }
+  .bio-modal-body p:last-child { margin-bottom: 0; }
+
+  .bio-modal-links {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .bio-modal-links a {
+    color: var(--accent);
+    text-decoration: none;
+    padding-bottom: 2px;
+    border-bottom: 1px solid rgba(35,72,214,0.3);
+    transition: border-color 0.2s;
+  }
+  .bio-modal-links a:hover { border-color: var(--accent); }
+
+  /* ═════════ FAQ ═════════ */
+  .faq-section { padding: 72px 48px; background: var(--bg2); }
+
+  .faq-list {
+    margin-top: 48px;
+    max-width: 880px;
+  }
+
+  .faq-item {
+    border-top: 1px solid var(--border-mid);
+    padding: 28px 0;
+  }
+  .faq-item:last-child { border-bottom: 1px solid var(--border-mid); }
+
+  .faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    gap: 24px;
+  }
+
+  .faq-q-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    line-height: 1.4;
+  }
+  body[data-lang="zh"] .faq-q-text { font-family: 'Noto Serif SC', serif; }
+
+  .faq-toggle {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border-mid);
+    border-radius: 50%;
+    position: relative;
+    flex-shrink: 0;
+    transition: transform 0.3s, background 0.2s;
+  }
+
+  .faq-toggle::before, .faq-toggle::after {
+    content: '';
+    position: absolute;
+    background: var(--ink);
+    top: 50%; left: 50%;
+  }
+
+  .faq-toggle::before {
+    width: 12px; height: 1.5px;
+    transform: translate(-50%, -50%);
+  }
+  .faq-toggle::after {
+    width: 1.5px; height: 12px;
+    transform: translate(-50%, -50%);
+    transition: transform 0.3s;
+  }
+
+  .faq-item.open .faq-toggle::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease, margin-top 0.4s ease;
+  }
+
+  .faq-item.open .faq-answer {
+    max-height: 500px;
+    margin-top: 18px;
+  }
+
+  .faq-a-text {
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink-mid);
+    max-width: 780px;
+  }
+
+  /* ═════════ FINAL CTA ═════════ */
+  .final-cta {
+    padding: 72px 48px;
+    background: #0a0a0a;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .final-cta::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 50% 50% at 30% 50%, rgba(58,90,220,0.15) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 50% at 70% 50%, rgba(200,50,143,0.1) 0%, transparent 65%);
+  }
+
+  .final-cta::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: var(--grain);
+    opacity: 0.3;
+  }
+
+  .final-cta > * { position: relative; z-index: 2; }
+
+  .final-cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 5.5vw, 72px);
+    font-weight: 400;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 22px;
+  }
+  body[data-lang="zh"] .final-cta-title { font-family: 'Noto Serif SC', serif; }
+
+  .final-cta-title em { font-style: italic; color: #9db4ff; }
+
+  .final-cta-sub {
+    font-size: 17px;
+    color: rgba(255,255,255,0.7);
+    margin-bottom: 40px;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .final-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .final-cta-contact {
+    margin-top: 40px;
+    font-family: 'DM Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+  }
+
+  .final-cta-contact a {
+    color: #9db4ff;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(157,180,255,0.35);
+    padding-bottom: 1px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .final-cta-contact a:hover { color: #fff; border-color: #fff; }
+
+  /* ═════════ FOOTER ═════════ */
+  footer {
+    padding: 80px 48px 40px;
+    background: #060606;
+    color: rgba(255,255,255,0.6);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 48px;
+    margin-bottom: 60px;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: #fff;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .footer-tagline {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(255,255,255,0.5);
+    max-width: 360px;
+  }
+
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.8);
+    margin-bottom: 18px;
+  }
+
+  .footer-links { list-style: none; }
+
+  .footer-links li { margin-bottom: 10px; }
+
+  .footer-links a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    font-size: 13px;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: #fff; }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.08em;
+  }
+
+  .footer-socials { display: flex; gap: 22px; }
+
+  .footer-socials a {
+    color: rgba(255,255,255,0.5);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-socials a:hover { color: #fff; }
+
+  /* ═════════ RESPONSIVE ═════════ */
+  @media (max-width: 1024px) {
+    .mission-inner { grid-template-columns: 1fr; gap: 40px; }
+    .mission-left { position: static; }
+    .agent-grid { grid-template-columns: 1fr; gap: 40px; }
+    .workflow-stages { grid-template-columns: repeat(2, 1fr); gap: 40px 24px; }
+    .workflow-stages::before { display: none; }
+    .stage-demo-inner { grid-template-columns: 1fr; gap: 28px; padding: 28px; }
+    .research-grid { grid-template-columns: repeat(2, 1fr); }
+    .reference-grid { grid-template-columns: 1fr; }
+    .ref-point { border-right: none; border-bottom: 1px solid var(--border); }
+    .ref-point:last-child { border-bottom: none; }
+    .reference-demo { aspect-ratio: 16 / 10; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    .usecase-row { grid-template-columns: 1fr; gap: 30px; }
+    .usecase-row:nth-child(odd) .usecase-visual { order: -1; }
+    .comparison-table { overflow-x: auto; }
+    .comp-row { min-width: 900px; }
+    .adoption-logos { grid-template-columns: repeat(4, 1fr); }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .bio-modal-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 28px 32px; }
+    .bio-modal-photo { max-width: 220px; }
+    .traction-stats { flex-direction: column; gap: 40px; }
+    .traction-stat + .traction-stat::before { display: none; }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    section { padding: 80px 20px; }
+    .hero { padding: 100px 20px 80px; }
+    .collab-inner { flex-direction: column; gap: 24px; }
+    .collab-logos { gap: 32px; }
+    .workflow-stages { grid-template-columns: 1fr; }
+    .stage-demo-inner { padding: 20px; }
+    .stage-demo-title { font-size: 22px; }
+    .research-grid { grid-template-columns: 1fr; }
+    .adoption-logos { grid-template-columns: repeat(2, 1fr); }
+    .films-grid { grid-template-columns: 1fr; grid-auto-rows: 220px; }
+    .film-card { grid-column: span 1 !important; grid-row: span 1 !important; }
+    .footer-top { grid-template-columns: 1fr; }
+    .mood-label { display: none; }
+    .traction-stat-num { font-size: 48px; }
+    .final-cta-contact { font-size: 11px; letter-spacing: 0.08em; }
+  }
+</style>
 </head>
-<body>
-  <h1>Moodio</h1>
-  <p>AI creates videos. Moodio creates creators.</p>
-  <p>Coming soon.</p>
+
+<body data-lang="en">
+
+<!-- ═════════ NAV ═════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    Moodio <span class="beta-tag">Beta</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#agent" class="nav-link" data-en="Product" data-zh="产品">Product</a></li>
+    <li><a href="#workflow" class="nav-link" data-en="Workflow" data-zh="工作流">Workflow</a></li>
+    <li><a href="#showcase" class="nav-link" data-en="Showcase" data-zh="作品">Showcase</a></li>
+    <li><a href="#research" class="nav-link" data-en="Research" data-zh="研究">Research</a></li>
+    <li><a href="#team" class="nav-link" data-en="Team" data-zh="团队">Team</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="lang-toggle">
+      <button class="lang-btn active" data-set-lang="en">EN</button>
+      <button class="lang-btn" data-set-lang="zh">中文</button>
+    </div>
+    <a href="https://app.moodio.art" class="btn-primary" target="_blank" rel="noopener" data-en="Launch App →" data-zh="进入 Moodio →">Launch App →</a>
+  </div>
+</nav>
+
+<!-- ═════════ HERO ═════════ -->
+<section class="hero" id="hero">
+  <div class="hero-moods">
+    <!-- TODO: Replace each mood div with a <video autoplay muted loop playsinline> pointing to a cinematic reference clip -->
+    <div class="mood mood-1"></div>
+    <div class="mood mood-2"></div>
+    <div class="mood mood-3"></div>
+    <div class="mood mood-4"></div>
+    <div class="mood mood-5"></div>
+  </div>
+  <div class="hero-overlay"></div>
+
+  <div class="mood-label">
+    <div class="mood-label-text" id="moodLabelText">REF · 001 BLUE HOUR</div>
+    <div class="mood-dots" id="moodDots"></div>
+  </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      <span data-en="Live Beta · app.moodio.art" data-zh="公开测试中 · app.moodio.art">Live Beta · app.moodio.art</span>
+    </div>
+    <h1 class="hero-title" data-en-html='The AI co-pilot for<br><em>professional</em> video production.' data-zh-html='为<em>专业视频制作</em>打造的<br>AI Co-pilot。'>
+      The AI co-pilot for<br><em>professional</em> video production.
+    </h1>
+    <p class="hero-sub" data-en="Built for individuals and teams that hold themselves to the highest standard. Research-driven, end-to-end." data-zh="写给那些对作品不肯将就的创作者和团队。研究驱动，走完全程。">
+      Built for individuals and teams that hold themselves to the highest standard. Research-driven, end-to-end.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://app.moodio.art" target="_blank" rel="noopener" class="btn-hero-primary" data-en="Launch App →" data-zh="进入 Moodio →">Launch App →</a>
+      <a href="#agent" class="btn-hero-ghost" data-en="Watch the Agent" data-zh="看 Agent 演示">Watch the Agent</a>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <span class="line"></span>
+    <span data-en="Move cursor to explore · Auto-shifts when idle" data-zh="移动鼠标切换风格 · 静止时自动轮换">Move cursor to explore · Auto-shifts when idle</span>
+  </div>
+</section>
+
+<!-- ═════════ COLLABORATORS STRIP ═════════ -->
+<section class="collab-strip">
+  <div class="collab-inner">
+    <div class="collab-label" data-en="In research collaboration with" data-zh="学术合作伙伴">In research collaboration with</div>
+    <div class="collab-logos">
+      <!-- Carnegie Mellon University wordmark -->
+      <span class="collab-logo" title="Carnegie Mellon University">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 26" height="18" overflow="visible" aria-label="Carnegie Mellon University">
+          <text y="20" font-family="'Playfair Display', Georgia, serif" font-size="17" font-weight="500" letter-spacing="0.02em" fill="currentColor">Carnegie Mellon</text>
+        </svg>
+      </span>
+      <!-- MIT wordmark -->
+      <span class="collab-logo" title="MIT">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 56 26" height="22" overflow="visible" aria-label="MIT">
+          <text y="21" font-family="'Syne', Arial Black, sans-serif" font-size="23" font-weight="700" letter-spacing="0.04em" fill="currentColor">MIT</text>
+        </svg>
+      </span>
+      <!-- Adobe wordmark -->
+      <span class="collab-logo" title="Adobe">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 26" height="20" overflow="visible" aria-label="Adobe">
+          <text y="20" font-family="'Syne', Arial, sans-serif" font-size="20" font-weight="600" letter-spacing="0.01em" fill="currentColor">Adobe</text>
+        </svg>
+      </span>
+      <!-- Apple logo mark (SimpleIcons path, viewBox 0 0 24 24) -->
+      <span class="collab-logo" title="Apple">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Apple">
+          <path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/>
+        </svg>
+      </span>
+      <!-- Meta logo mark (SimpleIcons path, viewBox 0 0 24 24) -->
+      <span class="collab-logo" title="Meta">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" aria-label="Meta">
+          <path d="M6.915 4.03c-1.968 0-3.683 1.28-4.871 3.113C.704 9.208 0 11.883 0 14.449c0 .706.07 1.369.21 1.973a6.624 6.624 0 0 0 .265.86 5.297 5.297 0 0 0 .371.761c.696 1.159 1.818 1.927 3.593 1.927 1.497 0 2.633-.671 3.965-2.444.76-1.012 1.144-1.626 2.663-4.32l.756-1.339.186-.325c.061.1.121.196.183.3l2.152 3.595c.724 1.21 1.665 2.556 2.47 3.314 1.046.987 1.992 1.22 3.06 1.22 1.075 0 1.876-.355 2.455-.843a3.743 3.743 0 0 0 .81-.973c.542-.939.861-2.127.861-3.745 0-2.72-.681-5.357-2.084-7.45-1.282-1.912-2.957-2.93-4.716-2.93-1.047 0-2.088.467-3.053 1.308-.652.57-1.257 1.29-1.82 2.05-.69-.875-1.335-1.547-1.958-2.056-1.182-.966-2.315-1.303-3.454-1.303zm10.16 2.053c1.147 0 2.188.758 2.992 1.999 1.132 1.748 1.647 4.195 1.647 6.4 0 1.548-.368 2.9-1.839 2.9-.58 0-1.027-.23-1.664-1.004-.496-.601-1.343-1.878-2.832-4.358l-.617-1.028a44.908 44.908 0 0 0-1.255-1.98c.07-.109.141-.224.211-.327 1.12-1.667 2.118-2.602 3.358-2.602zm-10.201.553c1.265 0 2.058.791 2.675 1.446.307.327.737.871 1.234 1.579l-1.02 1.566c-.757 1.163-1.882 3.017-2.837 4.338-1.191 1.649-1.81 1.817-2.486 1.817-.524 0-1.038-.237-1.383-.794-.263-.426-.464-1.13-.464-2.046 0-2.221.63-4.535 1.66-6.088.454-.687.964-1.226 1.533-1.533a2.264 2.264 0 0 1 1.088-.285z"/>
+        </svg>
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ MISSION ═════════ -->
+<section class="mission">
+  <div class="mission-inner">
+    <div class="mission-left">
+      <div class="section-label" data-en="01 Mission" data-zh="01 我们相信什么">01 Mission</div>
+      <div class="mission-quote" data-en='"Great work still takes craft, time, and taste."' data-zh="「好作品，终究离不开手艺、时间，和品味。」">
+        "Great work still takes craft, time, and taste."
+      </div>
+    </div>
+    <div class="mission-right">
+      <p class="mission-body" data-en-html='We&rsquo;re not chasing the fantasy of <em>one-click filmmaking</em>. What we build is the workflow underneath it: <strong>real-time team collaboration</strong>, <strong>fine-grained aesthetic control</strong>, and <strong>a creative asset layer that compounds across projects</strong> &mdash; so studios stop depending on lone heroes and start operating like a system.<br><br>Consumer-grade quality. Studio-grade workflow. AI as a <em>craft multiplier</em>, not a replacement.' data-zh-html='我们不信<em>「一键出片」</em>这回事。真正重要的，是它背后的那套工作流——<strong>团队实时协同</strong>、<strong>对美学的精细掌控</strong>、<strong>能在项目之间持续沉淀的创意资产</strong>。让工作室不再靠一两个英雄撑着，而是像一套系统那样跑起来。<br><br>画质消费级，工作流工作室级。AI 是创作的<em>放大器</em>，不是替代品。'>
+        We're not chasing the fantasy of <em>one-click filmmaking</em>. What we build is the workflow underneath it: <strong>real-time team collaboration</strong>, <strong>fine-grained aesthetic control</strong>, and <strong>a creative asset layer that compounds across projects</strong> &mdash; so studios stop depending on lone heroes and start operating like a system.<br><br>Consumer-grade quality. Studio-grade workflow. AI as a <em>craft multiplier</em>, not a replacement.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ AGENT STORY ═════════ -->
+<section class="agent-section" id="agent">
+  <div class="section-label" data-en="02 The Moodio Agent" data-zh="02 Moodio Agent">02 The Moodio Agent</div>
+  <h2 class="agent-title" data-en-html='The first end-to-end agent for video production.<br><em>And it gets better the more your team uses it.</em>' data-zh-html='第一个跑完整条流水线的视频制作 Agent。<br><em>你们用得越久，它越懂你们。</em>'>
+    The first end-to-end agent for video production.<br><em>And it gets better the more your team uses it.</em>
+  </h2>
+  <p class="agent-sub" data-en="Every time a user explores references, generates shots, edits a draft, or exports a final video, the agent silently learns what worked and what didn't. For teams, the effect compounds the agent learns your studio's collective taste, workflow patterns, and quality bar, making every project ship a little faster than the last." data-zh="每一次找参考、生成镜头、改草稿、导成片，Agent 都在默默记下哪些管用、哪些不管用。一群人一起做项目时，这种积累会被放大——它会摸清整个工作室的审美、节奏和品质底线，让每个项目都比上一个做得更顺。">
+    Every time a user explores references, generates shots, edits a draft, or exports a final video, the agent silently learns what worked and what didn't. For teams, the effect compounds the agent learns your studio's collective taste, workflow patterns, and quality bar, making every project ship a little faster than the last.
+  </p>
+
+  <div class="agent-grid">
+    <div class="agent-demo">
+      <div class="agent-demo-scanline"></div>
+      <!-- TODO: Replace with embedded product demo video -->
+      <div class="agent-demo-label">
+        <div class="agent-demo-label-main" data-en="Agent Demo · 3:24" data-zh="Agent 演示 · 3:24">Agent Demo · 3:24</div>
+        <div class="agent-demo-label-sub" data-en="End-to-end production walkthrough" data-zh="端到端制作流程演示">End-to-end production walkthrough</div>
+      </div>
+    </div>
+
+    <div class="agent-features">
+      <div class="agent-feature">
+        <div class="agent-feature-title" data-en="Adapts to your style" data-zh="贴合你的风格">Adapts to your style</div>
+        <div class="agent-feature-text" data-en="Smarter suggestions, fewer dead ends, faster paths to polished output tailored to how you actually work." data-zh="建议更准，少走弯路，离成片更近——完全按你真实的做法来。">Smarter suggestions, fewer dead ends, faster paths to polished output tailored to how you actually work.</div>
+      </div>
+      <div class="agent-feature">
+        <div class="agent-feature-title" data-en="Learns your team's taste" data-zh="读懂团队的审美">Learns your team's taste</div>
+        <div class="agent-feature-text" data-en="As collaborators interact across shared projects, the agent absorbs your studio's visual language and quality bar." data-zh="一群人在共享项目里一起搭，Agent 会慢慢吸收你们的视觉语言和品质底线。">As collaborators interact across shared projects, the agent absorbs your studio's visual language and quality bar.</div>
+      </div>
+      <div class="agent-feature">
+        <div class="agent-feature-title" data-en="Compounds across projects" data-zh="项目越多，越懂你们">Compounds across projects</div>
+        <div class="agent-feature-text" data-en="Every export, every edit, every reference becomes training signal. Onboarding gets faster. Direction gets consistent. Output quality climbs." data-zh="每一次导出、每一次修改、每一条参考，都是训练信号。新人上手更快，方向更稳，成片品质一路往上走。">Every export, every edit, every reference becomes training signal. Onboarding gets faster. Direction gets consistent. Output quality climbs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ REFERENCE LIBRARY ═════════ -->
+<section class="reference-section" id="reference">
+  <div class="section-label" data-en="03 The Reference Library" data-zh="03 参考库">03 The Reference Library</div>
+  <h2 class="section-title" data-en-html='Reference is<br>your <em>prompt.</em>' data-zh-html='参考，<br>就是你的 <em>prompt。</em>'>
+    Reference is<br>your <em>prompt.</em>
+  </h2>
+  <p class="section-sub" data-en="The deepest cinematic reference library ever built for production. Search by what you feel, not by what you can describe." data-zh="专为视频制作打造的电影参考库，覆盖最深。凭感觉搜，不用想怎么描述。">
+    The deepest cinematic reference library ever built for production. Search by what you feel, not by what you can describe.
+  </p>
+
+  <!-- TODO: Replace with embedded product demo video of the reference search in action -->
+  <div class="reference-demo">
+    <div class="reference-demo-scanline"></div>
+    <div class="reference-demo-label">
+      <div class="reference-demo-label-main" data-en="Reference Search · Demo" data-zh="参考检索 · 演示">Reference Search · Demo</div>
+      <div class="reference-demo-label-sub" data-en="Drop a frame · Moodio reads your intent" data-zh="丢入一帧 · Moodio 读懂你的意图">Drop a frame · Moodio reads your intent</div>
+    </div>
+  </div>
+
+  <div class="reference-grid">
+    <div class="ref-point">
+      <div class="ref-point-num">01 —</div>
+      <div class="ref-point-title" data-en="Deepest coverage" data-zh="覆盖最深">Deepest coverage</div>
+      <p class="ref-point-text" data-en="A cinematic database that understands shots the way cinematographers do lighting, motion, composition, color, geometry." data-zh="一套像摄影师那样理解镜头的参考库——光线、运动、构图、色彩、空间，一帧都不漏。">A cinematic database that understands shots the way cinematographers do lighting, motion, composition, color, geometry.</p>
+    </div>
+    <div class="ref-point">
+      <div class="ref-point-num">02 —</div>
+      <div class="ref-point-title" data-en="Search by feeling" data-zh="凭感觉搜索">Search by feeling</div>
+      <p class="ref-point-text" data-en="Describe a mood, paste a frame, or name a director. Moodio surfaces exactly what you were reaching for." data-zh="说一种情绪、贴一帧画面，或者报一个导演的名字。Moodio 会把你真正想要的那一帧推到你眼前。">Describe a mood, paste a frame, or name a director. Moodio surfaces exactly what you were reaching for.</p>
+    </div>
+    <div class="ref-point">
+      <div class="ref-point-num">03 —</div>
+      <div class="ref-point-title" data-en-html='Reference <em>as</em> prompt' data-zh-html='参考 <em>即</em> prompt'>Reference <em>as</em> prompt</div>
+      <p class="ref-point-text" data-en="Drop in a frame and Moodio reads your intent no prompt engineering, no guessing what words to use." data-zh="把一帧画面丢进来，Moodio 就读懂了你想要什么——不用琢磨 prompt，也不用猜该怎么措辞。">Drop in a frame and Moodio reads your intent no prompt engineering, no guessing what words to use.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ WORKFLOW ═════════ -->
+<section class="workflow-section" id="workflow">
+  <div class="section-label" data-en="04 End-to-End Pipeline" data-zh="04 端到端流水线">04 End-to-End Pipeline</div>
+  <h2 class="section-title" data-en-html='One agent.<br>Every stage of <em>production.</em>' data-zh-html='一个 Agent，<br>走完<em>整条制作流水线。</em>'>
+    One agent.<br>Every stage of <em>production.</em>
+  </h2>
+  <p class="section-sub" data-en="From first reference to final cut. Moodio is the first agent built to cover the complete professional video production pipeline." data-zh="从第一条参考，到最终成片。Moodio 是第一个把专业视频制作全链路跑通的 Agent。">
+    From first reference to final cut. Moodio is the first agent built to cover the complete professional video production pipeline.
+  </p>
+
+  <div class="workflow-stages">
+    <button class="stage" type="button" data-stage="1">
+      <div class="stage-num">i</div>
+      <div class="stage-label" data-en="Stage 01" data-zh="阶段 01">Stage 01</div>
+      <div class="stage-title" data-en="Ideation" data-zh="构思">Ideation</div>
+      <p class="stage-text" data-en="Search the world's richest cinematic reference library to find frames that match the feeling you're chasing. Reference is your prompt." data-zh="在全球最丰富的电影参考库里，找到跟心里那个感觉对得上的那一帧。参考就是 prompt。">Search the world's richest cinematic reference library to find frames that match the feeling you're chasing. Reference is your prompt.</p>
+      <div class="stage-hint" data-en="Watch demo" data-zh="看演示">Watch demo</div>
+    </button>
+    <button class="stage" type="button" data-stage="2">
+      <div class="stage-num">ii</div>
+      <div class="stage-label" data-en="Stage 02" data-zh="阶段 02">Stage 02</div>
+      <div class="stage-title" data-en="Pre-Production" data-zh="前期">Pre-Production</div>
+      <p class="stage-text" data-en="Learn how each shot was built. Scripts, storyboards, and shot lists generated, refined, and versioned inside the same canvas." data-zh="弄清楚每个镜头是怎么搭起来的。剧本、分镜、镜头表，都在同一块画布里生成、打磨、存好版本。">Learn how each shot was built. Scripts, storyboards, and shot lists generated, refined, and versioned inside the same canvas.</p>
+      <div class="stage-hint" data-en="Watch demo" data-zh="看演示">Watch demo</div>
+    </button>
+    <button class="stage" type="button" data-stage="3">
+      <div class="stage-num">iii</div>
+      <div class="stage-label" data-en="Stage 03" data-zh="阶段 03">Stage 03</div>
+      <div class="stage-title" data-en="Production" data-zh="制作">Production</div>
+      <p class="stage-text" data-en="Generate shots grounded in your reference style with fine-grained control over subject, scene, motion, and camera." data-zh="按参考风格生成镜头——主体、场景、运动、运镜，都能精细控制。">Generate shots grounded in your reference style with fine-grained control over subject, scene, motion, and camera.</p>
+      <div class="stage-hint" data-en="Watch demo" data-zh="看演示">Watch demo</div>
+    </button>
+    <button class="stage" type="button" data-stage="4">
+      <div class="stage-num">iv</div>
+      <div class="stage-label" data-en="Stage 04" data-zh="阶段 04">Stage 04</div>
+      <div class="stage-title" data-en="Post-Production" data-zh="后期">Post-Production</div>
+      <p class="stage-text" data-en="Edit, extend, and refine inside a Figma-style canvas. Your team co-edits in real time; your asset library grows with every draft." data-zh="在 Figma 那样的画布里剪辑、延展、打磨。团队实时协同，资产库也跟着每一版草稿一起长大。">Edit, extend, and refine inside a Figma-style canvas. Your team co-edits in real time; your asset library grows with every draft.</p>
+      <div class="stage-hint" data-en="Watch demo" data-zh="看演示">Watch demo</div>
+    </button>
+    <button class="stage" type="button" data-stage="5">
+      <div class="stage-num">v</div>
+      <div class="stage-label" data-en="Stage 05" data-zh="阶段 05">Stage 05</div>
+      <div class="stage-title" data-en="Export" data-zh="导出">Export</div>
+      <p class="stage-text" data-en="Publish-ready output for every channel commercial, film, social. Every export teaches the agent what shipped, closing the creative loop." data-zh="广告、影视、社媒——每个渠道都能直接发。每导出一版，Agent 就记下哪些被真正选用，创作的闭环由此形成。">Publish-ready output for every channel commercial, film, social. Every export teaches the agent what shipped, closing the creative loop.</p>
+      <div class="stage-hint" data-en="Watch demo" data-zh="看演示">Watch demo</div>
+    </button>
+  </div>
+
+  <!-- Expandable demo panel - content swapped by JS based on which stage is clicked -->
+  <div class="stage-demo-panel" id="stageDemoPanel">
+    <div class="stage-demo-inner">
+      <!-- TODO: Replace with embedded <video> for the currently active stage -->
+      <div class="stage-demo-visual">
+        <div class="stage-demo-visual-scanline"></div>
+        <div class="stage-demo-visual-label">
+          <div class="stage-demo-visual-label-main" id="stageDemoVisualTitle">Ideation · Demo</div>
+          <div class="stage-demo-visual-label-sub" id="stageDemoVisualSub">Reference search in action</div>
+        </div>
+      </div>
+      <div class="stage-demo-content">
+        <div class="stage-demo-label" id="stageDemoLabel">Stage 01</div>
+        <h3 class="stage-demo-title" id="stageDemoTitle">Ideation</h3>
+        <p class="stage-demo-desc" id="stageDemoDesc">Describe a mood, paste a frame, or name a director Moodio surfaces exactly what you were reaching for.</p>
+        <ul class="stage-demo-bullets" id="stageDemoBullets">
+          <li>Semantic search across a cinematic corpus indexed by lighting, motion, composition, color, and geometry.</li>
+          <li>Paste a screenshot to retrieve visually similar frames no keywords required.</li>
+          <li>Save references into a mood board that becomes the prompt for every downstream stage.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="workflow-tag">
+    <div class="workflow-tag-icon">★</div>
+    <div class="workflow-tag-text" data-en-html='<strong>First end-to-end agent for video production.</strong> Every stage learns from real user interactions and compounds across your studio&rsquo;s projects.' data-zh-html='<strong>首个端到端视频制作 Agent。</strong>每一步都在从真实用户交互里学东西，在工作室的项目之间一点点攒起来。'>
+      <strong>First end-to-end agent for video production.</strong> Every stage learns from real user interactions and compounds across your studio's projects.
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ TRACTION ═════════ -->
+<section class="traction-section">
+  <div class="traction-inner">
+    <div class="traction-label" data-en="Traction" data-zh="增长数据">Traction</div>
+    <h2 class="traction-heading" data-en-html='Live Beta. Growing at the speed of the <em>reference library.</em>' data-zh-html='公开测试中。增长速度，和<em>参考库</em>一起涨。'>
+      Live Beta. Growing at the speed of the <em>reference library.</em>
+    </h2>
+    <div class="traction-stats">
+      <div class="traction-stat">
+        <div class="traction-stat-num">$1M</div>
+        <div class="traction-stat-label" data-en="Annual Recurring Revenue" data-zh="年度经常性收入">Annual Recurring Revenue</div>
+      </div>
+      <div class="traction-stat">
+        <div class="traction-stat-num">100%</div>
+        <div class="traction-stat-label" data-en="Month-over-month growth" data-zh="月环比增长">Month-over-month growth</div>
+      </div>
+      <div class="traction-stat">
+        <div class="traction-stat-num">$0</div>
+        <div class="traction-stat-label" data-en="Paid marketing" data-zh="付费营销">Paid marketing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ SHOWCASE ═════════ -->
+<section class="showcase-section" id="showcase">
+  <div class="section-label" data-en="05 Showcase" data-zh="05 作品">05 Showcase</div>
+  <h2 class="section-title" data-en-html='Real films.<br>Real <em>awards.</em>' data-zh-html='真实的作品。<br>真实的<em>荣誉。</em>'>
+    Real films.<br>Real <em>awards.</em>
+  </h2>
+  <p class="section-sub" data-en="Moodio is already powering award-winning work at professional studios. This is what the workflow produces not demos, not marketing reels. Click any film to watch." data-zh="Moodio 已经在专业工作室里做出过拿奖的作品。下面这些不是 demo，也不是营销素材——是工作流真刀真枪做出来的东西。点开就能看。">
+    Moodio is already powering award-winning work at professional studios. This is what the workflow produces not demos, not marketing reels. Click any film to watch.
+  </p>
+
+  <div class="showcase-subheading" data-en="Films &amp; Awards" data-zh="影片与奖项">Films &amp; Awards</div>
+
+  <div class="films-grid">
+    <!-- Row 1: FEATURED pair -->
+    <a class="film-card f-1" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="1.mp4" type="video/mp4"></video></div>
+      <div class="film-top">
+        <span class="film-tag" data-en="FEATURED" data-zh="精选">FEATURED</span>
+      </div>
+      <div class="film-content">
+        <div class="film-title" data-en="Amazing, My Friend!" data-zh="了不起啊！朋友">Amazing, My Friend!</div>
+        <div class="film-meta">
+          <span data-en="Tianhao Lize Pictures · AI Drama Series" data-zh="天浩丽泽影业 · AI 短剧">Tianhao Lize Pictures · AI Drama Series</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="film-card f-2" href="#" target="_blank" rel="noopener">
+      <!-- TODO: replace src with actual video file for 西凤酒业宣传片 -->
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="xifeng.mp4" type="video/mp4"></video></div>
+      <div class="film-top">
+        <span class="film-tag" data-en="FEATURED" data-zh="精选">FEATURED</span>
+      </div>
+      <div class="film-content">
+        <div class="film-title" data-en="Xifeng — A Brand Film" data-zh="西凤酒业宣传片">Xifeng — A Brand Film</div>
+        <div class="film-meta">
+          <span data-en="Xinhua News · Xi'an Bureau · AI Brand Film" data-zh="新华社西安分社 · AI 广告宣传片">Xinhua News · Xi'an Bureau · AI Brand Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Row 2: Festival Finalists pair -->
+    <a class="film-card f-3" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="%E6%94%AF%E9%9B%85%E9%9B%AA%E4%BD%9C%E5%93%81%EF%BC%9AAI%E7%9F%AD%E7%89%87%E3%80%8A%E5%87%9D%E8%A7%86%E3%80%8B.mov" type="video/quicktime"><source src="%E6%94%AF%E9%9B%85%E9%9B%AA%E4%BD%9C%E5%93%81%EF%BC%9AAI%E7%9F%AD%E7%89%87%E3%80%8A%E5%87%9D%E8%A7%86%E3%80%8B.mov" type="video/mp4"></video></div>
+      <div class="film-top">
+        <span class="film-award" data-en="Finalist · Infinite Possibilities Film Festival" data-zh="无限可能电影节 入围">Finalist · Infinite Possibilities Film Festival</span>
+      </div>
+      <div class="film-content">
+        <div class="film-title" data-en="Gaze" data-zh="凝视">凝视</div>
+        <div class="film-meta">
+          <span data-en="支雅雪 · AI Short Film" data-zh="支雅雪 · AI 短片">支雅雪 · AI Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="film-card f-4" href="#" target="_blank" rel="noopener">
+      <!-- TODO: replace src with actual video file for 囚犯 -->
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="prisoner.mp4" type="video/mp4"></video></div>
+      <div class="film-top">
+        <span class="film-award" data-en="Finalist · Infinite Possibilities Film Festival" data-zh="无限可能电影节 入围">Finalist · Infinite Possibilities Film Festival</span>
+      </div>
+      <div class="film-content">
+        <div class="film-title" data-en="The Prisoner" data-zh="囚犯">囚犯</div>
+        <div class="film-meta">
+          <span data-en="AI Short Film" data-zh="AI 短片">AI Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <!-- Row 3: Short film portfolio (4 cards) -->
+    <a class="film-card f-5" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="Wind%20%E9%A3%8E_%E9%99%88%E8%B6%8A.mp4" type="video/mp4"></video></div>
+      <div class="film-content">
+        <div class="film-title" data-en="Wind" data-zh="风">风</div>
+        <div class="film-meta">
+          <span data-en="陈越 · Short Film" data-zh="陈越 · 短片">陈越 · Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="film-card f-6" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="%E7%95%99%E7%99%BD.mov" type="video/quicktime"><source src="%E7%95%99%E7%99%BD.mov" type="video/mp4"></video></div>
+      <div class="film-content">
+        <div class="film-title" data-en="Negative Space" data-zh="留白">留白</div>
+        <div class="film-meta">
+          <span data-en="Short Film" data-zh="短片">Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="film-card f-7" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="%E6%B6%88%E5%A4%B1%E7%9A%849%E5%8F%B7%E5%BA%95%E7%89%87.mp4" type="video/mp4"></video></div>
+      <div class="film-content">
+        <div class="film-title" data-en="The Missing Roll No.9" data-zh="消失的9号底片">消失的9号底片</div>
+        <div class="film-meta">
+          <span data-en="Short Film" data-zh="短片">Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+
+    <a class="film-card f-8" href="#" target="_blank" rel="noopener">
+      <div class="film-visual"><video autoplay muted loop playsinline><source src="%E5%A5%B6%E5%A5%B6%E9%AA%91%E7%9D%80%E9%A9%AC%E8%B5%B0%E4%BA%86.mp4" type="video/mp4"></video></div>
+      <div class="film-content">
+        <div class="film-title" data-en="Grandma Rode Away on a Horse" data-zh="奶奶骑着马走了">奶奶骑着马走了</div>
+        <div class="film-meta">
+          <span data-en="Short Film" data-zh="短片">Short Film</span>
+          <span class="film-meta-arrow">→</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <div class="showcase-subheading" data-en="Partner Studios" data-zh="合作工作室">Partner Studios</div>
+
+  <div class="clients-grid">
+    <!-- TODO: Replace with actual studio names + representative brand/client logos -->
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+    <div class="client-card">
+      <div class="client-name" data-en="Studio Name" data-zh="工作室名称">Studio Name</div>
+      <div class="client-brands">Brand · Brand · Brand</div>
+    </div>
+  </div>
+  <div class="client-placeholder-note" data-en="→ To be populated with partner studios and their representative brands" data-zh="→ 待补充合作工作室与其代表品牌">→ To be populated with partner studios and their representative brands</div>
+</section>
+
+<!-- ═════════ USE CASES ═════════ -->
+<section class="usecases-section" id="use-cases">
+  <div class="section-label" data-en="06 Who it's for" data-zh="06 为谁而做">06 Who it's for</div>
+  <h2 class="section-title" data-en-html='Built for professionals<br>who create at the <em>highest level.</em>' data-zh-html='写给那些<br><em>把作品做到最高水准</em>的专业人士。'>
+    Built for professionals<br>who create at the <em>highest level.</em>
+  </h2>
+  <p class="section-sub" data-en="Whether you're making a film, a campaign, or a launch spot Moodio meets you where the work actually happens." data-zh="不管你在拍一部片子、做一次品牌战役，还是赶一支发布广告——Moodio 就出现在你真正动手的地方。">
+    Whether you're making a film, a campaign, or a launch spot Moodio meets you where the work actually happens.
+  </p>
+
+  <div class="usecase-row">
+    <div class="usecase-visual usecase-v1">
+      <span class="usecase-visual-label" data-en="Directors · Demo reel" data-zh="导演 · 演示片">Directors · Demo reel</span>
+    </div>
+    <div class="usecase-text">
+      <div class="usecase-role" data-en="Film &amp; Advertising" data-zh="电影与广告">Film &amp; Advertising</div>
+      <div class="usecase-title" data-en="Directors" data-zh="导演">Directors</div>
+      <p class="usecase-body" data-en="Find the exact reference frame. Brief Moodio like you'd brief your DP. Generate previz and concept reels that communicate your vision clearly to clients, investors, and your crew." data-zh="找对参考的那一帧。像跟摄影指导交底那样，跟 Moodio 交底。生成预演和概念片，把脑子里的画面一目了然地讲给客户、投资人、摄制组。">Find the exact reference frame. Brief Moodio like you'd brief your DP. Generate previz and concept reels that communicate your vision clearly to clients, investors, and your crew.</p>
+    </div>
+  </div>
+
+  <div class="usecase-row">
+    <div class="usecase-visual usecase-v2">
+      <span class="usecase-visual-label" data-en="Brand teams · Demo reel" data-zh="品牌团队 · 演示片">Brand teams · Demo reel</span>
+    </div>
+    <div class="usecase-text">
+      <div class="usecase-role" data-en="Marketing" data-zh="市场营销">Marketing</div>
+      <div class="usecase-title" data-en="Brand Teams" data-zh="品牌团队">Brand Teams</div>
+      <p class="usecase-body" data-en="Upload your brand's reference library once. Moodio learns your visual language and applies it across every piece of content so every video feels unmistakably yours." data-zh="品牌参考库传一次，Moodio 就学会了你们的视觉语言，再把它套到每一条内容上——每一支视频，一眼都是你们的样子。">Upload your brand's reference library once. Moodio learns your visual language and applies it across every piece of content so every video feels unmistakably yours.</p>
+    </div>
+  </div>
+
+  <div class="usecase-row">
+    <div class="usecase-visual usecase-v3">
+      <span class="usecase-visual-label" data-en="Creators · Demo reel" data-zh="创作者 · 演示片">Creators · Demo reel</span>
+    </div>
+    <div class="usecase-text">
+      <div class="usecase-role" data-en="Individual" data-zh="个人创作">Individual</div>
+      <div class="usecase-title" data-en="Content Creators" data-zh="内容创作者">Content Creators</div>
+      <p class="usecase-body" data-en="Find the style you want. Drop in your references. Let Moodio build it out. From concept to ready-to-post video without switching tools or burning a full day." data-zh="锁定想要的风格，把参考丢进去，让 Moodio 给你做出来。从一个念头到能直接发的成片——不用切工具，也不用赔上一整天。">Find the style you want. Drop in your references. Let Moodio build it out. From concept to ready-to-post video without switching tools or burning a full day.</p>
+    </div>
+  </div>
+
+  <div class="usecase-row">
+    <div class="usecase-visual usecase-v4">
+      <span class="usecase-visual-label" data-en="Indie filmmakers · Demo reel" data-zh="独立电影人 · 演示片">Indie filmmakers · Demo reel</span>
+    </div>
+    <div class="usecase-text">
+      <div class="usecase-role" data-en="Film Production" data-zh="电影制作">Film Production</div>
+      <div class="usecase-title" data-en="Independent Filmmakers" data-zh="独立电影人">Independent Filmmakers</div>
+      <p class="usecase-body" data-en="Validate your visual style before you shoot a single frame. Walk into investor meetings with concept reels that show exactly how the film will look and feel." data-zh="在还没开机之前，先把视觉风格验证一遍。拿着能让片子质感立住的概念片，走进投资人的会议室。">Validate your visual style before you shoot a single frame. Walk into investor meetings with concept reels that show exactly how the film will look and feel.</p>
+    </div>
+  </div>
+
+  <div class="usecase-row">
+    <div class="usecase-visual usecase-v5">
+      <span class="usecase-visual-label" data-en="E-Commerce · Demo reel" data-zh="电商 · 演示片">E-Commerce · Demo reel</span>
+    </div>
+    <div class="usecase-text">
+      <div class="usecase-role" data-en="E-Commerce" data-zh="电商">E-Commerce</div>
+      <div class="usecase-title" data-en="UGC &amp; Product" data-zh="UGC 与产品内容">UGC &amp; Product</div>
+      <p class="usecase-body" data-en="Upload your product. Find your reference style. Generate platform-native UGC content ready for TikTok, Instagram, and beyond at the speed your campaigns demand." data-zh="传上产品、定好参考风格，生成可以直接上 TikTok、Instagram 的平台原生 UGC 内容——按你投放节奏来。">Upload your product. Find your reference style. Generate platform-native UGC content ready for TikTok, Instagram, and beyond at the speed your campaigns demand.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ TESTIMONIALS ═════════ -->
+<section class="testimonials-section" id="testimonials">
+  <div class="section-label" data-en="07 Testimonials" data-zh="07 用户声音">07 Testimonials</div>
+  <h2 class="section-title" data-en-html='What studios say<br>after <em>shipping with us.</em>' data-zh-html='用 Moodio 交付完一部作品之后，<br><em>他们这样说。</em>'>
+    What studios say<br>after <em>shipping with us.</em>
+  </h2>
+  <p class="section-sub" data-en="Real quotes from directors, brand teams, and studios actively using Moodio in production. No case studies. No marketing polish." data-zh="导演、品牌团队、工作室——正在真刀真枪用 Moodio 做项目的人说的话。不是 case study，也没有营销打磨。">
+    Real quotes from directors, brand teams, and studios actively using Moodio in production. No case studies. No marketing polish.
+  </p>
+
+  <div class="testimonials-grid">
+    <!-- TODO: Replace with real quotes from beta users -->
+    <div class="testimonial-card">
+      <div class="testimonial-mark">"</div>
+      <div class="testimonial-quote" data-en="Previz used to eat a week. Now I walk into the pitch with a real concept reel, referenced and color-graded same afternoon I got the brief." data-zh="以前预演得耗掉一周，现在我拿到 brief 的当天下午，就能带着一支参考和调色都到位的概念片去提案。">
+        "Previz used to eat a week. Now I walk into the pitch with a real concept reel, referenced and color-graded same afternoon I got the brief."
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar a-1">D</div>
+        <div>
+          <div class="testimonial-name" data-en="[Director Name]" data-zh="[导演姓名]">[Director Name]</div>
+          <div class="testimonial-role" data-en="Film &amp; Advertising Director" data-zh="电影与广告导演">Film &amp; Advertising Director</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-mark">"</div>
+      <div class="testimonial-quote" data-en="It's the first AI tool that actually respects our brand system. I upload the reference deck once and every video downstream looks unmistakably ours." data-zh="这是第一个真的尊重我们品牌系统的 AI 工具。参考 deck 传一次，后面的每支视频一眼就是我们的。">
+        "It's the first AI tool that actually respects our brand system. I upload the reference deck once and every video downstream looks unmistakably ours."
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar a-2">B</div>
+        <div>
+          <div class="testimonial-name" data-en="[Brand Lead]" data-zh="[品牌负责人]">[Brand Lead]</div>
+          <div class="testimonial-role" data-en="Head of Brand · Global Consumer Co." data-zh="品牌负责人 · 全球消费品公司">Head of Brand · Global Consumer Co.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="testimonial-card">
+      <div class="testimonial-mark">"</div>
+      <div class="testimonial-quote" data-en="We shipped a short that won a festival before we shot a single frame of live action. That is not a thing that was possible twelve months ago." data-zh="我们一镜实拍都没开机，就用它做完了一部获奖短片。这件事在 12 个月前根本不存在。">
+        "We shipped a short that won a festival before we shot a single frame of live action. That is not a thing that was possible twelve months ago."
+      </div>
+      <div class="testimonial-author">
+        <div class="testimonial-avatar a-3">F</div>
+        <div>
+          <div class="testimonial-name" data-en="[Filmmaker Name]" data-zh="[电影人姓名]">[Filmmaker Name]</div>
+          <div class="testimonial-role" data-en="Independent Filmmaker" data-zh="独立电影人">Independent Filmmaker</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testimonial-placeholder-note" data-en="→ Placeholder quotes · Swap with real feedback from studio beta users" data-zh="→ 占位引文，待替换为真实内测用户反馈">→ Placeholder quotes · Swap with real feedback from studio beta users</div>
+</section>
+
+<!-- ═════════ COMPARISON ═════════ -->
+<section class="comparison-section" id="comparison">
+  <div class="section-label" data-en="08 Comparison" data-zh="08 对比">08 Comparison</div>
+  <h2 class="section-title" data-en-html='Why studios pick Moodio<br>over <em>everything else.</em>' data-zh-html='工作室为什么选 Moodio，<br>而<em>不是别的。</em>'>
+    Why studios pick Moodio<br>over <em>everything else.</em>
+  </h2>
+  <p class="section-sub" data-en="Competitors ship features. Moodio ships a workflow. Here's what that means in practice." data-zh="对手交付的是功能。Moodio 交付的是工作流。具体差在哪儿，看下表。">
+    Competitors ship features. Moodio ships a workflow. Here's what that means in practice.
+  </p>
+
+  <div class="comparison-table">
+    <div class="comp-row">
+      <div class="comp-cell comp-header" data-en="Feature" data-zh="特性">Feature</div>
+      <div class="comp-cell comp-header moodio">Moodio</div>
+      <div class="comp-cell comp-header">Jimeng</div>
+      <div class="comp-cell comp-header">TapNow</div>
+      <div class="comp-cell comp-header">Lovart</div>
+      <div class="comp-cell comp-header">Liblib TV</div>
+      <div class="comp-cell comp-header">Octo</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label" data-en="End-to-end production (ideation → export)" data-zh="端到端制作（构思 → 导出）">End-to-end production (ideation → export)</div>
+      <div class="comp-cell comp-yes comp-moodio-cell">✓</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-partial" data-en="Partial" data-zh="部分">Partial</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label" data-en="Real-time team collaboration" data-zh="团队实时协作">Real-time team collaboration</div>
+      <div class="comp-cell comp-yes comp-moodio-cell">✓</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-partial" data-en="Basic" data-zh="基础">Basic</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label" data-en="Fine-grained cinematic control" data-zh="精细电影控制">Fine-grained cinematic control</div>
+      <div class="comp-cell comp-yes comp-moodio-cell">✓</div>
+      <div class="comp-cell comp-partial" data-en="Preset" data-zh="预设">Preset</div>
+      <div class="comp-cell comp-partial" data-en="Preset" data-zh="预设">Preset</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-partial" data-en="Preset" data-zh="预设">Preset</div>
+      <div class="comp-cell comp-partial" data-en="Preset" data-zh="预设">Preset</div>
+    </div>
+    <div class="comp-row">
+      <div class="comp-cell comp-label" data-en="Peer-reviewed research foundation" data-zh="同行评审的研究基础">Peer-reviewed research foundation</div>
+      <div class="comp-cell comp-yes comp-moodio-cell">✓</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+      <div class="comp-cell comp-no">—</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ RESEARCH FOUNDATION ═════════ -->
+<section class="research-section" id="research">
+  <div class="section-label" data-en="09 Research Foundation" data-zh="09 研究基础">09 Research Foundation</div>
+  <h2 class="section-title" data-en-html='Moodio is a <em>research-driven</em> company.' data-zh-html='Moodio 是一家<em>研究驱动</em>的公司。'>
+    Moodio is a <em>research-driven</em> company.
+  </h2>
+  <p class="section-sub" data-en="Our foundation is open, reproducible, and published at the top venues in AI. Every paper is public; every model is downloadable. Used by 100+ industry labs. 2M+ Hugging Face downloads." data-zh="我们的底子是开放、可复现、发表在 AI 顶级会议上的研究。论文公开，模型可下载。100+ 行业实验室在用，Hugging Face 下载量破 200 万。">
+    Our foundation is open, reproducible, and published at the top venues in AI. Every paper is public; every model is downloadable. Used by 100+ industry labs. 2M+ Hugging Face downloads.
+  </p>
+
+  <div class="research-grid">
+    <a class="paper-card" href="https://linzhiqiu.github.io/papers/camerabench/" target="_blank" rel="noopener">
+      <div class="paper-venue">NeurIPS 2025</div>
+      <div class="paper-award" data-en="Spotlight · Top 3%" data-zh="Spotlight · 前 3%">Spotlight · Top 3%</div>
+      <div class="paper-title">CameraBench</div>
+      <p class="paper-text" data-en="Understanding camera motion in any video. Foundation for fine-grained cinematic control adopted by Google DeepMind, xAI, Kling, and frontier video labs." data-zh="理解任何视频里的运镜。Moodio 精细电影控制的基础——已被 Google DeepMind、xAI、Kling 等前沿视频实验室采用。">Understanding camera motion in any video. Foundation for fine-grained cinematic control adopted by Google DeepMind, xAI, Kling, and frontier video labs.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+
+    <a class="paper-card" href="https://linzhiqiu.github.io/" target="_blank" rel="noopener">
+      <div class="paper-venue">CVPR 2026</div>
+      <div class="paper-award" data-en="Highlight · Top 3%" data-zh="Highlight · 前 3%">Highlight · Top 3%</div>
+      <div class="paper-title">CHAI</div>
+      <p class="paper-text" data-en="Building a precise video language with human-AI oversight. The scalable oversight framework behind Moodio's caption quality and retrieval precision." data-zh="用人机协同监督，把视频语言做精确。支撑 Moodio 标注质量和检索精度的可扩展监督框架。">Building a precise video language with human-AI oversight. The scalable oversight framework behind Moodio's caption quality and retrieval precision.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+
+    <a class="paper-card" href="https://linzhiqiu.github.io/papers/vqascore/" target="_blank" rel="noopener">
+      <div class="paper-venue">ECCV 2024</div>
+      <div class="paper-award" data-en="Adopted in Google Imagen-3" data-zh="被 Google Imagen-3 采用">Adopted in Google Imagen-3</div>
+      <div class="paper-title">VQAScore</div>
+      <p class="paper-text" data-en="The state-of-the-art metric for evaluating text-to-visual generation. Google DeepMind named it the strongest replacement for CLIPScore." data-zh="评估文生视觉的 SOTA 指标。Google DeepMind 将其评为 CLIPScore 最强替代品。">The state-of-the-art metric for evaluating text-to-visual generation. Google DeepMind named it the strongest replacement for CLIPScore.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+
+    <a class="paper-card" href="https://linzhiqiu.github.io/papers/genai_bench/" target="_blank" rel="noopener">
+      <div class="paper-venue">CVPR 2024</div>
+      <div class="paper-award" data-en="Best Paper · SynData Workshop" data-zh="最佳论文 · SynData Workshop">Best Paper · SynData Workshop</div>
+      <div class="paper-title">GenAI-Bench</div>
+      <p class="paper-text" data-en="A benchmark for compositional text-to-visual generation. Uniquely adopted in the official Google Imagen-4 technical report." data-zh="面向组合式文生视觉的基准。被 Google Imagen-4 官方技术报告独家采用。">A benchmark for compositional text-to-visual generation. Uniquely adopted in the official Google Imagen-4 technical report.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+
+    <a class="paper-card" href="https://linzhiqiu.github.io/" target="_blank" rel="noopener">
+      <div class="paper-venue">Whitepaper</div>
+      <div class="paper-award" data-en="Reference-First Workflow" data-zh="参考优先工作流">Reference-First Workflow</div>
+      <div class="paper-title">Moodio</div>
+      <p class="paper-text" data-en="The three-stage reference-first workflow: Chat-to-Inspire, Chat-to-Learn, Chat-to-Generate. Educating users with high-quality cinematic references all the way through." data-zh="三阶段参考优先工作流：Chat-to-Inspire、Chat-to-Learn、Chat-to-Generate。全程用高质量电影参考教创作者。">The three-stage reference-first workflow: Chat-to-Inspire, Chat-to-Learn, Chat-to-Generate. Educating users with high-quality cinematic references all the way through.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+
+    <a class="paper-card" href="https://linzhiqiu.github.io/" target="_blank" rel="noopener">
+      <div class="paper-venue" data-en="Whitepaper · Forthcoming" data-zh="白皮书 · 即将发布">Whitepaper · Forthcoming</div>
+      <div class="paper-award" data-en="Agent Post-Training" data-zh="Agent 后训练">Agent Post-Training</div>
+      <div class="paper-title">Moodio Agent</div>
+      <p class="paper-text" data-en="First end-to-end video production agent + learning rewards from real user-agent interactions. The data flywheel behind the studio-grade workflow." data-zh="首个端到端视频制作 Agent。从真实的用户-Agent 交互里学奖励，撑起工作室级工作流的数据飞轮。">First end-to-end video production agent + learning rewards from real user-agent interactions. The data flywheel behind the studio-grade workflow.</p>
+      <div class="paper-arrow">Read paper</div>
+    </a>
+  </div>
+</section>
+
+<!-- ═════════ RESEARCH ADOPTION ═════════ -->
+<section class="adoption-section">
+  <div class="adoption-label" data-en="10 Research Adoption" data-zh="10 研究影响">10 Research Adoption</div>
+  <h2 class="adoption-headline" data-en-html='Our open-source datasets and models power video research at the <em>frontier labs</em> and production studios building the future.' data-zh-html='<em>前沿实验室</em>和顶尖制作公司，正在用我们的开源数据集和模型，做面向未来的视频研究。'>
+    Our open-source datasets and models power video research at the <em>frontier labs</em> and production studios building the future.
+  </h2>
+
+  <div class="adoption-logos">
+
+    <!-- Google DeepMind SimpleIcons siDeepmind path -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Google DeepMind">
+        <path d="m5.99 1.62a8.54 8.54 0 0 0-2.54 6.83c.35 4.4 4.51 7.99 8.28 7.99c3.5 0 4.88-3.06 4.54-5.14a4.32 4.32 0 0 0-.95-2.07c.63.34 1.24.77 1.81 1.3c1.52 1.41 2.44 3.23 2.58 5.1c.33 4.13-2.73 8.37-7.85 8.37c-1.69 0-3.48-.43-4.98-1.14c-4.06-1.92-6.88-6.06-6.88-10.86c0-4.43 2.41-8.3 5.99-10.38zm6.15-1.62c1.69 0 3.48.43 4.98 1.14a12 12 0 0 1 6.88 10.86c0 4.43-2.41 8.3-5.99 10.38a8.54 8.54 0 0 0 2.54-6.83c-.35-4.4-4.51-7.99-8.28-7.99c-3.5 0-4.88 3.06-4.54 5.14a4.3 4.3 0 0 0 .96 2.07a8.72 8.72 0 0 1-1.81-1.3c-1.52-1.41-2.44-3.23-2.59-5.1c-.33-4.13 2.73-8.37 7.85-8.37z"/>
+      </svg>
+      <span class="adoption-logo-name">Google DeepMind</span>
+    </div>
+
+    <!-- ByteDance SimpleIcons siBytedance path -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="ByteDance">
+        <path d="M19.877 1.469L24 2.533v18.942l-4.123 1.056V1.47zm-13.348 9.428l4.115 1.064v8.979l-4.115 1.064v-11.107zM0 2.572l4.115 1.064v16.735L0 21.428V2.572zm17.455 5.62v11.108l-4.123-1.064V9.257l4.123-1.064z"/>
+      </svg>
+      <span class="adoption-logo-name">ByteDance</span>
+    </div>
+
+    <!-- xAI wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 52 24" xmlns="http://www.w3.org/2000/svg" aria-label="xAI" overflow="visible">
+        <text x="26" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="19" font-weight="700" fill="currentColor" letter-spacing="-0.02em">xAI</text>
+      </svg>
+      <span class="adoption-logo-name">xAI</span>
+    </div>
+
+    <!-- Microsoft Windows 4-square mark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Microsoft">
+        <path d="M0 0h11.377v11.372H0zm12.623 0H24v11.372H12.623zM0 12.623h11.377V24H0zm12.623 0H24V24H12.623z"/>
+      </svg>
+      <span class="adoption-logo-name">Microsoft</span>
+    </div>
+
+    <!-- Adobe wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 72 24" xmlns="http://www.w3.org/2000/svg" aria-label="Adobe" overflow="visible">
+        <text x="36" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="18" font-weight="600" fill="currentColor" letter-spacing="0.01em">Adobe</text>
+      </svg>
+      <span class="adoption-logo-name">Adobe</span>
+    </div>
+
+    <!-- Tencent wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 84 24" xmlns="http://www.w3.org/2000/svg" aria-label="Tencent" overflow="visible">
+        <text x="42" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="16" font-weight="600" fill="currentColor" letter-spacing="0.02em">Tencent</text>
+      </svg>
+      <span class="adoption-logo-name">Tencent</span>
+    </div>
+
+    <!-- Kling wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 58 24" xmlns="http://www.w3.org/2000/svg" aria-label="Kling" overflow="visible">
+        <text x="29" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="19" font-weight="700" fill="currentColor" letter-spacing="-0.01em">Kling</text>
+      </svg>
+      <span class="adoption-logo-name">Kling</span>
+    </div>
+
+    <!-- Midjourney wordmark (abbreviated) -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg" aria-label="Midjourney" overflow="visible">
+        <text x="18" y="20" text-anchor="middle" font-family="'Playfair Display', serif" font-size="22" font-weight="500" font-style="italic" fill="currentColor" letter-spacing="-0.02em">MJ</text>
+      </svg>
+      <span class="adoption-logo-name">Midjourney</span>
+    </div>
+
+    <!-- Runway wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 82 24" xmlns="http://www.w3.org/2000/svg" aria-label="Runway" overflow="visible">
+        <text x="41" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="16" font-weight="600" fill="currentColor" letter-spacing="0.04em">Runway</text>
+      </svg>
+      <span class="adoption-logo-name">Runway</span>
+    </div>
+
+    <!-- Luma wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 60 24" xmlns="http://www.w3.org/2000/svg" aria-label="Luma AI" overflow="visible">
+        <text x="30" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="19" font-weight="700" fill="currentColor" letter-spacing="-0.01em">Luma</text>
+      </svg>
+      <span class="adoption-logo-name">Luma</span>
+    </div>
+
+    <!-- Xiaomi SimpleIcons siXiaomi path -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="Xiaomi">
+        <path d="M12 0C8.016 0 4.756.255 2.493 2.516.23 4.776 0 8.033 0 12.012c0 3.98.23 7.235 2.494 9.497C4.757 23.77 8.017 24 12 24c3.983 0 7.243-.23 9.506-2.491C23.77 19.247 24 15.99 24 12.012c0-3.984-.233-7.243-2.502-9.504C19.234.252 15.978 0 12 0zM4.906 7.405h5.624c1.47 0 3.007.068 3.764.827.746.746.827 2.233.83 3.676v4.54a.15.15 0 0 1-.152.147h-1.947a.15.15 0 0 1-.152-.148V11.83c-.002-.806-.048-1.634-.464-2.051-.358-.36-1.026-.441-1.72-.458H7.158a.15.15 0 0 0-.151.147v6.98a.15.15 0 0 1-.152.148H4.906a.15.15 0 0 1-.15-.148V7.554a.15.15 0 0 1 .15-.149zm12.131 0h1.949a.15.15 0 0 1 .15.15v8.892a.15.15 0 0 1-.15.148h-1.949a.15.15 0 0 1-.151-.148V7.554a.15.15 0 0 1 .151-.149zM8.92 10.948h2.046c.083 0 .15.066.15.147v5.352a.15.15 0 0 1-.15.148H8.92a.15.15 0 0 1-.152-.148v-5.352a.15.15 0 0 1 .152-.147Z"/>
+      </svg>
+      <span class="adoption-logo-name">Xiaomi</span>
+    </div>
+
+    <!-- SenseTime wordmark -->
+    <div class="adoption-logo">
+      <svg viewBox="0 0 100 24" xmlns="http://www.w3.org/2000/svg" aria-label="SenseTime" overflow="visible">
+        <text x="50" y="19" text-anchor="middle" font-family="'Syne', sans-serif" font-size="14" font-weight="600" fill="currentColor" letter-spacing="0.03em">SenseTime</text>
+      </svg>
+      <span class="adoption-logo-name">SenseTime</span>
+    </div>
+
+  </div>
+
+  <div class="adoption-stats">
+    <div class="adoption-stat"><strong>2M+</strong> <span data-en="HuggingFace downloads" data-zh="HuggingFace 下载量">HuggingFace downloads</span></div>
+    <span class="adoption-stat-sep">·</span>
+    <div class="adoption-stat"><strong>100+</strong> <span data-en="industry labs using our research" data-zh="在用我们研究的行业实验室">industry labs using our research</span></div>
+  </div>
+</section>
+
+<!-- ═════════ TEAM ═════════ -->
+<section class="team-section" id="team">
+  <div class="section-label" data-en="11 Team" data-zh="11 团队">11 Team</div>
+  <h2 class="section-title" data-en-html='Researchers, filmmakers,<br>and <em>engineers who ship.</em>' data-zh-html='研究者、电影人，<br>以及<em>真正在做事的工程师。</em>'>
+    Researchers, filmmakers,<br>and <em>engineers who ship.</em>
+  </h2>
+  <p class="section-sub" data-en="A multidisciplinary team across the U.S. and China, spanning AI research, product engineering, and professional filmmaking." data-zh="横跨中美的多学科团队：AI 研究、产品工程、专业电影制作，都在其中。">
+    A multidisciplinary team across the U.S. and China, spanning AI research, product engineering, and professional filmmaking.
+  </p>
+
+  <div class="team-category" data-en="Advisors" data-zh="顾问">Advisors</div>
+  <div class="team-advisors">
+    <a class="member" href="https://www.cs.cmu.edu/~deva/" target="_blank" rel="noopener">
+      <div class="member-photo">
+        <img src="https://www.cs.cmu.edu/~deva/ims/headshot.jpg" alt="Deva Ramanan" onerror="this.parentElement.innerHTML='&lt;div class=&quot;member-photo-placeholder p-1&quot;&gt;DR&lt;/div&gt;'">
+      </div>
+      <div class="member-name">Deva Ramanan</div>
+      <div class="member-role" data-en="Professor, CMU Robotics Institute" data-zh="卡内基梅隆大学机器人研究所教授">Professor, CMU Robotics Institute</div>
+    </a>
+    <a class="member" href="https://phontron.com/" target="_blank" rel="noopener">
+      <div class="member-photo">
+        <div class="member-photo-placeholder p-2">GN</div>
+      </div>
+      <div class="member-name">Graham Neubig</div>
+      <div class="member-role" data-en="Professor, CMU · Chief Scientist, All Hands AI" data-zh="卡内基梅隆大学教授 · All Hands AI 首席科学家">Professor, CMU · Chief Scientist, All Hands AI</div>
+    </a>
+  </div>
+
+  <div class="team-category" data-en="Core Team" data-zh="核心团队">Core Team</div>
+  <div class="team-core">
+    <div class="member clickable" id="member-zhiqiu" role="button" tabindex="0" aria-haspopup="dialog">
+      <div class="member-photo">
+        <img src="https://linzhiqiu.github.io/images/profile.jpg" alt="Zhiqiu Lin" onerror="this.parentElement.innerHTML='&lt;div class=&quot;member-photo-placeholder p-1&quot;&gt;ZL&lt;/div&gt;'">
+      </div>
+      <div class="member-name">Zhiqiu Lin · 林之秋</div>
+      <div class="member-role" data-en="Lead Research · Ph.D., Carnegie Mellon" data-zh="研究负责人 · CMU 博士">Lead Research · Ph.D., Carnegie Mellon</div>
+      <span class="member-bio-link" data-en="Read full bio" data-zh="查看完整简历">Read full bio</span>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-3">RY</div></div>
+      <div class="member-name">Ruihuang Yang</div>
+      <div class="member-role" data-en="Chief Agent Engineer · ex-ByteDance" data-zh="首席 Agent 工程师 · 前字节跳动">Chief Agent Engineer · ex-ByteDance</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-4">CM</div></div>
+      <div class="member-name">Chancharik Mitra</div>
+      <div class="member-role" data-en="LLM Engineer · Ph.D., MIT" data-zh="LLM 工程师 · MIT 博士">LLM Engineer · Ph.D., MIT</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-5">RR</div></div>
+      <div class="member-name">Ryan Rao</div>
+      <div class="member-role" data-en="Agent Engineer · Meta, ex-Amazon" data-zh="Agent 工程师 · Meta，前亚马逊">Agent Engineer · Meta, ex-Amazon</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-6">GL</div></div>
+      <div class="member-name">George Liu</div>
+      <div class="member-role" data-en="Agent Engineer · Databricks, ex-Amazon" data-zh="Agent 工程师 · Databricks，前亚马逊">Agent Engineer · Databricks, ex-Amazon</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-7">DM</div></div>
+      <div class="member-name">Derek Mu</div>
+      <div class="member-role" data-en="Agent Engineer · ex-Amazon" data-zh="Agent 工程师 · 前亚马逊">Agent Engineer · ex-Amazon</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-1">TL</div></div>
+      <div class="member-name">Tiffany Ling</div>
+      <div class="member-role" data-en="UX Design and Product · Parsons School of Design · CMU iii" data-zh="UX 设计与产品 · Parsons 设计学院 · CMU iii">UX Design and Product · Parsons School of Design · CMU iii</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-8">YH</div></div>
+      <div class="member-name">Yili Han</div>
+      <div class="member-role" data-en="Ops &amp; Product · NYU Tisch · CMU ETC · Filmmaker" data-zh="运营与产品 · NYU Tisch · CMU ETC · 电影人">Ops &amp; Product · NYU Tisch · CMU ETC · Filmmaker</div>
+    </div>
+
+    <div class="member">
+      <div class="member-photo"><div class="member-photo-placeholder p-3">YH</div></div>
+      <div class="member-name">Yuhan Huang</div>
+      <div class="member-role" data-en="Lead Data Annotator · MA, University of Bristol" data-zh="首席数据标注 · 布里斯托大学艺术硕士">Lead Data Annotator · MA, University of Bristol</div>
+    </div>
+  </div>
+
+  <div class="team-footnote" data-en="+ a 20-person team of professional content creators driving cinematic data annotation and agent product design." data-zh="+ 一支 20 余人的专业内容创作团队，负责电影数据标注与 Agent 产品设计。">
+    + a 20-person team of professional content creators driving cinematic data annotation and agent product design.
+  </div>
+</section>
+
+<!-- ═════════ BIO MODAL (Zhiqiu) ═════════ -->
+<div class="bio-modal-backdrop" id="bioBackdrop"></div>
+<div class="bio-modal" id="bioModal" role="dialog" aria-modal="true" aria-labelledby="bioModalName">
+  <button class="bio-modal-close" id="bioClose" aria-label="Close">✕</button>
+  <div class="bio-modal-inner">
+    <div class="bio-modal-photo">
+      <img src="https://linzhiqiu.github.io/images/profile.jpg" alt="Zhiqiu Lin" onerror="this.parentElement.innerHTML='&lt;div class=&quot;member-photo-placeholder p-1&quot;&gt;ZL&lt;/div&gt;'">
+    </div>
+    <div class="bio-modal-content">
+      <div class="bio-modal-name" id="bioModalName">Zhiqiu Lin · 林之秋</div>
+      <div class="bio-modal-role" data-en="Lead Research · Ph.D., Carnegie Mellon University" data-zh="研究负责人 · 卡内基梅隆大学博士">Lead Research · Ph.D., Carnegie Mellon University</div>
+      <div class="bio-modal-body">
+        <p data-en="Zhiqiu Lin is a Ph.D. graduate of the CMU Robotics Institute, advised by Deva Ramanan. His research focuses on vision-language models and AI agents, with emphasis on evaluation, data, optimization, and reward modeling." data-zh="林之秋是 CMU 机器人研究所博士，师从 Deva Ramanan 教授。他的研究集中在视觉-语言模型和 AI Agent，重点关注评估、数据、优化和奖励建模。">
+          Zhiqiu Lin is a Ph.D. graduate of the CMU Robotics Institute, advised by Deva Ramanan. His research focuses on vision-language models and AI agents, with emphasis on evaluation, data, optimization, and reward modeling.
+        </p>
+        <p data-en="More than ten first-author papers at CVPR, NeurIPS, ICML, and ECCV. Multiple Oral and Spotlight presentations, and Best Paper nominations. Publications have accumulated several thousand citations." data-zh="在 CVPR、NeurIPS、ICML、ECCV 等顶级会议累计发表十余篇第一作者论文，多次入选 Oral、Spotlight，并获最佳论文提名。累计引用数千。">
+          More than ten first-author papers at CVPR, NeurIPS, ICML, and ECCV. Multiple Oral and Spotlight presentations, and Best Paper nominations. Publications have accumulated several thousand citations.
+        </p>
+        <p data-en="His VQAScore work was highlighted by Google DeepMind as outperforming CLIP, and his open-source models have surpassed 2M downloads on Hugging Face. GenAI-Bench was uniquely adopted in Google Imagen-4's official technical report. CameraBench and CHAI datasets are used at frontier labs including Google DeepMind, ByteDance, xAI, Kling, Midjourney, Runway, Luma, Tencent, Microsoft, Adobe, Xiaomi, and SenseTime." data-zh="Google DeepMind 官方认可 VQAScore 优于 CLIP，他的开源模型在 Hugging Face 下载量突破 200 万。Google Imagen-4 官方技术报告独家引用 GenAI-Bench。CameraBench 和 CHAI 数据集在 Google DeepMind、ByteDance、xAI、Kling、Midjourney、Runway、Luma、Tencent、Microsoft、Adobe、小米、商汤等前沿实验室均有使用。">
+          His VQAScore work was highlighted by Google DeepMind as outperforming CLIP, and his open-source models have surpassed 2M downloads on Hugging Face. GenAI-Bench was uniquely adopted in Google Imagen-4's official technical report. CameraBench and CHAI datasets are used at frontier labs including Google DeepMind, ByteDance, xAI, Kling, Midjourney, Runway, Luma, Tencent, Microsoft, Adobe, Xiaomi, and SenseTime.
+        </p>
+        <p data-en="Completed his undergraduate studies at Cornell University a double major in Computer Science and Mathematics in two years. Ranked top three in the College of Arts and Sciences and carried the college flag at graduation. Best Paper nomination at CVPR 2020 as an undergraduate. He has mentored more than twenty undergraduate and master's students, several of whom pursued Ph.D. studies at Stanford, MIT, and Cornell." data-zh="在康奈尔大学两年念完计算机与数学双学位，位列文理学院前三，毕业典礼上担任学院旗手。还在本科时就拿到 CVPR 2020 最佳论文提名。他带过二十多位本科和硕士学生，其中多人前往 Stanford、MIT、Cornell 继续攻读博士。">
+          Completed his undergraduate studies at Cornell University a double major in Computer Science and Mathematics in two years. Ranked top three in the College of Arts and Sciences and carried the college flag at graduation. Best Paper nomination at CVPR 2020 as an undergraduate. He has mentored more than twenty undergraduate and master's students, several of whom pursued Ph.D. studies at Stanford, MIT, and Cornell.
+        </p>
+      </div>
+      <div class="bio-modal-links">
+        <a href="https://linzhiqiu.github.io/" target="_blank" rel="noopener">Website</a>
+        <a href="https://scholar.google.com/citations?user=TFlZ2OcAAAAJ&hl" target="_blank" rel="noopener">Scholar</a>
+        <a href="https://github.com/linzhiqiu" target="_blank" rel="noopener">Github</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═════════ FAQ ═════════ -->
+<section class="faq-section" id="faq">
+  <div class="section-label" data-en="12 FAQ" data-zh="12 常见问题">12 FAQ</div>
+  <h2 class="section-title" data-en-html='Questions<br>you probably have.' data-zh-html='你大概会问的<br>几个问题。'>
+    Questions<br>you probably have.
+  </h2>
+
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-q-text" data-en="How is Moodio different from Runway, Sora, or Seedance?" data-zh="Moodio 和 Runway、Sora、Seedance 有什么不一样？">How is Moodio different from Runway, Sora, or Seedance?</div>
+        <div class="faq-toggle"></div>
+      </div>
+      <div class="faq-answer">
+        <p class="faq-a-text" data-en="Those are generation models. Moodio is a production workflow. We cover the entire pipeline ideation, pre-production, production, post-production, and export in one agent that learns your studio's taste. Generation is one step of five, and we can route to any of those models inside the workflow." data-zh="那些是生成模型，Moodio 是整套制作工作流。一个 Agent 把五个环节——构思、前期、制作、后期、导出——都覆盖了，一路摸清你们工作室的审美。生成只是其中一环，上面这些模型，我们在工作流里都能调。">
+          Those are generation models. Moodio is a production workflow. We cover the entire pipeline ideation, pre-production, production, post-production, and export in one agent that learns your studio's taste. Generation is one step of five, and we can route to any of those models inside the workflow.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-q-text" data-en="Who owns what I create inside Moodio?" data-zh="我在 Moodio 里做出来的东西，版权归谁？">Who owns what I create inside Moodio?</div>
+        <div class="faq-toggle"></div>
+      </div>
+      <div class="faq-answer">
+        <p class="faq-a-text" data-en="You do. Full commercial rights for all output. Your uploaded references, brand assets, and exported projects are yours we don't claim ownership and we don't train foundation models on your private assets." data-zh="归你。所有产出都有完整的商用权利。你上传的参考、品牌资产、导出的项目都是你的——我们不主张所有权，也不会用你的私有资产去训练基础模型。">
+          You do. Full commercial rights for all output. Your uploaded references, brand assets, and exported projects are yours we don't claim ownership and we don't train foundation models on your private assets.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-q-text" data-en="Can I upload my own brand's reference library or style assets?" data-zh="能上传我自己品牌的参考库和风格资产吗？">Can I upload my own brand's reference library or style assets?</div>
+        <div class="faq-toggle"></div>
+      </div>
+      <div class="faq-answer">
+        <p class="faq-a-text" data-en="Yes. Brand teams and studios upload their reference corpus once; Moodio indexes it with the same structured retrieval we use on the public cinematic corpus. Every project from that point inherits your visual language." data-zh="可以。品牌团队和工作室把参考资料传一次，Moodio 会用跟公开电影语料同样的结构化检索去建索引。之后的每一个项目，都会继承你们的视觉语言。">
+          Yes. Brand teams and studios upload their reference corpus once; Moodio indexes it with the same structured retrieval we use on the public cinematic corpus. Every project from that point inherits your visual language.
+        </p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question">
+        <div class="faq-q-text" data-en="Can my whole team collaborate in real-time?" data-zh="整个团队能一起实时协作吗？">Can my whole team collaborate in real-time?</div>
+        <div class="faq-toggle"></div>
+      </div>
+      <div class="faq-answer">
+        <p class="faq-a-text" data-en="Yes. Moodio runs on a Figma-style canvas with multi-cursor editing, role-based access, and shared asset libraries. Managers allocate generation credits across the team, and every member's interactions contribute to the agent's learned studio taste." data-zh="可以。Moodio 是一块类似 Figma 的画布：多光标编辑、按角色分权限、共享资产库都有。管理者可以在团队里分配生成额度，每个人的操作也都在帮 Agent 摸清你们工作室的审美。">
+          Yes. Moodio runs on a Figma-style canvas with multi-cursor editing, role-based access, and shared asset libraries. Managers allocate generation credits across the team, and every member's interactions contribute to the agent's learned studio taste.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═════════ FINAL CTA ═════════ -->
+<section class="final-cta">
+  <h2 class="final-cta-title" data-en-html='Every great video<br>starts with <em>a feeling.</em>' data-zh-html='每一部好作品，<br>都从<em>一种感觉</em>开始。'>
+    Every great video<br>starts with <em>a feeling.</em>
+  </h2>
+  <p class="final-cta-sub" data-en="Make the one that defines you." data-zh="去做那部能真正代表你的作品。">
+    Make the one that defines you.
+  </p>
+  <div class="final-cta-buttons">
+    <a href="https://app.moodio.art" target="_blank" rel="noopener" class="btn-hero-primary" data-en="Launch App →" data-zh="进入 Moodio →">Launch App →</a>
+    <a href="#" class="btn-hero-ghost" data-en="Join Discord" data-zh="加入 Discord 社区">Join Discord</a>
+  </div>
+  <p class="final-cta-contact" data-en-html='For collaborations &amp; inquiries <a href="mailto:support@moodio.art">support@moodio.art</a>' data-zh-html='合作与咨询 <a href="mailto:support@moodio.art">support@moodio.art</a>'>
+    For collaborations &amp; inquiries <a href="mailto:support@moodio.art">support@moodio.art</a>
+  </p>
+</section>
+
+<!-- ═════════ FOOTER ═════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Moodio <span class="beta-tag">Beta</span></div>
+      <p class="footer-tagline" data-en="The professional AI platform reshaping how ads and films get made. From reference to reality." data-zh="专业级 AI 平台，重新定义广告和电影的做法。从参考，到成片。">
+        The professional AI platform reshaping how ads and films get made. From reference to reality.
+      </p>
+    </div>
+    <div>
+      <div class="footer-col-title" data-en="Product" data-zh="产品">Product</div>
+      <ul class="footer-links">
+        <li><a href="https://app.moodio.art" target="_blank" rel="noopener" data-en="Launch App" data-zh="进入 Moodio">Launch App</a></li>
+        <li><a href="#agent" data-en="The Agent" data-zh="Agent">The Agent</a></li>
+        <li><a href="#workflow" data-en="Workflow" data-zh="工作流">Workflow</a></li>
+        <li><a href="#showcase" data-en="Showcase" data-zh="作品">Showcase</a></li>
+        <li><a href="#" data-en="Changelog" data-zh="更新日志">Changelog</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title" data-en="Community" data-zh="社区">Community</div>
+      <ul class="footer-links">
+        <li><a href="#" data-en="Discord Community" data-zh="Discord 社区">Discord Community</a></li>
+        <li><a href="#" data-en="Blog" data-zh="博客">Blog</a></li>
+        <li><a href="#" data-en="Tutorials" data-zh="教程">Tutorials</a></li>
+        <li><a href="https://linzhiqiu.github.io/" target="_blank" rel="noopener" data-en="Research Papers" data-zh="研究论文">Research Papers</a></li>
+        <li><a href="https://github.com/linzhiqiu" target="_blank" rel="noopener">Github</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title" data-en="Company" data-zh="公司">Company</div>
+      <ul class="footer-links">
+        <li><a href="#team" data-en="Team" data-zh="团队">Team</a></li>
+        <li><a href="#" data-en="About" data-zh="关于我们">About</a></li>
+        <li><a href="#" data-en="Careers" data-zh="招聘">Careers</a></li>
+        <li><a href="#" data-en="Press" data-zh="媒体报道">Press</a></li>
+        <li><a href="mailto:support@moodio.art" data-en="Contact" data-zh="联系我们">Contact</a></li>
+        <li><a href="#" data-en="Privacy" data-zh="隐私">Privacy</a></li>
+        <li><a href="#" data-en="Terms" data-zh="条款">Terms</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div data-en="© 2026 Moodio · Datapizza.ai INC · Delaware" data-zh="© 2026 Moodio · Datapizza.ai INC · 特拉华州">© 2026 Moodio · Datapizza.ai INC · Delaware</div>
+    <div class="footer-socials">
+      <a href="#">Twitter</a>
+      <a href="#">LinkedIn</a>
+      <a href="#">Instagram</a>
+      <a href="#">Discord</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ═════════ WORKFLOW · Stage demo expansion ═════════ */
+  (function initStageDemos() {
+    const stages = document.querySelectorAll('.stage');
+    const panel = document.getElementById('stageDemoPanel');
+    if (!stages.length || !panel) return;
+
+    const visualTitle = document.getElementById('stageDemoVisualTitle');
+    const visualSub   = document.getElementById('stageDemoVisualSub');
+    const label       = document.getElementById('stageDemoLabel');
+    const title       = document.getElementById('stageDemoTitle');
+    const desc        = document.getElementById('stageDemoDesc');
+    const bullets     = document.getElementById('stageDemoBullets');
+
+    // Bilingual demo content per stage. Swap bullet copy / videos as product evolves.
+    const DEMOS = {
+      '1': {
+        visualTitle: { en: 'Ideation · Demo',       zh: '构思 · 演示' },
+        visualSub:   { en: 'Reference search in action', zh: '参考检索实况' },
+        label:       { en: 'Stage 01 · Ideation',   zh: '阶段 01 · 构思' },
+        title:       { en: 'Find the frame before you write the brief.', zh: '在写 brief 之前，先找到那一帧。' },
+        desc:        { en: 'Describe a mood, paste a screenshot, or name a director Moodio surfaces exactly what you were reaching for, ranked by visual intent, not keywords.', zh: '描述一种情绪、粘贴一帧画面，或说出一位导演的名字——Moodio 会按视觉意图排序，把你真正想要的那条递到你手里，而不是按关键词搜。' },
+        bullets: [
+          { en: 'Semantic search across a cinematic corpus indexed by lighting, motion, composition, color, and geometry.', zh: '跨整个电影语料的语义检索，按光线、运动、构图、色彩、空间建索引。' },
+          { en: 'Paste a screenshot to retrieve visually similar frames no keywords required.', zh: '粘贴一张截图即可检索视觉相近的画面——不用关键词。' },
+          { en: 'Save references into a mood board that becomes the prompt for every downstream stage.', zh: '把参考收进 mood board，它会成为后续所有环节的 prompt。' }
+        ]
+      },
+      '2': {
+        visualTitle: { en: 'Pre-Production · Demo', zh: '前期 · 演示' },
+        visualSub:   { en: 'Script & storyboard canvas', zh: '剧本与分镜画布' },
+        label:       { en: 'Stage 02 · Pre-Production', zh: '阶段 02 · 前期' },
+        title:       { en: 'From references to a real shot list.', zh: '从参考，到一份真能拍的镜头表。' },
+        desc:        { en: 'Moodio analyzes your selected references and drafts the script, storyboard frames, and shot list inside one Figma-style canvas all of it versioned as you iterate.', zh: 'Moodio 会分析你选的参考，在一块 Figma 式画布里起草剧本、分镜和镜头表——所有修改都会保留版本。' },
+        bullets: [
+          { en: 'Auto-generated shot lists inherit the cinematography grammar of your references.', zh: '自动生成的镜头表会继承参考的影像语法。' },
+          { en: 'Edit scripts conversationally: change a scene, adjust pacing, refine tone.', zh: '对话式地改剧本：换一场戏、调节奏、改气口。' },
+          { en: 'Every draft is versioned roll back or branch when direction shifts.', zh: '每一版草稿都留版本，方向一变就能回滚或拉分支。' }
+        ]
+      },
+      '3': {
+        visualTitle: { en: 'Production · Demo', zh: '制作 · 演示' },
+        visualSub:   { en: 'Fine-grained cinematic control', zh: '精细电影控制' },
+        label:       { en: 'Stage 03 · Production', zh: '阶段 03 · 制作' },
+        title:       { en: 'Generate shots grounded in your reference.', zh: '基于你的参考生成镜头。' },
+        desc:        { en: 'Control subject, scene, motion, spatial layout, and camera with fine-grained granularity backed by years of cinematic research.', zh: '主体、场景、运动、空间布局、运镜——都能精细控制，背后是多年电影语言研究的支撑。' },
+        bullets: [
+          { en: 'Fine-grained control over lighting, lensing, motion, and composition.', zh: '对光线、镜头、运动、构图的精细控制。' },
+          { en: 'Route through any generation model Moodio stays the control layer on top.', zh: '可接入任何生成模型——Moodio 始终是上层的控制层。' },
+          { en: 'Every generated shot stays consistent with the reference style.', zh: '每一个生成的镜头都与参考风格保持一致。' }
+        ]
+      },
+      '4': {
+        visualTitle: { en: 'Post-Production · Demo', zh: '后期 · 演示' },
+        visualSub:   { en: 'Figma-style canvas · Multi-cursor', zh: 'Figma 式画布 · 多光标' },
+        label:       { en: 'Stage 04 · Post-Production', zh: '阶段 04 · 后期' },
+        title:       { en: 'Edit and extend together, in real time.', zh: '实时一起剪、一起延展。' },
+        desc:        { en: 'A Figma-style canvas where your whole team cuts, extends, and refines shots in parallel. Shared asset libraries grow with every draft.', zh: '一块 Figma 式画布，整个团队可以并行剪辑、延展、打磨。共享资产库随每一版草稿一起生长。' },
+        bullets: [
+          { en: 'Multi-cursor editing with role-based access for directors, editors, and producers.', zh: '多光标协作，按角色分权限——导演、剪辑、制片各司其职。' },
+          { en: 'Extend any shot inline inpaint, outpaint, or re-time without switching tools.', zh: '任意镜头就地延展——重绘、扩画面、改节奏，不用切工具。' },
+          { en: 'Asset library auto-tags and indexes every draft for reuse in future projects.', zh: '资产库自动打标签、建索引，后续项目可复用。' }
+        ]
+      },
+      '5': {
+        visualTitle: { en: 'Export · Demo', zh: '导出 · 演示' },
+        visualSub:   { en: 'Multi-format delivery', zh: '多格式交付' },
+        label:       { en: 'Stage 05 · Export', zh: '阶段 05 · 导出' },
+        title:       { en: 'Publish-ready output for every channel.', zh: '面向每一个渠道的可发布成片。' },
+        desc:        { en: 'Deliver commercial, cinematic, and social cuts in one pass. Every export closes the loop teaching the agent what shipped and what didn\'t.', zh: '一次性输出广告、影视、社媒版本。每一次导出都在闭合回路——让 Agent 知道哪些东西真的被选用。' },
+        bullets: [
+          { en: 'Platform-native formats pre-configured for film, TV, streaming, and social.', zh: '为影视、流媒体、社媒预配置的平台原生格式。' },
+          { en: 'Color, sound, and subtitle handoffs that respect professional pipelines.', zh: '尊重专业流水线的调色、声音、字幕交付。' },
+          { en: 'Every export signal feeds the agent\'s learned taste for your next project.', zh: '每一次导出都在喂养 Agent，让它更懂你下一个项目。' }
+        ]
+      }
+    };
+
+    let activeStage = null;
+
+    function render(stageId) {
+      const d = DEMOS[stageId];
+      if (!d) return;
+      const lang = document.body.getAttribute('data-lang') || 'en';
+
+      visualTitle.textContent = d.visualTitle[lang];
+      visualSub.textContent   = d.visualSub[lang];
+      label.textContent       = d.label[lang];
+      title.textContent       = d.title[lang];
+      desc.textContent        = d.desc[lang];
+
+      bullets.innerHTML = '';
+      d.bullets.forEach(b => {
+        const li = document.createElement('li');
+        li.setAttribute('data-en', b.en);
+        li.setAttribute('data-zh', b.zh);
+        li.textContent = b[lang];
+        bullets.appendChild(li);
+      });
+    }
+
+    function open(stage) {
+      stages.forEach(s => s.classList.toggle('active', s === stage));
+      const id = stage.getAttribute('data-stage');
+      render(id);
+      panel.classList.add('open');
+      activeStage = stage;
+    }
+    function close() {
+      stages.forEach(s => s.classList.remove('active'));
+      panel.classList.remove('open');
+      activeStage = null;
+    }
+
+    stages.forEach(stage => {
+      stage.addEventListener('click', () => {
+        if (stage === activeStage) {
+          close();
+        } else {
+          open(stage);
+          // Scroll the panel into view so user sees the demo
+          setTimeout(() => {
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }, 200);
+        }
+      });
+    });
+
+    // Re-render current demo when language toggles
+    const langBtns = document.querySelectorAll('.lang-btn');
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (activeStage) {
+          setTimeout(() => render(activeStage.getAttribute('data-stage')), 10);
+        }
+      });
+    });
+  })();
+
+  /* ═════════ HERO · mouse-reactive mood crossfade ═════════ */
+  (function initHeroMoods() {
+    const hero = document.getElementById('hero');
+    const moods = document.querySelectorAll('.mood');
+    const moodLabelText = document.getElementById('moodLabelText');
+    const moodDotsContainer = document.getElementById('moodDots');
+    const labels = [
+      'REF · 001 BLUE HOUR',
+      'REF · 002 GOLDEN HOUR',
+      'REF · 003 AQUA DREAM',
+      'REF · 004 NOIR STUDY',
+      'REF · 005 NEON NIGHT'
+    ];
+    const labelsZh = [
+      '参考 · 001 蓝调时刻',
+      '参考 · 002 黄金时刻',
+      '参考 · 003 水色梦境',
+      '参考 · 004 黑色电影',
+      '参考 · 005 霓虹夜'
+    ];
+
+    moods.forEach((_, i) => {
+      const d = document.createElement('span');
+      d.className = 'mood-dot';
+      if (i === 2) d.classList.add('active');
+      moodDotsContainer.appendChild(d);
+    });
+    const dots = document.querySelectorAll('.mood-dot');
+
+    const N = moods.length;
+    const spread = N - 1;
+    let currentX = 0.5;
+    let targetX = 0.5;
+
+    updateMoods(0.5);
+
+    // Auto-cycle state
+    const IDLE_DELAY   = 2000;   // ms of no movement before auto mode kicks in
+    const CYCLE_INTERVAL = 3000; // ms between auto mood advances
+    let lastMoveTime   = 0;
+    let isUserActive   = false;
+    let autoMoodIdx    = 2;      // start from centre mood
+    let autoCycleTimer = null;
+
+    function getAnchor(idx) { return idx / spread; }
+
+    function startAutoCycle() {
+      if (autoCycleTimer) return;
+      autoCycleTimer = setInterval(() => {
+        if (isUserActive) return;
+        autoMoodIdx = (autoMoodIdx + 1) % N;
+        targetX = getAnchor(autoMoodIdx);
+      }, CYCLE_INTERVAL);
+    }
+
+    function stopAutoCycle() {
+      clearInterval(autoCycleTimer);
+      autoCycleTimer = null;
+    }
+
+    // Begin auto-cycling on load after initial delay
+    setTimeout(startAutoCycle, IDLE_DELAY);
+
+    hero.addEventListener('mousemove', (e) => {
+      const rect = hero.getBoundingClientRect();
+      targetX = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      lastMoveTime = Date.now();
+
+      if (!isUserActive) {
+        isUserActive = true;
+        stopAutoCycle();
+      }
+
+      // After cursor idles again, resume auto-cycling
+      clearTimeout(hero._idleTimer);
+      hero._idleTimer = setTimeout(() => {
+        isUserActive = false;
+        // Snap autoMoodIdx to whichever mood is closest to where cursor left off
+        autoMoodIdx = Math.round(targetX * spread);
+        startAutoCycle();
+      }, IDLE_DELAY);
+    });
+
+    hero.addEventListener('mouseleave', () => {
+      isUserActive = false;
+      clearTimeout(hero._idleTimer);
+      autoMoodIdx = Math.round(targetX * spread);
+      startAutoCycle();
+    });
+
+    function animate() {
+      currentX += (targetX - currentX) * 0.06;
+      updateMoods(currentX);
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    function updateMoods(x) {
+      let activeIdx = 0;
+      let maxOpacity = 0;
+      moods.forEach((mood, i) => {
+        const anchor = i / spread;
+        const dist = Math.abs(x - anchor) * spread;
+        const opacity = Math.max(0, 1 - dist);
+        mood.style.opacity = opacity;
+        if (opacity > maxOpacity) {
+          maxOpacity = opacity;
+          activeIdx = i;
+        }
+      });
+      dots.forEach((d, i) => {
+        d.classList.toggle('active', i === activeIdx);
+      });
+      const lang = document.body.getAttribute('data-lang');
+      moodLabelText.textContent = lang === 'zh' ? labelsZh[activeIdx] : labels[activeIdx];
+    }
+  })();
+
+  /* ═════════ LANGUAGE TOGGLE ═════════ */
+  (function initLangToggle() {
+    const buttons = document.querySelectorAll('.lang-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-set-lang');
+        setLang(lang);
+      });
+    });
+
+    function setLang(lang) {
+      document.body.setAttribute('data-lang', lang);
+      document.documentElement.setAttribute('lang', lang === 'zh' ? 'zh-CN' : 'en');
+
+      document.querySelectorAll('.lang-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-set-lang') === lang);
+      });
+
+      document.querySelectorAll('[data-en]').forEach(el => {
+        const val = el.getAttribute(lang === 'zh' ? 'data-zh' : 'data-en');
+        if (val !== null) el.textContent = val;
+      });
+
+      document.querySelectorAll('[data-en-html]').forEach(el => {
+        const val = el.getAttribute(lang === 'zh' ? 'data-zh-html' : 'data-en-html');
+        if (val !== null) el.innerHTML = val;
+      });
+    }
+  })();
+
+  /* ═════════ FAQ ACCORDION ═════════ */
+  (function initFAQ() {
+    document.querySelectorAll('.faq-item').forEach(item => {
+      const q = item.querySelector('.faq-question');
+      q.addEventListener('click', () => {
+        item.classList.toggle('open');
+      });
+    });
+  })();
+
+  /* ═════════ BIO MODAL (Zhiqiu) ═════════ */
+  (function initBioModal() {
+    const trigger = document.getElementById('member-zhiqiu');
+    const backdrop = document.getElementById('bioBackdrop');
+    const modal = document.getElementById('bioModal');
+    const closeBtn = document.getElementById('bioClose');
+    if (!trigger || !modal) return;
+
+    function open() {
+      backdrop.classList.add('open');
+      modal.classList.add('open');
+      document.body.classList.add('modal-open');
+      closeBtn.focus();
+    }
+    function close() {
+      backdrop.classList.remove('open');
+      modal.classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+
+    trigger.addEventListener('click', open);
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        open();
+      }
+    });
+    backdrop.addEventListener('click', close);
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('open')) close();
+    });
+  })();
+</script>
+
 </body>
 </html>
