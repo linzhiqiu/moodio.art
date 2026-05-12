@@ -97,8 +97,6 @@
     border-radius: 2px; transition: background 0.2s, color 0.2s; white-space: nowrap;
   }
   .lang-btn.active { background: var(--ink); color: #fff; }
-  .nav-hamburger { display: none; background: none; border: 1px solid var(--border-mid); width: 38px; height: 32px; padding: 0; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 3px; flex-shrink: 0; }
-  .nav-hamburger span { display: block; width: 16px; height: 1.5px; background: var(--ink); }
   .btn-primary {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--ink); color: #fff; text-decoration: none;
@@ -284,9 +282,9 @@
   /* ── COMPETITION ── */
   .competition-section { background: var(--bg2); }
   .comp-table { margin-top: 48px; background: #fff; border: 1px solid var(--border); overflow: hidden; }
-  .comp-row { display: grid; grid-template-columns: 2fr repeat(6, 0.9fr); border-bottom: 1px solid var(--border); }
+  .comp-row { display: grid; grid-template-columns: 2.2fr repeat(6, 1fr); border-bottom: 1px solid var(--border); }
   .comp-row:last-child { border-bottom: none; }
-  .comp-cell { padding: 12px 10px; font-size: 12px; display: flex; align-items: center; border-right: 1px solid var(--border); }
+  .comp-cell { padding: 18px 14px; font-size: 13px; display: flex; align-items: center; border-right: 1px solid var(--border); }
   .comp-cell:last-child { border-right: none; }
   .comp-header { background: var(--bg3); font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mid); justify-content: center; text-align: center; }
   .comp-header.moodio { background: var(--ink); color: #fff; font-family: 'Playfair Display', serif; font-size: 17px; font-style: italic; text-transform: none; letter-spacing: -0.01em; }
@@ -301,7 +299,7 @@
 
   /* ── MOAT ── */
   .moat-section { background: #fff; }
-  .moat-intro { font-family: 'Noto Serif SC', serif; font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; line-height: 1.6; color: var(--ink); max-width: 860px; margin-bottom: 24px; }
+  .moat-intro { font-family: 'Noto Serif SC', serif; font-size: clamp(22px, 2.2vw, 30px); font-weight: 400; line-height: 1.6; color: var(--ink); max-width: 860px; margin-bottom: 64px; }
   .moat-intro em { font-style: italic; color: var(--accent); }
   .moat-pillars { display: flex; flex-direction: column; gap: clamp(16px, 2vw, 24px); }
   .moat-pillar { box-sizing: border-box; padding: clamp(28px, 3vw, 44px); border: 1px solid var(--border); background: #fff; }
@@ -319,51 +317,35 @@
   /* ── DEMO PLACEHOLDER ── */
   .demo-placeholder {
     grid-column: 1 / -1;
-    margin-top: 28px;
+    margin-top: 40px;
     border: 1px solid var(--border);
     background: #0a0a0a;
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16 / 9;
-    display: flex;
   }
-  .demo-placeholder > .demo-placeholder-inner,
-  .demo-placeholder > div { width: 100%; height: 100%; box-sizing: border-box; }
-  .moat-pillar > .demo-placeholder { margin-top: 28px; }
-  .moat-pillar > .demo-placeholder + .demo-placeholder { margin-top: 12px; }
   .demo-placeholder::before {
     content: ''; position: absolute; inset: 0;
     background-image: var(--grain); opacity: 0.3; pointer-events: none;
   }
   .demo-placeholder-inner {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: clamp(10px, 1.6vw, 20px); text-align: center; position: relative; z-index: 1;
-    overflow: hidden; gap: 6px;
+    padding: 56px 48px; text-align: center; position: relative; z-index: 1;
   }
   .demo-placeholder-tag {
-    font-family: 'DM Mono', monospace; font-size: clamp(7px, 0.7vw, 9px);
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(255,255,255,0.4); margin-bottom: 4px;
-    border: 1px solid rgba(255,255,255,0.12); padding: 2px 6px; border-radius: 2px;
+    font-family: 'DM Mono', monospace; font-size: 10px;
+    letter-spacing: 0.25em; text-transform: uppercase;
+    color: rgba(255,255,255,0.4); margin-bottom: 20px;
+    border: 1px solid rgba(255,255,255,0.12); padding: 4px 12px; border-radius: 2px;
   }
   .demo-placeholder-title {
-    font-family: 'Noto Serif SC', serif; font-size: clamp(11px, 1.2vw, 16px);
-    font-weight: 400; color: rgba(255,255,255,0.85); margin-bottom: 4px; line-height: 1.3;
+    font-family: 'Noto Serif SC', serif; font-size: clamp(20px, 2vw, 26px);
+    font-weight: 400; color: rgba(255,255,255,0.85); margin-bottom: 12px; line-height: 1.4;
   }
   body[data-lang="en"] .demo-placeholder-title { font-family: 'Playfair Display', serif; }
   .demo-placeholder-sub {
-    font-family: 'DM Mono', monospace; font-size: clamp(7px, 0.75vw, 9px);
-    letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase; line-height: 1.4;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.14em; color: rgba(255,255,255,0.35); text-transform: uppercase;
   }
-  /* Inner mockup elements scaled down */
-  .demo-placeholder .demo-search-mock { padding: 6px 10px; font-size: 10px; margin: 4px 0 8px !important; }
-  .demo-placeholder .demo-search-icon { font-size: 11px; }
-  .demo-placeholder .demo-search-text { font-size: 9px; }
-  .demo-placeholder-inner > div[style*="aspect-ratio:16/5"] { aspect-ratio: 16/3 !important; margin-top: 8px !important; }
-  .demo-placeholder-inner > div[style*="grid-template-columns:repeat(4"] > div[style*="aspect-ratio:1/1"] { aspect-ratio: 5/3 !important; padding: 6px !important; }
-  .demo-placeholder-inner > div[style*="grid-template-columns:1fr 1fr 1fr"] > div[style*="aspect-ratio:4/3"] { aspect-ratio: 4/2 !important; padding: 8px !important; }
-  .demo-placeholder-inner > div[style*="grid-template-columns:1fr 1fr 1fr"],
-  .demo-placeholder-inner > div[style*="grid-template-columns:repeat(4"] { margin-top: 8px !important; gap: 6px !important; }
   .demo-placeholder-grid {
     display: grid; gap: 2px; margin-top: 28px; width: 100%;
   }
@@ -431,7 +413,6 @@
   .demo-zone.active { border-color: rgba(157,180,255,0.5); background: rgba(35,72,214,0.12); }
   .demo-zone.active .demo-zone-line { background: rgba(157,180,255,0.2); }
   .showcase-section { background: #0a0a0a; color: #fff; overflow: hidden; position: relative; }
-  .showcase-title-block { margin: 0 auto 48px; max-width: 1100px; }
   .showcase-section::before { content: ''; position: absolute; inset: 0; background-image: var(--grain); opacity: 0.25; pointer-events: none; }
   .showcase-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: clamp(220px, 26vw, 320px); gap: 2px; }
   .film-card { position: relative; overflow: hidden; background: #111; display: flex; flex-direction: column; justify-content: flex-end; text-decoration: none; color: #fff; transition: transform 0.3s; }
@@ -440,13 +421,10 @@
   .film-visual::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 60%); }
   .film-visual video { width: 100%; height: 100%; object-fit: cover; }
   .film-visual iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; pointer-events: none; z-index: 1; }
-  /* Crop iframe edges in cards to hide YouTube channel watermark/title bar */
-  .film-card[data-yt] .film-visual { overflow: hidden; }
-  .film-card[data-yt] .film-visual iframe { width: 130%; height: 140%; top: -20%; left: -15%; inset: auto; }
   .film-visual::after { z-index: 2; }
   .film-top { position: absolute; top: 14px; left: 14px; z-index: 2; }
-  .film-tag { font-family: 'DM Mono', monospace; font-size: clamp(7px, 0.85vw, 10px); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.9); background: rgba(35,72,214,0.7); padding: 3px 8px; border-radius: 1px; white-space: nowrap; display: inline-block; }
-  .film-award { font-family: 'DM Mono', monospace; font-size: clamp(7px, 0.85vw, 10px); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.9); background: rgba(184,74,27,0.75); padding: 3px 8px; border-radius: 1px; white-space: nowrap; display: inline-block; }
+  .film-tag { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.9); background: rgba(35,72,214,0.7); padding: 3px 8px; border-radius: 1px; }
+  .film-award { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.9); background: rgba(184,74,27,0.75); padding: 3px 8px; border-radius: 1px; }
   .film-content { position: relative; z-index: 2; padding: 14px 16px 16px; }
   .film-title { font-family: 'Noto Serif SC', serif; font-size: 15px; font-weight: 500; margin-bottom: 4px; line-height: 1.3; }
   .film-meta { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.55); display: flex; justify-content: space-between; align-items: center; }
@@ -480,7 +458,7 @@
   .adoption-headline { font-family: 'Noto Serif SC', serif; font-size: clamp(22px, 2.5vw, 30px); font-weight: 400; line-height: 1.5; max-width: 780px; margin: 0 auto 52px; position: relative; }
   body[data-lang="en"] .adoption-headline { font-family: 'Playfair Display', serif; }
   .adoption-headline em { font-style: italic; color: #9db4ff; }
-  .adoption-logos { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); max-width: 1100px; margin: 0 auto 40px; position: relative; }
+  .adoption-logos { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.08); max-width: 1100px; margin: 0 auto 40px; position: relative; }
   .adoption-logo { background: #0a0a0a; padding: 28px 16px 22px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: rgba(255,255,255,0.75); transition: color 0.2s, background 0.2s; }
   .adoption-logo svg { height: 28px; width: auto; fill: currentColor; flex-shrink: 0; overflow: visible; }
   .adoption-logo-name { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.42); text-align: center; transition: color 0.2s; line-height: 1.5; }
@@ -529,7 +507,6 @@
   .team-core { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 24px; }
   .member { display: flex; flex-direction: column; gap: 10px; text-decoration: none; color: inherit; }
   .member.clickable { cursor: pointer; }
-  .member-bio-link { margin-top: auto; }
   .member-photo { width: 100%; aspect-ratio: 1; overflow: hidden; background: var(--bg3); }
   .team-core .member-photo, .team-advisors .member-photo { border: 1px solid var(--border-mid); box-sizing: border-box; }
   .member-photo img { width: 100%; height: 100%; object-fit: cover; }
@@ -546,13 +523,6 @@
   .collaborator-name { font-family: 'Noto Serif SC', serif; color: var(--ink); cursor: pointer; padding: 3px 10px; border: 1px solid rgba(35, 72, 214, 0.35); background: rgba(35, 72, 214, 0.04); transition: background 0.15s, border-color 0.15s, color 0.15s; user-select: none; }
   body[data-lang="en"] .collaborator-name { font-family: 'Playfair Display', serif; }
   .collaborator-name:hover { background: rgba(35, 72, 214, 0.1); border-color: var(--accent); color: var(--accent); }
-  .collaborator-name.expanded { background: var(--accent); border-color: var(--accent); color: #fff; }
-  .collaborator-inline { grid-column: 1 / -1; background: var(--bg2); border-left: 3px solid var(--accent); padding: 14px 16px; margin: 4px 0 8px; font-family: 'Noto Sans SC', sans-serif; font-size: 12px; line-height: 1.7; color: var(--ink); }
-  .collaborator-inline-name { font-family: 'Noto Serif SC', serif; font-weight: 600; font-size: 14px; margin-bottom: 4px; color: var(--ink); }
-  body[data-lang="en"] .collaborator-inline-name { font-family: 'Playfair Display', serif; }
-  .collaborator-inline-role { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
-  .collaborator-inline-body p { margin-bottom: 8px; }
-  .collaborator-inline-body p:last-child { margin-bottom: 0; }
   .collaborator-role-hint { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--ink-dim); letter-spacing: 0.08em; margin-right: 4px; text-transform: uppercase; }
   body[data-lang="zh"] .collaborator-role-hint { font-family: 'Noto Sans SC', sans-serif; text-transform: none; letter-spacing: 0.04em; font-size: 11px; }
   .team-footnote { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); font-size: 13px; color: var(--ink-dim); line-height: 1.6; }
@@ -634,7 +604,7 @@
     .roadmap-cards { grid-template-columns: 1fr; }
     .investor-funds { gap: 8px; }
     .research-grid { grid-template-columns: repeat(3, 1fr); }
-    .adoption-logos { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .adoption-logos { grid-template-columns: repeat(4, 1fr); }
     .comp-table { overflow-x: auto; }
     .comp-row { min-width: 860px; }
     .bio-modal-inner { grid-template-columns: 1fr; gap: 24px; padding: 40px 28px 32px; }
@@ -643,113 +613,21 @@
   }
   @media (max-width: 640px) {
     nav { padding: 0 12px; gap: 8px; }
-    /* 1. Nav links hidden, show hamburger */
-    .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: rgba(255,255,255,0.98); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); padding: 8px 20px 16px; border-bottom: 1px solid var(--border); gap: 0; z-index: 199; }
-    .nav-links.open { display: flex; }
-    .nav-links li { display: flex; }
-    .nav-link { padding: 0 4px; min-height: 44px; height: 44px; font-size: 14px; border-bottom: 1px solid var(--border); display: flex; align-items: center; width: 100%; }
-    .nav-link:last-child { border-bottom: none; }
-    .nav-hamburger { display: inline-flex; }
-    /* Hide primary contact button on mobile (move to hamburger menu) */
-    .nav-right .btn-primary { display: none; }
-    /* Language toggle height matches hamburger (32px) */
-    .lang-toggle { height: 32px; box-sizing: border-box; padding: 0 2px; }
-    .lang-btn { height: 28px; display: inline-flex; align-items: center; padding: 0 8px; }
-
-    section { padding: 56px 20px; }
-    /* Cap caption / body text at 14px on mobile */
-    .section-sub, .moat-intro, .moat-body, .target-body, .whynow-quote-text, .whynow-point-text,
-    .whynow-point-solution-text, .moat-proof, .investor-fund-text, .investor-vision,
-    .target-type-desc, .paper-text, .roadmap-card-text, .collaborators-intro,
-    .film-modal-meta, .traction-stat-label, .film-title,
-    .film-meta, .demo-placeholder-title, .demo-placeholder-sub { font-size: 14px !important; }
-    .mission-strip-quote { font-size: 16px !important; }
-
-    /* 2. Hero 640px shorter */
-    .hero { min-height: 640px; height: 640px; padding: 100px 20px 60px; }
+    .nav-links { gap: 0; }
+    .nav-link { padding: 8px 4px; }
+    section { padding: 60px 20px; }
+    .hero { padding: 100px 20px 80px; }
     .mood-label { display: none; }
-
-    /* 3. Traction + collab: same width, narrow gap */
-    .traction-stats { gap: 6px; }
-    .traction-section { padding: 40px 20px 12px; }
-    .collab-strip { padding: 0 20px 8px; }
-    .collab-inner { padding: 20px 16px; gap: 16px; max-width: none; }
-    .collab-logos { gap: 12px; }
-    .collab-logo + .collab-logo { padding-left: 12px; }
-
-    /* 4. Section 1 (Why Now) cards: stacked */
-    .whynow-points { flex-direction: column; gap: 12px; }
-    .whynow-point { flex: none; min-width: 0; }
-    .whynow-point-solution-text { min-height: 0; }
-
-    /* Section 2 target: smaller body + 2-col card grid */
-    .target-body { font-size: 13px; line-height: 1.65; margin-bottom: 24px; }
-    .target-types { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    .target-type-illustration { padding: 8px; aspect-ratio: 16 / 7; }
-    .target-type-illustration svg { max-width: 110px; }
-    .target-type-content { padding: 12px 14px 14px; }
-    .target-type-name { font-size: 12px; line-height: 1.3; }
-    .target-type-desc { font-size: 11px; line-height: 1.5; }
-
-    /* Section 4 moat */
-    .moat-pillar { padding: 24px; }
-    .moat-num { font-size: clamp(24px, 6vw, 30px); }
-
-    /* 5. Section 6 research papers: 2 per row */
-    .research-grid { grid-template-columns: repeat(2, 1fr); }
-
-    /* 6. Adoption logos: 3 per row */
-    .adoption-logos { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-
-    /* Adoption stats: stacked, centered */
-    .adoption-stats { flex-direction: column; gap: 8px; }
-    .adoption-stats > span { display: none; }
-    .adoption-stat { text-align: center; width: 100%; }
-
-    /* 7. Section 5 (showcase) reduce text-to-grid gap */
-    .showcase-title-block { margin-bottom: 16px; padding: 0 20px; }
-    .showcase-section .section-label, .showcase-section .section-title, .showcase-section .section-sub { padding: 0; }
-
-    /* 8. Showcase films: 12-col grid, 3 per row × 3 rows, h=240 */
-    .showcase-grid { display: grid; grid-template-columns: repeat(12, 1fr); grid-auto-rows: 240px; gap: 2px; }
-    .f-1 { grid-column: span 3; } .f-2 { grid-column: span 6; } .f-3 { grid-column: span 3; }
-    .f-4 { grid-column: span 5; } .f-5 { grid-column: span 3; } .f-6 { grid-column: span 4; }
-    .f-7 { grid-column: span 4; } .f-8 { grid-column: span 3; } .f-9 { grid-column: span 5; }
-    /* Smaller overlay text on mobile */
-    .film-title { font-size: 11px !important; margin-bottom: 2px; line-height: 1.2; }
-    .film-meta { font-size: 7px !important; letter-spacing: 0.1em; }
-    .film-content { padding: 8px 10px 10px; }
-    .film-top { top: 8px; left: 8px; }
-    .film-tag, .film-award { font-size: 7px !important; padding: 2px 5px; letter-spacing: 0.12em; }
-
-    /* 9. Section 8 investor funds: 1 per row, num left, [title above text] right */
-    .investor-funds { flex-direction: column; gap: 12px; }
-    .investor-fund { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "pct title" "pct text"; column-gap: 18px; row-gap: 4px; align-items: center; padding: 18px 20px; }
-    .investor-fund-pct { grid-area: pct; align-self: center; margin-bottom: 0; font-size: clamp(40px, 11vw, 56px); }
-    .investor-fund-title { grid-area: title; align-self: end; margin-bottom: 0; }
-    .investor-fund-text { grid-area: text; align-self: start; }
-
-    /* 10. Team core 3 per row */
-    .team-core { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .team-advisors { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-    .member-name { font-size: 12px; }
-    .member-role { font-size: 9px; }
-
-    /* 11. Collaborators 3 per row, varied widths */
-    .collaborators-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; font-size: 13px; line-height: 1.4; }
-    .collaborator-name { padding: 6px 4px; text-align: center; font-size: 12px; }
-
-    /* Footer: brand + cols still side-by-side, narrow */
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 20px; margin-bottom: 20px; padding-top: 0; }
-    .footer-cols { gap: 14px; }
-    footer { padding: 12px 20px 20px; }
-    .footer-logo { font-size: 18px; }
-    .footer-tagline { font-size: 11px; }
-    .footer-col-title { font-size: 10px; margin-bottom: 10px; }
-    .footer-links a { font-size: 12px; }
-    .footer-bottom { justify-content: center; text-align: center; flex-direction: column; gap: 40px; }
-    .footer-socials { flex-direction: row; justify-content: center; align-items: center; gap: 40px; }
-    footer { padding-bottom: 160px; }
+    .traction-stats { gap: 8px; }
+    .moat-pillar { grid-template-columns: 1fr; }
+    .moat-num { font-size: 36px; }
+    .moat-proof { grid-column: 1; }
+    .research-grid { grid-template-columns: 1fr; }
+    .adoption-logos { grid-template-columns: repeat(2, 1fr); }
+    .showcase-grid { grid-template-columns: 1fr; }
+    .team-core { grid-template-columns: repeat(2, 1fr); }
+    .footer-top { grid-template-columns: 1fr; gap: 28px; }
+    .footer-cols { gap: 20px; }
   }
 </style>
 </head>
@@ -772,7 +650,6 @@
       <button class="lang-btn" data-set-lang="en">EN</button>
     </div>
     <a href="mailto:zhiqiulin98@gmail.com" class="btn-primary"><span class="lang-zh">联系我们 →</span><span class="lang-en">Contact Us →</span></a>
-    <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
   </div>
 </nav>
 
@@ -885,7 +762,9 @@
             <span class="lang-en"><strong>Alignment</strong>　Client and team are looking at the same frame from minute one — the pitch moves faster from the start.<br><br><strong>Exploration</strong>　One person can sift through references and iterate on their own ideas without getting stuck in their head.<br><br><strong>Production</strong>　Any frame or clip you retrieve can be used directly for generation. Want to borrow a character's action or a camera move? Find the reference, drop it in. As multi-reference video generation matures, retrieval will plug straight into production.</span>
           </div>
         </div>
-        <!-- DEMO I: Retrieval Comparison -->
+      </div>
+
+      <!-- DEMO I: Retrieval Comparison -->
       <div class="demo-placeholder">
         <div class="demo-placeholder-inner" style="padding:0;">
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; width:100%;">
@@ -927,7 +806,6 @@
           </div>
         </div>
       </div>
-      </div>
 
       <!-- ── PILLAR II: 全流程 Agent ── -->
       <div class="moat-pillar">
@@ -948,7 +826,9 @@
             <span class="lang-en">Multi-cursor collaboration with role-based permissions: director, DP, art lead, and video team share one canvas.<br><br>Every pre-production decision is stored structurally; later revisions trace to the source. Creative frameworks reusable on the next similar project — craft finally compounds.</span>
           </div>
         </div>
-        <!-- DEMO II-A: End-to-End Pipeline Concept -->
+      </div>
+
+      <!-- DEMO II-A: End-to-End Pipeline Concept -->
       <div class="demo-placeholder">
         <div class="demo-placeholder-inner">
           <div class="demo-placeholder-tag"><span class="lang-zh">概念图 · 待填入</span><span class="lang-en">Concept Design · To Be Filled</span></div>
@@ -981,7 +861,6 @@
           <div class="demo-placeholder-sub" style="margin-top:16px;"><span class="lang-zh">多光标 · 按角色分权限 · 共享资产库</span><span class="lang-en">Multi-cursor · Role-based permissions · Shared asset library</span></div>
         </div>
       </div>
-      </div>
 
       <!-- ── PILLAR III: 个性化 Agent + 用户模拟器 ── -->
       <div class="moat-pillar">
@@ -1002,7 +881,9 @@
             <span class="lang-en">A team's creative decisions keep building up inside Moodio. Every project you ship, the agent learns you a little better — and the next project starts from a higher floor.<br><br>This is an asset that compounds. New hires get onboarded straight to the team's aesthetic and quality bar through the agent — what used to take weeks of acclimation now takes hours.</span>
           </div>
         </div>
-        <!-- DEMO III: Three-Layer Asset Accumulation -->
+      </div>
+
+      <!-- DEMO III: Three-Layer Asset Accumulation -->
       <div class="demo-placeholder">
         <div class="demo-placeholder-inner">
           <div class="demo-placeholder-tag"><span class="lang-zh">概念图 · 待填入</span><span class="lang-en">Concept Design · To Be Filled</span></div>
@@ -1019,7 +900,6 @@
             </div>
           </div>
         </div>
-      </div>
       </div>
 
     </div>
@@ -1040,14 +920,14 @@
     </p>
 
     <div style="margin: 48px 0; padding: 32px 36px; background: rgba(74,111,165,0.06); border-left: 3px solid var(--accent);">
-      <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 18px; font-weight: 700;">
+      <div style="font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.18em; margin-bottom: 18px;">
         <span class="lang-zh">为什么没人做对</span><span class="lang-en">WHY NO ONE HAS GOTTEN IT RIGHT</span>
       </div>
-      <p style="font-size: 12px; line-height: 1.7; color: var(--ink); margin-bottom: 16px;">
+      <p style="font-size: 17px; line-height: 1.7; color: var(--ink); margin-bottom: 16px;">
         <span class="lang-zh">最像 Moodio 的两类对手：一类是自媒体出身的 Agent 工具（TapNow），画布撑不住大项目，检索只能做关键词匹配，Agent 没记忆。另一类是消费级创作工具（即梦 Octo），完成度高但定位是 vibe creator，没有行业级素材库，也没为专业团队做工作流。</span>
         <span class="lang-en">The two closest competitors: one is an agent tool with roots in short-form media (TapNow) — the canvas can't hold a real project, retrieval is keyword-matching only, the agent has no memory. The other is consumer creative tooling (Dreamina Octo) — polished but built for vibe creators, no industry-grade library, no workflow built for professional teams.</span>
       </p>
-      <p style="font-size: 12px; line-height: 1.7; color: var(--ink); margin-bottom: 0;">
+      <p style="font-size: 17px; line-height: 1.7; color: var(--ink); margin-bottom: 0;">
         <span class="lang-zh">两类都解决不了专业影视团队的真问题，因为从第一天起就不是为这群人做的。Moodio 不一样：研究和创始团队从一开始就在做专业影视——CameraBench、CHAI、VQAScore、GenAI-Bench，每一篇研究都对应影视团队天天用到的东西：运镜、构图、光线、画面质量。<strong>谁在做、为谁做，决定了最后能做出什么。</strong></span>
         <span class="lang-en">Neither solves the real problem for professional film teams — because from day one, neither was built for this audience. Moodio is. Our research and founding team have been on professional film from the start. CameraBench, CHAI, VQAScore, GenAI-Bench — each paper maps to what film teams actually use every day: camera work, composition, lighting, image quality. <strong>Who builds it, and who they build it for, decides what gets built.</strong></span>
       </p>
@@ -1325,7 +1205,7 @@
 <!-- ══ 06 SHOWCASE ══ -->
 <section class="showcase-section" id="showcase">
   <div class="section-inner" style="max-width:none;padding:0;">
-    <div class="showcase-title-block">
+    <div style="margin:0 auto 48px;max-width:1100px;">
       <div class="section-label" style="color:rgba(255,255,255,0.6);"><span class="lang-zh">06 作品与客户</span><span class="lang-en">06 Work &amp; Clients</span></div>
       <h2 class="section-title" style="color:#fff;">
         <span class="lang-zh">专业团队利用 Moodio<br><em style="color:#9db4ff;">交付的作品。</em></span>
@@ -1337,12 +1217,12 @@
       </p>
     </div>
     <div class="showcase-grid">
-      <a class="film-card f-1" href="#"><div class="film-visual"><img src="videos/了不起啊！朋友.png" alt="了不起啊！朋友" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"></div><div class="film-top"><span class="film-tag"><span class="lang-zh">AI 短剧</span><span class="lang-en">AI Series</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">天浩丽泽影业</span><span class="lang-en">Tianhao Lize Pictures</span></div><div class="film-meta"><span><span class="lang-zh">《了不起啊！朋友》</span><span class="lang-en">Amazing, Friend!</span></span><span>→</span></div></div></a>
+      <a class="film-card f-1" href="#"><div class="film-visual"></div><div class="film-top"><span class="film-tag"><span class="lang-zh">AI 短剧</span><span class="lang-en">AI Series</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">天浩丽泽影业</span><span class="lang-en">Tianhao Lize Pictures</span></div><div class="film-meta"><span><span class="lang-zh">《了不起啊！朋友》</span><span class="lang-en">Amazing, Friend!</span></span><span>→</span></div></div></a>
       <a class="film-card f-2" href="#" data-yt="JwuBCR6h-ZI"><div class="film-visual"><iframe src="https://www.youtube.com/embed/JwuBCR6h-ZI?autoplay=1&mute=1&loop=1&playlist=JwuBCR6h-ZI&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-top"><span class="film-tag"><span class="lang-zh">品牌宣传片</span><span class="lang-en">Brand Film</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">西凤酒业宣传片</span><span class="lang-en">Xifeng Baijiu Brand Film</span></div><div class="film-meta"><span><span class="lang-zh">新华社西安分社</span><span class="lang-en">Xinhua News Agency Xi'an</span></span><span>→</span></div></div></a>
       <a class="film-card f-3" href="#" data-yt="xqB6MZQ2MxI"><div class="film-visual"><iframe src="https://www.youtube.com/embed/xqB6MZQ2MxI?autoplay=1&mute=1&loop=1&playlist=xqB6MZQ2MxI&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-top"><span class="film-award"><span class="lang-zh">无限可能电影节 入围</span><span class="lang-en">Infinite Possibilities Film Fest</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">凝视</span><span class="lang-en">Gaze</span></div><div class="film-meta"><span><span class="lang-zh">支雅雪 · AI 短片</span><span class="lang-en">Zhi Yaxue · AI Short</span></span><span>→</span></div></div></a>
-      <a class="film-card f-4" href="#" data-yt="ATGOY-H86tc"><div class="film-visual"><iframe src="https://www.youtube.com/embed/ATGOY-H86tc?autoplay=1&mute=1&loop=1&playlist=ATGOY-H86tc&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-top"><span class="film-award"><span class="lang-zh">无限可能电影节 入围</span><span class="lang-en">Infinite Possibilities Film Fest</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">囚犯</span><span class="lang-en">The Prisoner</span></div><div class="film-meta"><span>AI <span class="lang-zh">短片</span><span class="lang-en">Short</span></span><span>→</span></div></div></a>
+      <a class="film-card f-4" href="#"><div class="film-visual"></div><div class="film-top"><span class="film-award"><span class="lang-zh">无限可能电影节 入围</span><span class="lang-en">Infinite Possibilities Film Fest</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">囚犯</span><span class="lang-en">The Prisoner</span></div><div class="film-meta"><span>AI <span class="lang-zh">短片</span><span class="lang-en">Short</span></span><span>→</span></div></div></a>
       <a class="film-card f-5" href="#" data-yt="F94nhQ_qvF4"><div class="film-visual"><iframe src="https://www.youtube.com/embed/F94nhQ_qvF4?autoplay=1&mute=1&loop=1&playlist=F94nhQ_qvF4&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-top"><span class="film-tag"><span class="lang-zh">小红书爆款</span><span class="lang-en">Viral · Xiaohongshu</span></span></div><div class="film-content"><div class="film-title"><span class="lang-zh">伊藤润二《鱼》</span><span class="lang-en">Junji Ito's "Gyo" Adaptation</span></div><div class="film-meta"><span><span class="lang-zh">漫画二创</span><span class="lang-en">Manga Adaptation</span></span><span>→</span></div></div></a>
-      <a class="film-card f-6" href="#" data-yt="GQL6Y2UlQ8Y"><div class="film-visual"><iframe src="https://www.youtube.com/embed/GQL6Y2UlQ8Y?autoplay=1&mute=1&loop=1&playlist=GQL6Y2UlQ8Y&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-content"><div class="film-title"><span class="lang-zh">风</span><span class="lang-en">Wind</span></div><div class="film-meta"><span><span class="lang-zh">陈越 · 短片</span><span class="lang-en">Chen Yue · Short</span></span><span>→</span></div></div></a>
+      <a class="film-card f-6" href="#" data-yt="70Rib7jv5_8"><div class="film-visual"><iframe src="https://www.youtube.com/embed/70Rib7jv5_8?autoplay=1&mute=1&loop=1&playlist=70Rib7jv5_8&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-content"><div class="film-title"><span class="lang-zh">风</span><span class="lang-en">Wind</span></div><div class="film-meta"><span><span class="lang-zh">陈越 · 短片</span><span class="lang-en">Chen Yue · Short</span></span><span>→</span></div></div></a>
       <a class="film-card f-7" href="#"><div class="film-visual"></div><div class="film-content"><div class="film-title"><span class="lang-zh">留白</span><span class="lang-en">Negative Space</span></div><div class="film-meta"><span><span class="lang-zh">短片</span><span class="lang-en">Short Film</span></span><span>→</span></div></div></a>
       <a class="film-card f-8" href="#" data-yt="zP5KGI3usDM"><div class="film-visual"><iframe src="https://www.youtube.com/embed/zP5KGI3usDM?autoplay=1&mute=1&loop=1&playlist=zP5KGI3usDM&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-content"><div class="film-title"><span class="lang-zh">消失的9号底片</span><span class="lang-en">The Missing Roll No.9</span></div><div class="film-meta"><span><span class="lang-zh">短片</span><span class="lang-en">Short Film</span></span><span>→</span></div></div></a>
       <a class="film-card f-9" href="#" data-yt="_Brpw_OciAc"><div class="film-visual"><iframe src="https://www.youtube.com/embed/_Brpw_OciAc?autoplay=1&mute=1&loop=1&playlist=_Brpw_OciAc&controls=0&showinfo=0&modestbranding=1&rel=0&playsinline=1&iv_load_policy=3" allow="autoplay; encrypted-media" frameborder="0"></iframe></div><div class="film-content"><div class="film-title"><span class="lang-zh">奶奶骑着马走了</span><span class="lang-en">Grandma Rode Away on a Horse</span></div><div class="film-meta"><span><span class="lang-zh">短片</span><span class="lang-en">Short Film</span></span><span>→</span></div></div></a>
@@ -1584,15 +1464,6 @@
 </footer>
 
 <script>
-  /* ── HAMBURGER MENU (mobile) ── */
-  (function() {
-    const ham = document.getElementById('navHamburger');
-    const links = document.querySelector('.nav-links');
-    if (!ham || !links) return;
-    ham.addEventListener('click', () => links.classList.toggle('open'));
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
-  })();
-
   /* ── LANG TOGGLE ── */
   (function() {
     const btns = document.querySelectorAll('.lang-btn');
@@ -1788,44 +1659,11 @@
       document.body.classList.remove('modal-open');
     }
 
-    function toggleCollaboratorInline(el, id) {
-      const list = el.parentNode;
-      const existing = list.querySelector('.collaborator-inline');
-      const sameOne = existing && existing.dataset.for === id;
-      if (existing) {
-        existing.remove();
-        list.querySelectorAll('.collaborator-name.expanded').forEach(n => n.classList.remove('expanded'));
-        if (sameOne) return;
-      }
-      const b = bios[id];
-      if (!b) return;
-      const panel = document.createElement('div');
-      panel.className = 'collaborator-inline';
-      panel.dataset.for = id;
-      panel.innerHTML = '<div class="collaborator-inline-name">' + (b.name || '') + '</div>' +
-        (b.role ? '<div class="collaborator-inline-role">' + b.role + '</div>' : '') +
-        '<div class="collaborator-inline-body">' + (b.body || '') + '</div>';
-      // Insert panel AFTER the last item in the same grid row (so siblings on same row stay put)
-      const items = Array.from(list.children).filter(c => c.classList.contains('collaborator-name'));
-      const idx = items.indexOf(el);
-      const cols = 3; // matches grid-template-columns in mobile CSS
-      const rowEnd = Math.min(idx - (idx % cols) + cols, items.length);
-      const insertAfter = items[rowEnd - 1];
-      list.insertBefore(panel, insertAfter.nextSibling);
-      el.classList.add('expanded');
-    }
-    function handleBioClick(el, id) {
-      if (window.innerWidth <= 640 && el.classList.contains('collaborator-name')) {
-        toggleCollaboratorInline(el, id);
-      } else {
-        openBio(id);
-      }
-    }
     document.querySelectorAll('[data-bio-id]').forEach(el => {
       const id = el.getAttribute('data-bio-id');
-      el.addEventListener('click', () => handleBioClick(el, id));
+      el.addEventListener('click', () => openBio(id));
       el.addEventListener('keydown', e => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleBioClick(el, id); }
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openBio(id); }
       });
     });
     backdrop.addEventListener('click', close);
