@@ -90,7 +90,6 @@
     border: 1px solid var(--border-mid); border-radius: 3px; padding: 2px;
     font-family: 'DM Mono', monospace; font-size: clamp(10px, 0.9vw, 11px);
     white-space: nowrap; flex-shrink: 0;
-    height: 34px; box-sizing: border-box;
   }
   .lang-btn {
     background: none; border: none; padding: 4px clamp(6px, 0.8vw, 9px); cursor: pointer;
@@ -104,11 +103,10 @@
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--ink); color: #fff; text-decoration: none;
     font-size: clamp(10px, 0.95vw, 12px); font-weight: 500; letter-spacing: 0.08em;
-    padding: 0 clamp(12px, 1.4vw, 18px); border-radius: 2px;
+    padding: 10px clamp(12px, 1.4vw, 18px); border-radius: 2px;
     transition: background 0.2s, transform 0.2s;
     font-family: 'Noto Sans SC', sans-serif;
     white-space: nowrap; flex-shrink: 0;
-    height: 34px; box-sizing: border-box;
   }
   body[data-lang="en"] .btn-primary { font-family: 'Syne', sans-serif; }
   .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
@@ -1135,7 +1133,7 @@
           </svg>
         </div>
         <div class="moat-pains-content">
-          <span class="moat-pains-label"><span class="lang-zh">创意对齐<span style="color:#d83a3a;font-weight:800;">难</span></span><span class="lang-en">Creative alignment is <span style="color:#d83a3a;font-weight:800;">hard</span></span></span>
+          <span class="moat-pains-label"><span class="lang-zh">创意对齐难</span><span class="lang-en">Creative alignment is hard</span></span>
           <span class="moat-pains-body"><span class="lang-zh">导演、甲方、摄影、美术和后期很难在同一套视觉语言下快速达成共识。很多返工不是因为执行差，而是前期参考和预期没对齐。</span><span class="lang-en">Directors, clients, DPs, art leads, and post teams struggle to converge on a shared visual language. Most rework happens because references and expectations were misaligned upfront, not because execution failed.</span></span>
         </div>
       </li>
@@ -1152,7 +1150,7 @@
           </svg>
         </div>
         <div class="moat-pains-content">
-          <span class="moat-pains-label"><span class="lang-zh">工作流<span style="color:#d83a3a;font-weight:800;">割裂</span></span><span class="lang-en"><span style="color:#d83a3a;font-weight:800;">Fragmented</span> workflows</span></span>
+          <span class="moat-pains-label"><span class="lang-zh">工作流割裂</span><span class="lang-en">Fragmented workflows</span></span>
           <span class="moat-pains-body"><span class="lang-zh">搜参考、写脚本、做分镜、生成画面、生成视频、剪辑交付分散在不同工具里，上下文丢失严重，团队协作效率低。</span><span class="lang-en">Reference search, scripting, storyboarding, frame generation, video generation, and final edit live in different tools. Context gets lost between stages, and team collaboration suffers.</span></span>
         </div>
       </li>
@@ -1181,7 +1179,7 @@
           </svg>
         </div>
         <div class="moat-pains-content">
-          <span class="moat-pains-label"><span class="lang-zh">创意资产<span style="color:#d83a3a;font-weight:800;">无法沉淀</span></span><span class="lang-en">Creative assets <span style="color:#d83a3a;font-weight:800;">don't accumulate</span></span></span>
+          <span class="moat-pains-label"><span class="lang-zh">创意资产无法沉淀</span><span class="lang-en">Creative assets don't accumulate</span></span>
           <span class="moat-pains-body"><span class="lang-zh">每个项目里反复抽卡、修改、筛选出来的经验，最后只停留在聊天记录和文件夹里，无法变成团队下一次创作的智能资产。</span><span class="lang-en">The expertise built up through every iteration — picking, refining, choosing — ends up stranded in chat logs and folders. None of it carries into the next project as usable intelligence.</span></span>
         </div>
       </li>
@@ -1611,7 +1609,7 @@
 
 <!-- ══ 06 SHOWCASE ══ -->
 <section class="showcase-section" id="showcase">
-  <div class="section-inner">
+  <div class="section-inner" style="max-width:none;padding:0;">
     <div class="showcase-title-block">
       <div class="section-label" style="color:rgba(255,255,255,0.6);"><span class="lang-zh">06 作品与客户</span><span class="lang-en">06 Work &amp; Clients</span></div>
       <h2 class="section-title" style="color:#fff;">
