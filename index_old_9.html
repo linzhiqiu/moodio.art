@@ -917,36 +917,6 @@
 </head>
 <body data-lang="zh">
 
-<script>
-  /* ── LANGUAGE AUTO-DETECTION (runs before page renders) ── */
-  (function() {
-    var lang;
-    try {
-      // 1. URL parameter takes highest priority: ?lang=zh or ?lang=en
-      var urlMatch = window.location.search.match(/[?&]lang=(zh|en)\b/i);
-      if (urlMatch) {
-        lang = urlMatch[1].toLowerCase();
-      }
-      // 2. localStorage (user has manually toggled before)
-      else if (localStorage.getItem('moodio-lang')) {
-        var stored = localStorage.getItem('moodio-lang');
-        if (stored === 'zh' || stored === 'en') lang = stored;
-      }
-      // 3. Browser language: any zh-* variant → Chinese, otherwise English
-      else {
-        var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
-        lang = browserLang.indexOf('zh') === 0 ? 'zh' : 'en';
-      }
-    } catch (e) {
-      lang = 'en'; // fallback if anything fails
-    }
-    document.body.dataset.lang = lang;
-    document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
-    // Mark globally so the LANG TOGGLE script can pick up the initial state
-    window.__moodioInitialLang = lang;
-  })();
-</script>
-
 <!-- ══ NAV ══ -->
 <nav>
   <a href="#" class="nav-logo"><img src="logo.png" alt="Moodio" class="nav-logo-mark"><span class="nav-logo-text">Moodio <span class="beta-tag">Beta</span></span></a>
@@ -979,11 +949,11 @@
   <div class="hero-content">
     <h1 class="hero-title">
       <span class="lang-zh">Moodio：<br><em>让创意拥有记忆。</em></span>
-      <span class="lang-en">Moodio:<br>Where <em>professional craft compounds.</em></span>
+      <span class="lang-en">Moodio:<br>Where <em>creativity builds memory.</em></span>
     </h1>
     <p class="hero-sub">
       <span class="lang-zh"><strong style="font-style: italic;">让每一次创作沉淀为 AI 资产，加速专业影视创作。</strong><br><br>一个 Agent，串起整支团队的影视工作流。<br>三项核心能力：业内领先的影像检索、覆盖全影视流程的 AI 工作流，以及可随团队持续进化的个性化 Agent。<br><br>背靠 CMU 大模型研究团队，专注专家数据、Agent 评估与数据飞轮驱动的后训练。多项顶会研究成果已被 Google DeepMind、字节跳动、xAI 等 100+ AI 实验室采用。</span>
-      <span class="lang-en"><strong style="font-style: italic;">Turn every project into an AI asset. Accelerate professional film creation.</strong><br><br>One agent that runs your studio's whole workflow.<br>Three core capabilities: industry-leading visual retrieval, an AI workflow spanning the full film pipeline, and a personalized agent shaped by your team.<br><br>Built by a CMU foundation-model research team, working on expert data curation, agent evaluation, and data-flywheel post-training. Top-conference research adopted by 100+ AI labs including Google DeepMind, ByteDance, and xAI.</span>
+      <span class="lang-en"><strong style="font-style: italic;">Turn every project into an AI asset. Accelerate professional film creation.</strong><br><br>One agent that runs your studio's whole workflow.<br>Three core capabilities: industry-leading visual retrieval, an AI workflow spanning the full film pipeline, and a personalized agent that evolves with your team.<br><br>Built by a CMU foundation-model research team, focused on expert data, agent evaluation, and data-flywheel-driven post-training. Top-conference research adopted by 100+ AI labs including Google DeepMind, ByteDance, and xAI.</span>
     </p>
     <div class="hero-ctas">
       <a href="mailto:zhiqiulin98@gmail.com" class="btn-hero-primary"><span class="lang-zh">联系我们 →</span><span class="lang-en">Get in Touch →</span></a>
@@ -1041,11 +1011,11 @@
           <div class="subsection-eyebrow"><span class="lang-zh">谁是 Moodio 的核心客户？</span><span class="lang-en">Who Moodio Serves First?</span></div>
           <h3 class="subsection-heading">
             <span class="lang-zh">专业影视团队的需求<em>最真实</em>，付费意愿<em>也最强</em>。</span>
-            <span class="lang-en">Professional film teams have <em>the most concrete demand</em> and <em>the strongest intent to pay</em>.</span>
+            <span class="lang-en">Professional film teams have <em>the realest demand</em> and <em>the strongest willingness to pay</em>.</span>
           </h3>
           <p class="target-body">
             <span class="lang-zh">有甲方、有 deadline、有预算，创意对齐失败带来的是真金白银的返工成本。<br>他们愿意为真正解决问题的工具付费，也最能分辨工具是否专业。<br><br>整个影视行业都在重构 AI 工作流，但市面上仍缺少真正面向专业流程的产品。<br><em>需求早已存在，只差一个对的工具。</em></span>
-            <span class="lang-en">They have clients, deadlines, and budgets. When creative alignment fails, it costs real money in rework.<br>They'll pay for tools that genuinely solve the problem, and they can tell professional tools from amateur ones.<br><br>The film industry is redesigning workflows around AI, but no product on the market is truly built for professional pipelines.<br><em>The demand has been there for a while. What's missing is the right tool.</em></span>
+            <span class="lang-en">They have clients, deadlines, and budgets. Failed creative alignment means real money in rework.<br>They'll pay for tools that genuinely solve the problem, and they can tell professional tools from amateur ones.<br><br>The entire film industry is rebuilding its AI workflow, but the market still lacks a product truly built for professional pipelines.<br><em>The demand has existed for a while. The right tool is what's missing.</em></span>
           </p>
         </div>
       </div>
@@ -1110,7 +1080,7 @@
           </div>
           <div class="target-type-content">
             <div class="target-type-name"><span class="lang-zh">短剧制作公司</span><span class="lang-en">Short Drama Production Companies</span></div>
-            <div class="target-type-desc"><span class="lang-zh">集数多、节奏快、人员流动大，团队记忆和风格传承的价值最直接。</span><span class="lang-en">High episode count, fast pace, high staff turnover. Team memory and style continuity have the most direct value here.</span></div>
+            <div class="target-type-desc"><span class="lang-zh">集数多、节奏快、人员流动大，团队记忆和风格传承的价值最直接。</span><span class="lang-en">High episode count, fast pace, high staff turnover — team memory and style continuity have the most direct value here.</span></div>
           </div>
         </div>
         <div class="target-type">
@@ -1148,7 +1118,7 @@
     <div class="section-label"><span class="lang-zh">02 核心壁垒</span><span class="lang-en">02 Why We Win</span></div>
     <p class="moat-intro">
       <span class="lang-zh">专业影视团队有三件事一直没被现有工具解决——这也正是 Moodio 的三个核心壁垒所对应的痛点：</span>
-      <span class="lang-en">Three problems for professional film teams have never been properly solved by existing tools. They map directly to Moodio's three pillars:</span>
+      <span class="lang-en">Three problems for professional film teams have never been properly solved by existing tools — and they map directly to Moodio's three pillars:</span>
     </p>
     <ol class="moat-pains">
       <li>
@@ -1212,7 +1182,7 @@
         </div>
         <div class="moat-pains-content">
           <span class="moat-pains-label"><span class="lang-zh">创意资产<span style="color:#d83a3a;font-weight:800;">无法沉淀</span></span><span class="lang-en">Creative assets <span style="color:#d83a3a;font-weight:800;">don't accumulate</span></span></span>
-          <span class="moat-pains-body"><span class="lang-zh">每个项目里反复抽卡、修改、筛选出来的经验，最后只停留在聊天记录和文件夹里，无法变成团队下一次创作的智能资产。</span><span class="lang-en">The expertise built up through every iteration of picking, refining, choosing ends up stranded in chat logs and folders. None of it carries into the next project as usable intelligence.</span></span>
+          <span class="moat-pains-body"><span class="lang-zh">每个项目里反复抽卡、修改、筛选出来的经验，最后只停留在聊天记录和文件夹里，无法变成团队下一次创作的智能资产。</span><span class="lang-en">The expertise built up through every iteration — picking, refining, choosing — ends up stranded in chat logs and folders. None of it carries into the next project as usable intelligence.</span></span>
         </div>
       </li>
     </ol>
@@ -1229,11 +1199,11 @@
           <span class="moat-sub"><span class="lang-zh">对应痛点 · 创意对齐</span><span class="lang-en">Pain · Creative Misalignment</span></span>
         </div>
         <div class="moat-title"><span class="lang-zh">检索智能 · 业内最强的电影级视觉数据库</span><span class="lang-en">Cinematic Retrieval · The Industry's Strongest Visual Database</span></div>
-        <p class="moat-summary"><span class="lang-zh">导演脑子里有什么镜头，<em>嘴上说出来就行</em>。检索效果同时超过 Google Gemini Embedding 2 和阿里 Qwen-3-VL Embedding。</span><span class="lang-en">Whatever shot the director has in mind, <em>just describe it</em>. Retrieval outperforms both Google Gemini Embedding 2 and Alibaba Qwen-3-VL Embedding.</span></p>
+        <p class="moat-summary"><span class="lang-zh">导演脑子里有什么镜头，<em>嘴上说出来就行</em>。检索效果同时超过 Google Gemini Embedding 2 和阿里 Qwen-3-VL Embedding。</span><span class="lang-en">Whatever shot the director has in mind, <em>just say it out loud</em>. Retrieval outperforms both Google Gemini Embedding 2 and Alibaba Qwen-3-VL Embedding.</span></p>
         <div class="moat-details">
         <div class="moat-pillar-grid">
           <div class="moat-pillar-body">
-            <p class="moat-body"><span class="lang-zh">找参考是专业团队每天都在做的事。一条对的参考，静帧也好、视频也好，团队和客户立刻就能对上方向，沟通成本也跟着降下来。在我们公开发布的影视检索基准 <a href="https://linzhiqiu.github.io/papers/moodio/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Moodio-T2V</a> 上，Moodio 的检索效果同时超过 <a href="https://deepmind.google/models/gemini-embedding/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Google Gemini Embedding 2</a> 和阿里 Qwen-3-VL Embedding。</span><span class="lang-en">Finding references is what professional teams do every day. The right one, still or video, instantly aligns the team and the client, and communication cost drops on the spot. On our publicly released cinematic retrieval benchmark <a href="https://linzhiqiu.github.io/papers/moodio/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Moodio-T2V</a>, Moodio outperforms both <a href="https://deepmind.google/models/gemini-embedding/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Google Gemini Embedding 2</a> and Alibaba's Qwen-3-VL Embedding.</span></p>
+            <p class="moat-body"><span class="lang-zh">找参考是专业团队每天都在做的事。一条对的参考，静帧也好、视频也好，团队和客户立刻就能对上方向，沟通成本也跟着降下来。在我们公开发布的影视检索基准 <a href="https://linzhiqiu.github.io/papers/moodio/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Moodio-T2V</a> 上，Moodio 的检索效果同时超过 <a href="https://deepmind.google/models/gemini-embedding/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Google Gemini Embedding 2</a> 和阿里 Qwen-3-VL Embedding。</span><span class="lang-en">Hunting for references is what professional teams do every day. The right one, still or video, instantly aligns the team and the client, and communication cost drops on the spot. On our publicly released cinematic retrieval benchmark <a href="https://linzhiqiu.github.io/papers/moodio/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Moodio-T2V</a>, Moodio outperforms both <a href="https://deepmind.google/models/gemini-embedding/" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: underline;">Google Gemini Embedding 2</a> and Alibaba's Qwen-3-VL Embedding.</span></p>
             <p class="moat-body"><span class="lang-zh">举几个例子："焦点从前景转到背景的变焦"、"从昏暗室内推到明亮室外"——这种带镜头变化的专业描述，只有 Moodio 能搜到。</span><span class="lang-en">A few examples: "A rack focus from a foreground subject to the background street," "a push from a dim interior out into bright exterior." Only Moodio can retrieve professional descriptions like these.</span></p>
           </div>
           <div class="moat-proof">
@@ -1305,7 +1275,7 @@
           <div class="moat-pillar-body">
             <p class="moat-body" style="margin-top: 0;"><strong><span class="lang-zh">全流程视频创作。</span><span class="lang-en">End-to-end video creation.</span></strong> <span class="lang-zh">Moodio Agent 已经把 1. 搜参考、2. 写脚本、3. 出分镜表、4. 生成画面、5. 生成视频，到 6. 剪辑导出整条流程跑通了。从一个 idea 到一支可交付的成片，不用切换六七个工具，全程在一块画布上。</span><span class="lang-en">Moodio Agent runs the full pipeline: 1. find references, 2. write the script, 3. build the shot list, 4. generate frames, 5. generate video, 6. edit and export. From an idea to a deliverable cut, all on one canvas, no tool-switching.</span></p>
 
-            <p class="moat-body" style="margin-top: 24px;"><strong><span class="lang-zh">多人协作，少开会。</span><span class="lang-en">Real-time collaboration, fewer meetings.</span></strong> <span class="lang-zh">一个真实项目里，导演、摄影、美术、视频团队和甲方往往要为一个镜头反复沟通。Moodio 让所有人站在同一块画布上看同一份方案。任何人都能用一句自然语言调动 Agent：</span><span class="lang-en">On a real project, the director, DP, art lead, video team, and client end up going back and forth on every shot. Moodio puts everyone on the same canvas looking at the same brief. Anyone can call the agent in plain language:</span></p>
+            <p class="moat-body" style="margin-top: 24px;"><strong><span class="lang-zh">多人协作，少开会。</span><span class="lang-en">Multiplayer collaboration, fewer meetings.</span></strong> <span class="lang-zh">一个真实项目里，导演、摄影、美术、视频团队和甲方往往要为一个镜头反复沟通。Moodio 让所有人站在同一块画布上看同一份方案。任何人都能用一句自然语言调动 Agent：</span><span class="lang-en">On a real project, the director, DP, art lead, video team, and client end up going back and forth on every shot. Moodio puts everyone on the same canvas looking at the same brief. Anyone can call the agent in plain language:</span></p>
             <ul style="margin: 12px 0 0 0; padding-left: 24px; list-style: none;">
               <li style="margin-bottom: 8px; font-size: 0.95em; line-height: 1.7;"><strong><span class="lang-zh">资产查找</span><span class="lang-en">Find</span>　</strong><span class="lang-zh">"帮我找到汪导昨天晚上做的那个空境镜头。"</span><span class="lang-en">"Find that empty-frame shot Director Wang did last night."</span></li>
               <li style="margin-bottom: 8px; font-size: 0.95em; line-height: 1.7;"><strong><span class="lang-zh">方案回顾</span><span class="lang-en">Review</span>　</strong><span class="lang-zh">"这个镜头的人物动作做过什么替代方案？"</span><span class="lang-en">"What alternative actions have we tried for this shot?"</span></li>
@@ -1373,14 +1343,14 @@
         <div class="moat-details">
         <div class="moat-pillar-grid">
           <div class="moat-pillar-body">
-            <p class="moat-body" style="margin-top: 0;"><strong><span class="lang-zh">用户数据飞轮。</span><span class="lang-en">User data flywheel.</span></strong> <span class="lang-zh">每一次拒绝、修改、最终选定，都在告诉 Agent 这支团队的审美在哪里、底线在哪里。我们用这些数据持续做后训练，让 Agent 内化团队的视觉判断。项目越多，Agent 越懂这支团队；Agent 越懂团队，团队越愿意把更多项目放上来。</span><span class="lang-en">Every rejection, revision, and final pick teaches the agent this team's taste and shows it where the bar is. We use that data for ongoing post-training, so the agent truly internalizes the team's visual judgment. The more projects, the sharper the agent. The sharper the agent, the more projects come in.</span></p>
+            <p class="moat-body" style="margin-top: 0;"><strong><span class="lang-zh">用户数据飞轮。</span><span class="lang-en">User data flywheel.</span></strong> <span class="lang-zh">每一次拒绝、修改、最终选定，都在告诉 Agent 这支团队的审美在哪里、底线在哪里。我们用这些数据持续做后训练，让 Agent 内化团队的视觉判断。项目越多，Agent 越懂这支团队；Agent 越懂团队，团队越愿意把更多项目放上来。</span><span class="lang-en">Every rejection, revision, and final pick tells the agent where this team's taste lives and where its bar sits. We use that data for ongoing post-training, so the agent truly internalizes the team's visual judgment. More projects, sharper agent; sharper agent, more projects come in.</span></p>
 
-            <p class="moat-body" style="margin-top: 24px;"><strong><span class="lang-zh">用户模拟器 · 团队的视觉助理分身。</span><span class="lang-en">User Simulator · The team's visual-assistant twin.</span></strong> <span class="lang-zh">数据攒够之后，Moodio 会为每支团队后训练出一个用户模拟器：一个能模仿团队思维方式的 Agent 分身。一部短剧拍到第十集，分身已经看过你们怎么取景、怎么打光、怎么剪每一个镜头。第十一集，它可以按你们的习惯先把初稿做出来。这时候生成已经不是抽卡，而是分身真懂这支团队怎么干活。新人加入工作室，分身直接把团队的审美和品质底线教给他，原本要几周磨合的事，几天就够了。</span><span class="lang-en">Once enough data has accumulated, Moodio post-trains a user simulator for each team: an agent twin that mirrors how the team thinks. By the time a short series hits episode ten, the twin has watched how you frame, light, and cut every shot. On episode eleven, it can put together a first cut the way you would. Generation stops being a slot machine. It becomes the work of a twin that actually knows how this team works. When a new hire joins the studio, the twin instills the team's taste and standards from day one. What used to take weeks now takes a few days.</span></p>
+            <p class="moat-body" style="margin-top: 24px;"><strong><span class="lang-zh">用户模拟器 · 团队的视觉助理分身。</span><span class="lang-en">User Simulator · The team's visual-assistant twin.</span></strong> <span class="lang-zh">数据攒够之后，Moodio 会为每支团队后训练出一个用户模拟器：一个能模仿团队思维方式的 Agent 分身。一部短剧拍到第十集，分身已经看过你们怎么取景、怎么打光、怎么剪每一个镜头。第十一集，它可以按你们的习惯先把初稿做出来。这时候生成已经不是抽卡，而是分身真懂这支团队怎么干活。新人加入工作室，分身直接把团队的审美和品质底线教给他，原本要几周磨合的事，几天就够了。</span><span class="lang-en">Once enough data has accumulated, Moodio post-trains a user simulator for each team: an agent twin that mirrors how the team thinks. By the time a short series hits episode ten, the twin has watched how you frame, light, and cut every shot. On episode eleven, it can put together a first cut the way you would. Generation stops being a slot machine and becomes a twin that actually knows how this team works. When a new hire joins the studio, the twin teaches them the team's taste and quality bar directly. What used to take weeks now takes a few days.</span></p>
           </div>
           <div class="moat-proof">
             <div class="moat-proof-label"><span class="lang-zh">越用越值钱</span><span class="lang-en">More Valuable Over Time</span></div>
             <span class="lang-zh">每个项目都在让 Agent 多懂团队一点。用得越久，它越像团队自己的一员。</span>
-            <span class="lang-en">Every project helps the agent understand the team a little more. The longer you use it, the more it feels like part of the team.</span>
+            <span class="lang-en">Every project helps the agent understand the team a little more. The longer you use it, the more it feels like one of your own.</span>
           </div>
         </div>
         <!-- DEMO III: User Data Flywheel -->
@@ -1422,7 +1392,7 @@
     <div class="section-label"><span class="lang-zh">03 竞争格局</span><span class="lang-en">03 Competitive Landscape</span></div>
     <h2 class="section-title">
       <span class="lang-zh">市场在验证这个方向，<br><em>但没有人做对。</em></span>
-      <span class="lang-en">Many are trying.<br><em>No one's nailed it.</em></span>
+      <span class="lang-en">The market validates the direction.<br><em>Nobody has gotten it right.</em></span>
     </h2>
     <p class="section-sub">
       <span class="lang-zh">市面上想做的人不少，但没有一家把三件事同时做对：电影级检索、有记忆的 Agent、专业团队协作。</span>
@@ -1433,7 +1403,7 @@
       <div class="subsection-eyebrow"><span class="lang-zh">为什么没人做对</span><span class="lang-en">Why No One Has Gotten It Right</span></div>
       <p class="target-body" style="margin-bottom: 16px;">
         <span class="lang-zh">目前最接近的有两类产品。TapNow 更偏自媒体创作者工具，画布和检索能力难以支撑大型影视项目，Agent 也缺少长期记忆。即梦 Octo 则更偏消费级创作，流程完整，但定位仍是面向泛创作者，而非专业影视团队。</span>
-        <span class="lang-en">The two closest competitors today are TapNow and Dreamina Octo. TapNow leans toward short-form creator tooling: its canvas and retrieval can't support large film projects, and the agent lacks long-term memory. Dreamina Octo is more of a consumer creative tool, full-pipeline but positioned for general creators rather than professional film teams.</span>
+        <span class="lang-en">There are two closest comparables. TapNow leans toward short-form creator tooling — its canvas and retrieval can't support large film projects, and the agent lacks long-term memory. Dreamina Octo is more of a consumer creative tool — full pipeline, but positioned for general creators rather than professional film teams.</span>
       </p>
       <p class="target-body" style="margin-bottom: 16px;">
         <span class="lang-zh">它们都没有真正解决专业影视工作流的问题，因为从第一天起，就不是为这群人设计的。</span>
@@ -1441,7 +1411,7 @@
       </p>
       <p class="target-body" style="margin-bottom: 0;">
         <span class="lang-zh">Moodio 不一样。我们从研究到产品，都围绕专业影视创作展开：每一项研究对应真实 production workflow，每一个产品功能都与行业团队共同打磨。<em>谁在做、为谁做，决定了最后能做出什么。</em></span>
-        <span class="lang-en">Moodio is different. From research to product, everything we build centers on professional film creation: every paper maps to a real production workflow, and every feature is honed alongside industry teams. <em>Who builds it, and for whom, determines what gets built.</em></span>
+        <span class="lang-en">Moodio is different. From research to product, everything we build centers on professional film creation: every paper maps to a real production workflow, and every feature is honed alongside industry teams. <em>Who builds it, and who they build it for, decides what gets built.</em></span>
       </p>
     </div>
     <div class="comp-table">
@@ -1506,7 +1476,7 @@
   <div class="section-inner">
     <div class="section-label"><span class="lang-zh">04 团队</span><span class="lang-en">04 Team</span></div>
     <h2 class="section-title"><span class="lang-zh">研究者、电影人，<br><em>和真正能把产品做出来的工程师。</em></span><span class="lang-en">Researchers, filmmakers,<br><em>and engineers who ship.</em></span></h2>
-    <p class="section-sub"><span class="lang-zh">横跨中美的团队，兼具 AI 研究、产品工程与专业影视制作能力。</span><span class="lang-en">A team across the U.S. and China spanning AI research, product engineering, and professional filmmaking.</span></p>
+    <p class="section-sub"><span class="lang-zh">横跨中美的团队，兼具 AI 研究、产品工程与专业影视制作能力。</span><span class="lang-en">A team across the U.S. and China combining AI research, product engineering, and professional filmmaking.</span></p>
 
     <div class="team-category"><span class="lang-zh">顾问</span><span class="lang-en">Advisors</span></div>
     <div class="team-advisors">
@@ -1650,7 +1620,7 @@
       </h2>
       <p class="section-sub" style="color:rgba(255,255,255,0.65);">
         <span class="lang-zh">品牌宣传片、电影节入围短片、小红书爆款内容，均已真实交付上线。</span>
-        <span class="lang-en">Brand films, festival selections, viral content. All shipped, all real.</span>
+        <span class="lang-en">Brand films, festival selections, viral content — all shipped, all real.</span>
       </p>
     </div>
     <div class="showcase-grid">
@@ -1670,7 +1640,7 @@
       <div class="showcase-collab-label"><span class="lang-zh">合作创作者</span><span class="lang-en">Creative Collaborators</span></div>
       <p class="showcase-collab-intro">
         <span class="lang-zh">Moodio 在中美两地能触达 200+ 位专业创作者，覆盖制片、美术、AI 导演、摄影、配乐等环节。常驻合作的创作者包括：</span>
-        <span class="lang-en">Moodio reaches 200+ professional creators across China and the US, spanning production, art direction, AI direction, cinematography, and music. Regular collaborators include:</span>
+        <span class="lang-en">Moodio reaches 200+ professional creators across China and the US — spanning production, art direction, AI direction, cinematography, and music. Regular collaborators include:</span>
       </p>
       <div class="showcase-collab-list">
         <span class="showcase-collab-name" data-bio-id="yin-qing" role="button" tabindex="0"><span class="lang-zh">印卿</span><span class="lang-en">Qing Yin</span></span>
@@ -1720,14 +1690,14 @@
 <section class="roadmap-section" id="roadmap">
   <div class="section-inner">
     <div class="section-label"><span class="lang-zh">07 下一步</span><span class="lang-en">07 What We're Building Next</span></div>
-    <h2 class="section-title"><span class="lang-zh">让每个人，<br><em>都拥有专业级创作能力。</em></span><span class="lang-en">Pro-grade craft,<br><em>for everyone.</em></span></h2>
-    <p class="section-sub" style="margin-bottom: 20px;"><span class="lang-zh">Agent 不仅能成为专业团队的专属分身，也能将顶尖创作者的经验开放给更多人。</span><span class="lang-en">The agent can be a dedicated twin for any professional team, and a way to share top-tier creative expertise with everyone else.</span></p>
+    <h2 class="section-title"><span class="lang-zh">让每个人，<br><em>都拥有专业级创作能力。</em></span><span class="lang-en">Give everyone<br><em>pro-grade creative power.</em></span></h2>
+    <p class="section-sub" style="margin-bottom: 20px;"><span class="lang-zh">Agent 不仅能成为专业团队的专属分身，也能将顶尖创作者的经验开放给更多人。</span><span class="lang-en">The agent can be a dedicated twin for any professional team — and a way to share top-tier creative expertise with everyone else.</span></p>
     <div class="roadmap-cards" style="grid-template-columns: 1fr; max-width: 820px; margin-left: auto; margin-right: auto;">
       <div class="roadmap-card live">
         <span class="roadmap-card-tag"><span class="live-dot"></span><span class="lang-zh">长期方向</span><span class="lang-en">Long-term vision</span></span>
-        <div class="roadmap-card-stage"><span class="lang-zh">智能下沉</span><span class="lang-en">Pro-level Tools for All</span></div>
+        <div class="roadmap-card-stage"><span class="lang-zh">智能下沉</span><span class="lang-en">Intelligence Trickling Down</span></div>
         <h3 class="roadmap-card-title"><span class="lang-zh">没有影视背景的人，也能做出专业级的可交付影像。</span><span class="lang-en">People with no film background, making professional, deliverable work.</span></h3>
-        <p class="roadmap-card-text"><span class="lang-zh">专业团队在 Moodio 上做的项目越多，平台积累的创意智能就越厚。等到积累够厚，Moodio 后训练出来的 Agent 可以手把手带着没有影视背景的人做出专业级的可交付影像：从找参考、定风格、出分镜，到生成画面、剪辑导出，Agent 全程辅助决策。Moodio 的终点，是整个创意行业的智能基础设施。</span><span class="lang-en">The more projects professional teams ship on Moodio, the more the platform's creative intelligence compounds. Once it's deep enough, the agent Moodio post-trains can walk someone with no film background through a professional, deliverable piece of work: finding references, setting style, building shot lists, generating frames, and final editing. The agent guides every decision. Moodio's endpoint is the intelligent infrastructure the entire creative industry runs on.</span></p>
+        <p class="roadmap-card-text"><span class="lang-zh">专业团队在 Moodio 上做的项目越多，平台积累的创意智能就越厚。等到积累够厚，Moodio 后训练出来的 Agent 可以手把手带着没有影视背景的人做出专业级的可交付影像：从找参考、定风格、出分镜，到生成画面、剪辑导出，Agent 全程辅助决策。Moodio 的终点，是整个创意行业的智能基础设施。</span><span class="lang-en">The more projects professional teams ship on Moodio, the deeper the platform's creative intelligence runs. Once it's deep enough, the agent Moodio post-trains can walk someone with no film background through a professional, deliverable piece of work: finding references, setting style, building shot lists, generating frames, and final editing. The agent guides every decision. Moodio's endpoint is the intelligent infrastructure the entire creative industry runs on.</span></p>
       </div>
     </div>
   </div>
@@ -1748,7 +1718,7 @@
       <div class="investor-fund">
         <div class="investor-fund-pct">30%</div>
         <div class="investor-fund-title"><span class="lang-zh">Agent 后训练</span><span class="lang-en">Agent Post-Training</span></div>
-        <p class="investor-fund-text"><span class="lang-zh">把用户模拟器先做出来，让 Agent 真正理解每支团队的创作习惯，生成从靠抽卡变成靠理解。</span><span class="lang-en">Ship the user simulator. Make the Agent truly understand each team's creative habits. Generation stops being a slot machine and becomes informed work.</span></p>
+        <p class="investor-fund-text"><span class="lang-zh">把用户模拟器先做出来，让 Agent 真正理解每支团队的创作习惯，生成从靠抽卡变成靠理解。</span><span class="lang-en">Ship the user simulator. Make the Agent truly understand each team's creative habits — generation stops being a slot machine and becomes informed work.</span></p>
       </div>
       <div class="investor-fund">
         <div class="investor-fund-pct">40%</div>
@@ -1798,7 +1768,7 @@
 
 <!-- ══ FINAL CTA ══ -->
 <section class="final-cta">
-  <h2 class="final-cta-title"><span class="lang-zh">我们在找<br><em>下一程的合伙人。</em></span><span class="lang-en">We're looking for<br><em>partners for what's next.</em></span></h2>
+  <h2 class="final-cta-title"><span class="lang-zh">我们在找<br><em>下一程的合伙人。</em></span><span class="lang-en">We're looking for<br><em>partners for the next leg.</em></span></h2>
   <p class="final-cta-sub"><span class="lang-zh">$0.5M ARR，月环比翻倍，仍未进行公开市场推广。本轮融资意向 $2–5M。</span><span class="lang-en">$0.5M ARR. Doubling month over month. No public-facing marketing yet. Round size $2–5M.</span></p>
   <div class="final-cta-buttons">
     <a href="mailto:zhiqiulin98@gmail.com" class="btn-hero-primary"><span class="lang-zh">联系我们 →</span><span class="lang-en">Get in Touch →</span></a>
@@ -1879,18 +1849,12 @@
   /* ── LANG TOGGLE ── */
   (function() {
     const btns = document.querySelectorAll('.lang-btn');
-    // Sync initial button state with auto-detected language
-    const initialLang = window.__moodioInitialLang || document.body.dataset.lang || 'zh';
-    btns.forEach(b => b.classList.toggle('active', b.dataset.setLang === initialLang));
-    // Wire up clicks
     btns.forEach(btn => {
       btn.addEventListener('click', () => {
         const lang = btn.dataset.setLang;
         document.body.dataset.lang = lang;
         document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
         btns.forEach(b => b.classList.toggle('active', b.dataset.setLang === lang));
-        // Remember manual selection
-        try { localStorage.setItem('moodio-lang', lang); } catch (e) {}
       });
     });
   })();
@@ -1983,13 +1947,13 @@
         fallback: '印',
         name: 'Qing Yin · 印卿',
         role: '<span class="lang-zh">制片人</span><span class="lang-en">Producer</span>',
-        body: '<p><span class="lang-zh">电影《北京 2022》《749 局》执行制片，VR《大宋风华录·满江红》制片人，2025 海浪电影周运营总监，优酷纪录片《极境·冰川之上》制片统筹。</span><span class="lang-en">Line producer on <em>Beijing 2022</em> and <em>The 749 Bureau</em>; producer on the VR title <em>Song Dynasty: The Red River</em>; Operations Director, 2025 HiShorts! Film Week; production coordinator on the Youku documentary <em>Beyond the Glacier</em>.</span></p><p><span class="lang-zh">在 Moodio 项目中对接导演、编剧、客户、后期等多方，做全流程项目管理，从创意策划、剧本生成、分镜绘制、视频合成到后期配音配乐，确保按时交付。制定 AI 制作排期表，拆解任务节点，跟踪进度。</span><span class="lang-en">On Moodio projects, coordinates directors, writers, clients, and post-production through the full pipeline, from concept and script to storyboards, video synthesis, dubbing, and scoring, keeping delivery on schedule. Builds AI-production schedules, breaks down task nodes, and tracks progress.</span></p>'
+        body: '<p><span class="lang-zh">电影《北京 2022》《749 局》执行制片，VR《大宋风华录·满江红》制片人，2025 海浪电影周运营总监，优酷纪录片《极境·冰川之上》制片统筹。</span><span class="lang-en">Line producer on <em>Beijing 2022</em> and <em>The 749 Bureau</em>; producer on the VR title <em>Song Dynasty: The Red River</em>; Operations Director, 2025 HiShorts! Film Week; production coordinator on the Youku documentary <em>Beyond the Glacier</em>.</span></p><p><span class="lang-zh">在 Moodio 项目中对接导演、编剧、客户、后期等多方，做全流程项目管理，从创意策划、剧本生成、分镜绘制、视频合成到后期配音配乐，确保按时交付。制定 AI 制作排期表，拆解任务节点，跟踪进度。</span><span class="lang-en">On Moodio projects, coordinates directors, writers, clients, and post-production through the full pipeline — from concept and script to storyboards, video synthesis, dubbing, and scoring — keeping delivery on schedule. Builds AI-production schedules, breaks down task nodes, and tracks progress.</span></p>'
       },
       'yu-fan': {
         fallback: '虞',
         name: 'Fan Yu · 虞凡',
         role: '<span class="lang-zh">美术</span><span class="lang-en">Art Director</span>',
-        body: '<p><span class="lang-zh">主导 AI 辅助的概念设计与分镜制作，快速生成场景概念图、角色三视图、道具设计稿和分镜头脚本，大幅缩短传统手绘周期，形成项目专属的"角色库""场景包"，提升 AI 出图的一致性与效率。</span><span class="lang-en">Leads AI-assisted concept design and storyboarding, rapidly generating environment concepts, character turnarounds, prop designs, and storyboard scripts. Builds project-specific character libraries and scene packs, improving consistency and throughput of AI-generated visuals.</span></p>'
+        body: '<p><span class="lang-zh">主导 AI 辅助的概念设计与分镜制作，快速生成场景概念图、角色三视图、道具设计稿和分镜头脚本，大幅缩短传统手绘周期，形成项目专属的"角色库""场景包"，提升 AI 出图的一致性与效率。</span><span class="lang-en">Leads AI-assisted concept design and storyboarding — rapidly generating environment concepts, character turnarounds, prop designs, and storyboard scripts. Builds project-specific character libraries and scene packs, improving consistency and throughput of AI-generated visuals.</span></p>'
       },
       'chen-jing': {
         fallback: '陈',
@@ -2007,7 +1971,7 @@
         fallback: '彭',
         name: 'Chen Peng (Evian) · 彭晨',
         role: '<span class="lang-zh">AI 导演 · USC 电影艺术学院 MFA</span><span class="lang-en">AI Director · USC School of Cinematic Arts, MFA</span>',
-        body: '<p><span class="lang-zh">毕业于南加州大学电影与电视制作专业（USC School of Cinematic Arts, MFA），中美双语创作与制作背景。曾参与华谊兄弟传媒影视项目的制片及后期统筹。</span><span class="lang-en">MFA in Film & Television Production from USC School of Cinematic Arts. Bilingual (Chinese / English) creative and production background. Previously worked in production and post coordination at Huayi Brothers.</span></p><p><span class="lang-zh">参与中央电视台纪录频道项目《跨越千年》（70 周年专题纪录片）及《考古公开课：三星堆 — 重返 1986》的制作。参与 China TV 海外项目制片，负责跨地区内容协同与流程推进。</span><span class="lang-en">Contributed to CCTV documentary projects <em>Across the Millennia</em> (70th anniversary special) and <em>Archaeology Open Class: Sanxingdui — Back to 1986</em>. Worked on China TV\'s overseas productions, managing cross-region content coordination and production flow.</span></p><p><span class="lang-zh">参与 Amazon Future Cinema Creators Grant（FCCG）支持项目的制片工作，负责 AI 仿真人影像内容的制作统筹。熟悉 AIGC 制作流程，涵盖人物建模、动作生成、分镜驱动生成及后期合成。</span><span class="lang-en">Worked on projects supported by the Amazon Future Cinema Creators Grant (FCCG), coordinating production of AI-driven photo-real human imagery. Fluent across the AIGC pipeline, character modeling, motion generation, storyboard-driven synthesis, and post-production.</span></p>'
+        body: '<p><span class="lang-zh">毕业于南加州大学电影与电视制作专业（USC School of Cinematic Arts, MFA），中美双语创作与制作背景。曾参与华谊兄弟传媒影视项目的制片及后期统筹。</span><span class="lang-en">MFA in Film & Television Production from USC School of Cinematic Arts. Bilingual (Chinese / English) creative and production background. Previously worked in production and post coordination at Huayi Brothers.</span></p><p><span class="lang-zh">参与中央电视台纪录频道项目《跨越千年》（70 周年专题纪录片）及《考古公开课：三星堆 — 重返 1986》的制作。参与 China TV 海外项目制片，负责跨地区内容协同与流程推进。</span><span class="lang-en">Contributed to CCTV documentary projects <em>Across the Millennia</em> (70th anniversary special) and <em>Archaeology Open Class: Sanxingdui — Back to 1986</em>. Worked on China TV\'s overseas productions, managing cross-region content coordination and production flow.</span></p><p><span class="lang-zh">参与 Amazon Future Cinema Creators Grant（FCCG）支持项目的制片工作，负责 AI 仿真人影像内容的制作统筹。熟悉 AIGC 制作流程，涵盖人物建模、动作生成、分镜驱动生成及后期合成。</span><span class="lang-en">Worked on projects supported by the Amazon Future Cinema Creators Grant (FCCG), coordinating production of AI-driven photo-real human imagery. Fluent across the AIGC pipeline — character modeling, motion generation, storyboard-driven synthesis, and post-production.</span></p>'
       },
       'li-guanyu': {
         fallback: '厉',
