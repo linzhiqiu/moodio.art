@@ -165,13 +165,8 @@
     line-height: 1.08; letter-spacing: -0.01em; color: #fff;
     margin-bottom: 30px; opacity: 0; animation: fadeUp 0.9s ease 0.4s forwards;
   }
-  .hero-title em {
-    font-style: italic; color: #fff;
-    text-decoration: underline;
-    text-decoration-color: rgba(255,255,255,0.35);
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.12em;
-  }
+  .hero-title em { font-style: italic; color: #fff; display: inline-block; position: relative; }
+  .hero-title em::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0.08em; height: 2px; background: #fff; opacity: 0.35; }
   .hero-sub {
     font-size: 17px; line-height: 1.75; color: rgba(255,255,255,0.85);
     max-width: 640px; margin-bottom: 40px; font-weight: 400;
@@ -831,8 +826,8 @@
     .film-meta, .demo-placeholder-title, .demo-placeholder-sub { font-size: 14px !important; }
     .mission-strip-quote { font-size: 16px !important; }
 
-    /* 2. Hero on mobile: allow content to size naturally, anchor to top so it never tucks under the fixed nav */
-    .hero { min-height: 640px; height: auto; padding: 100px 20px 60px; align-items: flex-start; }
+    /* 2. Hero 640px shorter */
+    .hero { min-height: 640px; height: 640px; padding: 100px 20px 60px; }
     .mood-label { display: none; }
 
     /* 3. Traction + collab: same width, narrow gap */
