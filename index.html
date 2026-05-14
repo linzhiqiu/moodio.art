@@ -64,7 +64,7 @@
     flex-wrap: nowrap;
   }
   .nav-logo {
-    font-family: 'Playfair Display', serif; font-size: clamp(18px, 1.8vw, 22px); font-weight: 500;
+    font-family: 'Playfair Display', serif; font-size: clamp(18px, 1.8vw, 22px); font-weight: 700;
     letter-spacing: 0.01em; color: var(--ink);
     display: flex; align-items: center; gap: 2px; text-decoration: none;
     white-space: nowrap; flex-shrink: 0;
@@ -93,15 +93,18 @@
     height: 34px; box-sizing: border-box;
   }
   .lang-btn {
-    background: none; border: none; padding: 4px clamp(6px, 0.8vw, 9px); cursor: pointer;
+    background: none; border: none; padding: 0; cursor: pointer;
     color: var(--ink-dim); font-family: inherit; font-size: inherit;
     border-radius: 2px; transition: background 0.2s, color 0.2s; white-space: nowrap;
+    box-sizing: border-box;
+    width: 32px; height: 26px;
+    display: inline-flex; align-items: center; justify-content: center;
   }
   .lang-btn.active { background: var(--ink); color: #fff; }
   .nav-hamburger { display: none; background: none; border: 1px solid var(--border-mid); width: 38px; height: 32px; padding: 0; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 3px; flex-shrink: 0; }
   .nav-hamburger span { display: block; width: 16px; height: 1.5px; background: var(--ink); }
   .btn-primary {
-    display: inline-flex; align-items: center; gap: 8px;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     background: var(--ink); color: #fff; text-decoration: none;
     font-size: clamp(10px, 0.95vw, 12px); font-weight: 500; letter-spacing: 0.08em;
     padding: 0 clamp(12px, 1.4vw, 18px); border-radius: 2px;
@@ -109,6 +112,7 @@
     font-family: 'Noto Sans SC', sans-serif;
     white-space: nowrap; flex-shrink: 0;
     height: 34px; box-sizing: border-box;
+    min-width: 108px;
   }
   body[data-lang="en"] .btn-primary { font-family: 'Syne', sans-serif; }
   .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
@@ -316,7 +320,7 @@
   body[data-lang="en"] .mission-strip-quote em { font-style: normal; }
 
   /* ── TARGET ── */
-  .target-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: stretch; }
+  .target-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: stretch; }
   .target-left { position: sticky; top: 100px; }
   .target-body { font-family: 'Noto Serif SC', serif; font-size: clamp(16px, 1.35vw, 19px); font-weight: 400; line-height: 1.75; color: var(--ink); margin-bottom: 40px; }
   .target-body em { font-style: italic; color: var(--accent); }
@@ -450,10 +454,63 @@
     font-family: 'DM Mono', monospace; font-size: clamp(7px, 0.75vw, 9px);
     letter-spacing: 0.1em; color: rgba(255,255,255,0.35); text-transform: uppercase; line-height: 1.4;
   }
+  /* Photo variant: real product screenshots with manual navigation */
+  .demo-placeholder--photo { aspect-ratio: 8 / 5; padding: 0; position: relative; }
+  .demo-placeholder--photo > .demo-photo-stage { position: absolute; inset: 0; overflow: hidden; }
+  .demo-photo-stage > img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%; object-fit: cover; display: block;
+    opacity: 0; transition: opacity 0.35s ease;
+    pointer-events: none;
+  }
+  .demo-photo-stage > img.is-active { opacity: 1; }
+  /* Manual nav arrows */
+  .demo-photo-nav {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.62);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    width: 48px; height: 48px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    font-size: 20px; font-family: 'DM Mono', monospace; line-height: 1;
+    transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+    z-index: 3;
+    padding: 0;
+    border-radius: 2px;
+  }
+  .demo-photo-nav:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-50%) scale(1.05); }
+  .demo-photo-nav:active { transform: translateY(-50%) scale(0.95); }
+  .demo-photo-nav--prev { left: 16px; }
+  .demo-photo-nav--next { right: 16px; }
+  /* Caption sits below the photo container, on page background */
+  .demo-photo-captions {
+    position: relative;
+    height: clamp(26px, 2.6vw, 32px);
+    margin-top: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .demo-photo-caption {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 0.85vw, 11px);
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-dim);
+    opacity: 0; transition: opacity 0.35s ease;
+    display: inline-flex; align-items: center; gap: 10px;
+    white-space: nowrap;
+  }
+  .demo-photo-caption.is-active { opacity: 1; }
+  .demo-photo-beta-tag {
+    color: var(--accent); border: 1px solid var(--accent);
+    padding: 3px 8px; border-radius: 2px;
+    font-size: 0.95em; letter-spacing: 0.12em; font-weight: 600;
+    text-transform: none;
+  }
   /* Inner mockup elements scaled down */
-  .demo-placeholder .demo-search-mock { padding: 6px 10px; font-size: 10px; margin: 4px 0 8px !important; }
-  .demo-placeholder .demo-search-icon { font-size: 11px; }
-  .demo-placeholder .demo-search-text { font-size: 9px; }
+  .demo-placeholder .demo-search-mock { padding: 14px 20px; font-size: 14px; margin: 4px 0 16px !important; gap: 4px; }
+  .demo-placeholder .demo-search-icon { font-size: 28px; line-height: 1; }
+  .demo-placeholder .demo-search-text { font-size: 14px; }
   .demo-placeholder-inner > div[style*="aspect-ratio:16/5"] { aspect-ratio: 16/3 !important; margin-top: 8px !important; }
   .demo-placeholder-inner > div[style*="grid-template-columns:repeat(4"] > div[style*="aspect-ratio:1/1"] { aspect-ratio: 5/3 !important; padding: 6px !important; }
   .demo-placeholder-inner > div[style*="grid-template-columns:1fr 1fr 1fr"] > div[style*="aspect-ratio:4/3"] { aspect-ratio: 4/2 !important; padding: 8px !important; }
@@ -476,6 +533,19 @@
   }
   .demo-cell.tall { aspect-ratio: 4/3; }
   .demo-cell.wide { grid-column: span 2; aspect-ratio: 16/7; }
+  .demo-cell.has-image, .demo-cell.has-video { background: #000; border-color: rgba(255,255,255,0.12); }
+  .demo-cell.has-image::after, .demo-cell.has-video::after { display: none; }
+  .demo-cell.has-image > img,
+  .demo-cell.has-video > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  /* TapNow screenshots are very wide (≈2.29:1) → anchor to left so full left content is visible */
+  .retrieval-side--tapnow .demo-cell.has-image > img { object-position: left center; }
+
+  /* Retrieval comparison: responsive stack on mobile */
+  @media (max-width: 760px) {
+    .retrieval-compare-grid { grid-template-columns: 1fr !important; }
+    .retrieval-side { padding: 24px 18px !important; }
+    .retrieval-side--moodio { border-right: none !important; border-bottom: 1px solid rgba(157,180,255,0.32) !important; }
+  }
   .demo-scan {
     position: absolute; top: 0; left: 0; right: 0; height: 1px;
     background: linear-gradient(90deg, transparent, rgba(157,180,255,0.5), transparent);
@@ -1243,46 +1313,46 @@
           </div>
         </div>
         <!-- DEMO I: Retrieval Comparison -->
-      <div class="demo-placeholder">
+      <div class="demo-placeholder" style="aspect-ratio:auto; height:auto;">
         <div class="demo-placeholder-inner" style="padding:0;">
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:2px; width:100%;">
-            <div style="padding:36px 40px; background:#0f0f0f; border-right:1px solid rgba(255,255,255,0.06);">
-              <div class="demo-placeholder-tag" style="margin-bottom:20px;">Moodio</div>
-              <div class="demo-search-mock" style="margin:0 0 20px;">
-                <span class="demo-search-icon">⌕</span>
-                <span class="demo-search-text"><span class="lang-zh">焦点从前景转到背景的变焦</span><span class="lang-en">Rack focus from foreground to background</span></span>
+          <div class="retrieval-compare-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:2px; width:100%;">
+            <div class="retrieval-side retrieval-side--moodio" style="padding:36px 40px; background:linear-gradient(135deg, rgba(35,72,214,0.28) 0%, rgba(35,72,214,0.10) 100%); border-right:1px solid rgba(157,180,255,0.32); position:relative; box-shadow: inset 0 0 0 1px rgba(157,180,255,0.15);">
+              <div class="demo-placeholder-tag" style="margin-bottom:20px; color:#9db4ff; border-color:rgba(157,180,255,0.5); font-size:16px; padding:6px 14px; letter-spacing:0.15em; background:rgba(35,72,214,0.18);">Moodio</div>
+              <div class="demo-search-mock" style="margin:0 0 20px; border-color:rgba(157,180,255,0.35); background:rgba(35,72,214,0.10);">
+                <span class="demo-search-icon" style="color:#9db4ff;">⌕</span>
+                <span class="demo-search-text"><span class="lang-zh">运动饮料，户外奔跑，阳光充足，品牌广告质感</span><span class="lang-en">Sports drink, outdoor running, sun-drenched, brand-commercial look</span></span>
               </div>
-              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px;">
-                <div class="demo-cell" style="aspect-ratio:16/9;"><div class="demo-scan"></div></div>
-                <div class="demo-cell" style="aspect-ratio:16/9;"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9;"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9;"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9;"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9;"></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px;">
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-1.webm" autoplay muted loop playsinline preload="metadata"></video></div>
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-2.webm" autoplay muted loop playsinline preload="metadata"></video></div>
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-3.webm" autoplay muted loop playsinline preload="metadata"></video></div>
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-4.webm" autoplay muted loop playsinline preload="metadata"></video></div>
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-5.webm" autoplay muted loop playsinline preload="metadata"></video></div>
+                <div class="demo-cell has-video" style="aspect-ratio:16/9;"><video src="moodio-vids/moodio-6.webm" autoplay muted loop playsinline preload="metadata"></video></div>
               </div>
-              <div class="demo-placeholder-sub" style="margin-top:14px; text-align:left;"><span class="lang-zh">高度相关 · 精准匹配镜头动态</span><span class="lang-en">Highly relevant · Matches shot dynamics</span></div>
+              <div class="demo-placeholder-sub" style="margin-top:18px; text-align:center; color:#9db4ff; font-size:14px; letter-spacing:0.08em;"><span class="lang-zh">动态 + 语义理解 + 丰富素材库内容</span><span class="lang-en">Motion + Semantic understanding + Rich library content</span></div>
             </div>
-            <div style="padding:36px 40px; background:#0a0a0a;">
-              <div class="demo-placeholder-tag" style="margin-bottom:20px; border-color:rgba(255,255,255,0.08); color:rgba(255,255,255,0.3);">TapNow</div>
+            <div class="retrieval-side retrieval-side--tapnow" style="padding:36px 40px; background:#0a0a0a;">
+              <div class="demo-placeholder-tag" style="margin-bottom:20px; border-color:rgba(255,255,255,0.12); color:rgba(255,255,255,0.45); font-size:16px; padding:6px 14px; letter-spacing:0.15em;">TapNow</div>
               <div class="demo-search-mock" style="margin:0 0 20px; border-color:rgba(255,255,255,0.06);">
                 <span class="demo-search-icon" style="color:rgba(255,255,255,0.2);">⌕</span>
-                <span class="demo-search-text" style="color:rgba(255,255,255,0.3);"><span class="lang-zh">焦点从前景转到背景的变焦</span><span class="lang-en">Rack focus from foreground to background</span></span>
+                <span class="demo-search-text" style="color:rgba(255,255,255,0.3);"><span class="lang-zh">运动饮料，户外奔跑，阳光充足，品牌广告质感</span><span class="lang-en">Sports drink, outdoor running, sun-drenched, brand-commercial look</span></span>
               </div>
-              <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:4px;">
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
-                <div class="demo-cell" style="aspect-ratio:16/9; background:rgba(255,255,255,0.02);"></div>
+              <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:6px;">
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-1.png" alt="TapNow retrieval result 1" /></div>
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-2.png" alt="TapNow retrieval result 2" /></div>
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-3.png" alt="TapNow retrieval result 3" /></div>
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-4.png" alt="TapNow retrieval result 4" /></div>
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-5.png" alt="TapNow retrieval result 5" /></div>
+                <div class="demo-cell has-image" style="aspect-ratio:16/9;"><img src="tapnow/tapnow-6.png" alt="TapNow retrieval result 6" /></div>
               </div>
-              <div class="demo-placeholder-sub" style="margin-top:14px; text-align:left; color:rgba(255,255,255,0.2);"><span class="lang-zh">只能匹配关键词，专业描述接不住</span><span class="lang-en">Keyword-only · Misses pro descriptions</span></div>
+              <div class="demo-placeholder-sub" style="margin-top:18px; text-align:center; color:rgba(255,255,255,0.35); font-size:14px; letter-spacing:0.08em;"><span class="lang-zh">静态 + 关键词匹配 + 电影截图</span><span class="lang-en">Stills + Keyword matching + Film screenshots only</span></div>
             </div>
           </div>
-          <div style="padding:20px 40px; border-top:1px solid rgba(255,255,255,0.06); text-align:center;">
-            <div class="demo-placeholder-tag" style="display:inline-block;"><span class="lang-zh">真实产品对比截图 · 待填入</span><span class="lang-en">Real product comparison · To be filled</span></div>
-          </div>
         </div>
+      </div>
+      <div style="text-align:center; margin-top:14px; font-family:'DM Mono', monospace; font-size:13px; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-dim);">
+        <span class="lang-zh">真实产品对比截图</span><span class="lang-en">Real product comparison</span>
       </div>
         </div>
         <button class="moat-toggle" type="button" aria-expanded="false">
@@ -1332,27 +1402,24 @@
         </div>
       </div>
 
-      <!-- DEMO II-B: Multiplayer Canvas Concept -->
-      <div class="demo-placeholder">
-        <div class="demo-placeholder-inner">
-          <div class="demo-placeholder-tag"><span class="lang-zh">概念图 · 待填入</span><span class="lang-en">Concept Design · To Be Filled</span></div>
-          <div class="demo-placeholder-title"><span class="lang-zh">多人协作型画布 · 整支团队站在同一块画布上</span><span class="lang-en">Multiplayer Canvas · The Whole Team on One Canvas</span></div>
-          <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px; width:100%; margin-top:28px;">
-            <div style="aspect-ratio:1/1; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; padding:18px; text-align:center;">
-              <div class="demo-placeholder-sub"><span class="lang-zh">导演<br>定方向</span><span class="lang-en">Director<br>Direction</span></div>
-            </div>
-            <div style="aspect-ratio:1/1; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; padding:18px; text-align:center;">
-              <div class="demo-placeholder-sub"><span class="lang-zh">摄影<br>定影像</span><span class="lang-en">DP<br>Visuals</span></div>
-            </div>
-            <div style="aspect-ratio:1/1; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; padding:18px; text-align:center;">
-              <div class="demo-placeholder-sub"><span class="lang-zh">美术<br>守视觉</span><span class="lang-en">Art Lead<br>Cohesion</span></div>
-            </div>
-            <div style="aspect-ratio:1/1; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); display:flex; align-items:center; justify-content:center; padding:18px; text-align:center;">
-              <div class="demo-placeholder-sub"><span class="lang-zh">视频团队<br>交付成片</span><span class="lang-en">Video Team<br>Delivery</span></div>
-            </div>
-          </div>
-          <div class="demo-placeholder-sub" style="margin-top:16px;"><span class="lang-zh">多光标 · 按角色分权限 · 共享资产库</span><span class="lang-en">Multi-cursor · Role-based permissions · Shared asset library</span></div>
+      <!-- DEMO II-B: Multiplayer Canvas (real product screenshots, manual switch) -->
+      <div class="demo-placeholder demo-placeholder--photo" id="canvasCarousel">
+        <div class="demo-photo-stage">
+          <img src="canvas-relation.png" alt="Moodio multiplayer canvas — relation view" class="is-active" data-slide="0" />
+          <img src="canvas-view.png" alt="Moodio multiplayer canvas — board view" data-slide="1" />
+          <button class="demo-photo-nav demo-photo-nav--prev" type="button" aria-label="Previous slide">‹</button>
+          <button class="demo-photo-nav demo-photo-nav--next" type="button" aria-label="Next slide">›</button>
         </div>
+      </div>
+      <div class="demo-photo-captions" id="canvasCarouselCaptions">
+        <span class="demo-photo-caption is-active" data-slide="0">
+          <span><span class="lang-zh">关联功能 (1/2)</span><span class="lang-en">Relations Feature (1/2)</span></span>
+          <span class="demo-photo-beta-tag"><span class="lang-zh">内测中</span><span class="lang-en">In Beta</span></span>
+        </span>
+        <span class="demo-photo-caption" data-slide="1">
+          <span><span class="lang-zh">画布功能 (2/2)</span><span class="lang-en">Canvas Feature (2/2)</span></span>
+          <span class="demo-photo-beta-tag"><span class="lang-zh">内测中</span><span class="lang-en">In Beta</span></span>
+        </span>
       </div>
         </div>
         <button class="moat-toggle" type="button" aria-expanded="false">
@@ -1696,12 +1763,12 @@
   <div class="traction-inner">
     <div class="traction-label"><span class="lang-zh">增长数据 · 产品内测中</span><span class="lang-en">Traction · Private Beta</span></div>
     <h2 class="traction-heading">
-      <span class="lang-zh"><em>$0.5M ARR。</em><br class="brk-400">月环比 100% 增长。<br>仍未进行公开市场推广。</span>
-      <span class="lang-en"><em>$0.5M ARR.</em><br class="brk-400"> 100% month-over-month growth.<br>No public-facing marketing yet.</span>
+      <span class="lang-zh"><em>$500K ARR。</em><br class="brk-400">月环比 100% 增长。<br>仍未进行公开市场推广。</span>
+      <span class="lang-en"><em>$500K ARR.</em><br class="brk-400"> 100% month-over-month growth.<br>No public-facing marketing yet.</span>
     </h2>
     <div class="traction-stats">
       <div class="traction-stat">
-        <div class="traction-stat-num">$0.5M</div>
+        <div class="traction-stat-num">$500K</div>
         <div class="traction-stat-label"><span class="lang-zh">年度经常性收入</span><span class="lang-en">Annual Recurring Revenue</span></div>
       </div>
       <div class="traction-stat">
@@ -1738,7 +1805,7 @@
   <div class="section-inner">
     <div class="section-label"><span class="lang-zh">08 本轮融资</span><span class="lang-en">08 The Raise</span></div>
     <h2 class="section-title"><span class="lang-zh">本轮融资意向<br><em>$2–5M</em></span><span class="lang-en">Round Size<br><em>$2–5M</em></span></h2>
-    <p class="section-sub"><span class="lang-zh">产品在内测阶段，年经常性收入已经做到 $0.5M，月环比 100% 增长，仍未进行公开市场推广。这一轮融资做两件事：把已经跑通的产品扩到更多工作室；把下一阶段的研究做透，让每家工作室的创作历史，变成他们自己的 Agent。</span><span class="lang-en">Product in private beta. $0.5M ARR, 100% month-over-month growth, no public-facing marketing yet. This raise does two things: take what's already working to more studios, and finish the next research push, turning each studio's creative history into a creative twin that's truly their own.</span></p>
+    <p class="section-sub"><span class="lang-zh">产品在内测阶段，年经常性收入已经做到 $500K，月环比 100% 增长，仍未进行公开市场推广。这一轮融资做两件事：把已经跑通的产品扩到更多工作室；把下一阶段的研究做透，让每家工作室的创作历史，变成他们自己的 Agent。</span><span class="lang-en">Product in private beta. $500K ARR, 100% month-over-month growth, no public-facing marketing yet. This raise does two things: take what's already working to more studios, and finish the next research push, turning each studio's creative history into a creative twin that's truly their own.</span></p>
     <div class="investor-funds">
       <div class="investor-fund">
         <div class="investor-fund-pct">30%</div>
@@ -1799,7 +1866,7 @@
 <!-- ══ FINAL CTA ══ -->
 <section class="final-cta">
   <h2 class="final-cta-title"><span class="lang-zh">我们在找<br><em>下一程的合伙人。</em></span><span class="lang-en">We're looking for<br><em>partners for what's next.</em></span></h2>
-  <p class="final-cta-sub"><span class="lang-zh">$0.5M ARR，月环比翻倍，仍未进行公开市场推广。本轮融资意向 $2–5M。</span><span class="lang-en">$0.5M ARR. Doubling month over month. No public-facing marketing yet. Round size $2–5M.</span></p>
+  <p class="final-cta-sub"><span class="lang-zh">$500K ARR，月环比翻倍，仍未进行公开市场推广。本轮融资意向 $2–5M。</span><span class="lang-en">$500K ARR. Doubling month over month. No public-facing marketing yet. Round size $2–5M.</span></p>
   <div class="final-cta-buttons">
     <a href="mailto:zhiqiulin98@gmail.com" class="btn-hero-primary"><span class="lang-zh">联系我们 →</span><span class="lang-en">Get in Touch →</span></a>
     <a href="https://app.moodio.art" target="_blank" rel="noopener" class="btn-hero-ghost"><span class="lang-zh">体验产品</span><span class="lang-en">Try the Product</span></a>
@@ -1893,6 +1960,25 @@
         try { localStorage.setItem('moodio-lang', lang); } catch (e) {}
       });
     });
+  })();
+
+  /* ── CANVAS PHOTO CAROUSEL (manual switch) ── */
+  (function() {
+    const carousel = document.getElementById('canvasCarousel');
+    const captions = document.getElementById('canvasCarouselCaptions');
+    if (!carousel || !captions) return;
+    const imgs = carousel.querySelectorAll('.demo-photo-stage > img');
+    const caps = captions.querySelectorAll('.demo-photo-caption');
+    const prev = carousel.querySelector('.demo-photo-nav--prev');
+    const next = carousel.querySelector('.demo-photo-nav--next');
+    let current = 0;
+    function show(idx) {
+      current = (idx + imgs.length) % imgs.length;
+      imgs.forEach((el, i) => el.classList.toggle('is-active', i === current));
+      caps.forEach((el, i) => el.classList.toggle('is-active', i === current));
+    }
+    if (prev) prev.addEventListener('click', () => show(current - 1));
+    if (next) next.addEventListener('click', () => show(current + 1));
   })();
 
   /* ── HERO MOOD ── */
