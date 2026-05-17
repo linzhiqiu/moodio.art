@@ -2821,6 +2821,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 24px;
+      align-items: start;
     }
 
     .team-core {
@@ -4933,7 +4934,7 @@
       <!-- ── Advisors (moved to bottom) ── -->
       <div class="team-category"><span class="lang-zh">顾问</span><span class="lang-en">Advisors</span></div>
       <div class="team-advisors">
-        <a class="member" href="https://www.cs.cmu.edu/~deva/" target="_blank" rel="noopener">
+        <a class="member member-featured" href="https://www.cs.cmu.edu/~deva/" target="_blank" rel="noopener">
           <div class="member-photo"><img src="team/Ramanan-Deva-2020.jpg" alt="Deva Ramanan"
               style="object-position: center top;"
               onerror="this.parentElement.innerHTML='<div class=&quot;member-photo-placeholder p-1&quot;>DR</div>'">
@@ -4942,7 +4943,7 @@
           <div class="member-role"><span class="lang-zh">CMU 机器人研究所教授</span><span class="lang-en">Professor, CMU
               Robotics Institute</span></div>
         </a>
-        <a class="member" href="https://phontron.com/" target="_blank" rel="noopener">
+        <a class="member member-featured" href="https://phontron.com/" target="_blank" rel="noopener">
           <div class="member-photo"><img src="team/neubig-headshot-2021.jpg" alt="Graham Neubig"
               onerror="this.parentElement.innerHTML='<div class=&quot;member-photo-placeholder p-2&quot;>GN</div>'">
           </div>
@@ -4950,6 +4951,16 @@
           <div class="member-role"><span class="lang-zh">CMU 教授 · All Hands AI 首席科学家</span><span
               class="lang-en">Professor, CMU · Chief Scientist, All Hands AI</span></div>
         </a>
+        <div class="member clickable" data-bio-id="kevin-niu" role="button" tabindex="0">
+          <div class="member-photo"><img src="team/kevin.jpg" alt="Kevin Niu"
+              onerror="this.parentElement.innerHTML='<div class=&quot;member-photo-placeholder p-3&quot;>KN</div>'">
+          </div>
+          <div class="member-name">Kevin Niu</div>
+          <div class="member-role"><span class="lang-zh">Urus Entertainment CEO · 好莱坞战略顾问</span><span
+              class="lang-en">CEO, Urus Entertainment · Hollywood Strategic Advisor</span></div>
+          <span class="member-bio-link"><span class="lang-zh">查看完整简历 →</span><span class="lang-en">Read full bio
+              →</span></span>
+        </div>
       </div>
     </div>
   </section>
@@ -5503,6 +5514,12 @@
           role: '<span class="lang-zh">创始人 & CEO · CMU 机器人研究所博士</span><span class="lang-en">Founder &amp; CEO · Ph.D., CMU Robotics Institute</span>',
           body: '<p><span class="lang-zh">林之秋是 CMU 机器人研究所博士，导师为 Deva Ramanan 教授。研究方向是视觉-语言模型和 AI Agent，重点在评估、数据、优化和奖励建模。</span><span class="lang-en">Zhiqiu Lin is a Ph.D. graduate of the CMU Robotics Institute, advised by Deva Ramanan. His research focuses on vision-language models and AI agents, with emphasis on evaluation, data, optimization, and reward modeling.</span></p><p><span class="lang-zh">在 CVPR、NeurIPS、ICML、ECCV 等顶会发表过十多篇一作论文，多次入选 Oral 和 Spotlight，拿过最佳论文提名。论文累计被引数千次。</span><span class="lang-en">More than ten first-author papers at CVPR, NeurIPS, ICML, and ECCV. Multiple Oral and Spotlight selections, Best Paper nominations. Publications have accumulated several thousand citations.</span></p><p><span class="lang-zh">他做的 VQAScore 被 Google DeepMind 公开认可效果优于 CLIP，开源模型在 Hugging Face 下载量超过 200 万。Google Imagen-4 官方技术报告独家引用了他的 GenAI-Bench。CameraBench 和 CHAI 数据集已经在 Google DeepMind、字节跳动、xAI、可灵、Midjourney、Runway、Luma、腾讯、微软、Adobe、小米、商汤等前沿实验室落地使用。</span><span class="lang-en">His VQAScore was highlighted by Google DeepMind as outperforming CLIP, with 2M+ Hugging Face downloads. GenAI-Bench was uniquely adopted in Google Imagen-4\'s official technical report. CameraBench and CHAI are used at Google DeepMind, ByteDance, xAI, Kling, Midjourney, Runway, Luma, Tencent, Microsoft, Adobe, Xiaomi, and SenseTime.</span></p><p><span class="lang-zh">本科在康奈尔大学两年读完计算机和数学双学位，文理学院排名前三，毕业典礼担任学院旗手。本科期间就拿到 CVPR 2020 最佳论文提名。</span><span class="lang-en">Completed a double major in Computer Science and Mathematics at Cornell University in two years. Ranked top three in the College of Arts and Sciences, carried the college flag at graduation. Best Paper nomination at CVPR 2020 as an undergraduate.</span></p>',
           links: '<a href="https://linzhiqiu.github.io/" target="_blank" rel="noopener"><span class="lang-zh">个人网站</span><span class="lang-en">Website</span></a><a href="https://scholar.google.com/citations?user=TFlZ2OcAAAAJ&hl" target="_blank" rel="noopener">Scholar</a><a href="https://github.com/linzhiqiu" target="_blank" rel="noopener">Github</a>'
+        },
+        'kevin-niu': {
+          fallback: 'KN',
+          name: 'Kevin Niu',
+          role: '<span class="lang-zh">Urus Entertainment CEO · 好莱坞战略顾问</span><span class="lang-en">CEO, Urus Entertainment · Hollywood Strategic Advisor</span>',
+          body: '<p><span class="lang-zh">连续创业者，横跨 AI 技术与娱乐制作两大领域。</span><span class="lang-en">A serial entrepreneur working across both AI technology and entertainment production.</span></p><p><span class="lang-zh">现任 Urus Entertainment CEO，深耕 AI 面部捕捉与实时渲染算法，对生成式 AI 在专业影视制作中的应用有第一手技术判断。</span><span class="lang-en">As CEO of Urus Entertainment, Kevin pioneers AI facial capture and real-time rendering, giving him a first-hand technical view on how generative AI is being adopted in professional film production.</span></p><p><span class="lang-zh">同时担任 Teleperformance（巴黎上市，全球领先数字商业服务集团）独立董事，以及 Astro-Nomical Entertainment 联合创始人——旗下作品覆盖 Netflix Emmy 提名动画系列、第 68 届威尼斯电影节银狮奖影片及百老汇 Tony 提名制作。</span><span class="lang-en">He also serves as Independent Director at Teleperformance (Paris-listed global digital business services leader), and is Co-Founder of Astro-Nomical Entertainment, whose productions include an Emmy-nominated Netflix animated series, a Silver Lion winner at the 68th Venice Film Festival, and a Tony-nominated Broadway production.</span></p><p><span class="lang-zh">以好莱坞顶层制作人脉与跨产业资源网络为 Moodio 提供战略支持。</span><span class="lang-en">Brings top-tier Hollywood production relationships and cross-industry networks as strategic support for Moodio.</span></p>'
         },
         'yanru-li-producer': {
           fallback: '李',
