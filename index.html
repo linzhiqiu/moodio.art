@@ -2827,6 +2827,7 @@
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
       gap: 24px;
+      align-items: start;
     }
 
     .member {
@@ -2837,33 +2838,9 @@
       color: inherit;
     }
 
-    /* ── Featured (Founder & CEO) card: ~1.2x photo size ── */
-    .member-featured {
-      grid-column: span 2;
-      gap: 12px;
-    }
-
+    /* ── Featured (Founder & CEO) card: taller photo for visual emphasis ── */
     .member-featured .member-photo {
-      width: 60%;
-    }
-
-    .member-featured .member-name,
-    .member-featured .member-role,
-    .member-featured .member-bio-link {
-      width: 60%;
-    }
-
-    @media (max-width: 720px) {
-      .member-featured {
-        grid-column: span 1;
-      }
-
-      .member-featured .member-photo,
-      .member-featured .member-name,
-      .member-featured .member-role,
-      .member-featured .member-bio-link {
-        width: 100%;
-      }
+      aspect-ratio: 4 / 5;
     }
 
     .member.clickable {
@@ -4800,9 +4777,9 @@
           team combining deep expertise in full-stack agent/model training with real-world film production
           experience.</span></p>
 
-      <!-- ── Engineering & R&D ── -->
-      <div class="team-category"><span class="lang-zh">工程与研发</span><span class="lang-en">Engineering &amp;
-          R&amp;D</span></div>
+      <!-- ── Research & Engineering ── -->
+      <div class="team-category"><span class="lang-zh">研究与工程</span><span class="lang-en">Research &amp;
+          Engineering</span></div>
       <div class="team-core">
         <div class="member member-featured clickable" data-bio-id="zhiqiu" role="button" tabindex="0">
           <div class="member-photo"><img src="team/林之秋.jpg" alt="Zhiqiu Lin"
