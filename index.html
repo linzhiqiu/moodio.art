@@ -2837,25 +2837,33 @@
       color: inherit;
     }
 
-    /* ── Featured (Founder & CEO) card: ~1.2x emphasis ── */
+    /* ── Featured (Founder & CEO) card: ~1.2x photo size ── */
     .member-featured {
+      grid-column: span 2;
       gap: 12px;
     }
 
-    .member-featured .member-name {
-      font-size: clamp(16px, 1.3vw, 19px);
-      font-weight: 600;
-      letter-spacing: -0.005em;
+    .member-featured .member-photo {
+      width: 60%;
     }
 
-    .member-featured .member-role {
-      font-size: clamp(12px, 0.95vw, 13.5px);
-      color: var(--ink);
-    }
-
+    .member-featured .member-name,
+    .member-featured .member-role,
     .member-featured .member-bio-link {
-      color: var(--accent);
-      font-weight: 500;
+      width: 60%;
+    }
+
+    @media (max-width: 720px) {
+      .member-featured {
+        grid-column: span 1;
+      }
+
+      .member-featured .member-photo,
+      .member-featured .member-name,
+      .member-featured .member-role,
+      .member-featured .member-bio-link {
+        width: 100%;
+      }
     }
 
     .member.clickable {
