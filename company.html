@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Moodio · Company</title>
+  <meta name="description"
+    content="Moodio Inc.: the research team, the papers, and the raise.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600&family=DM+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #101010;
+      --panel: #000000;
+      --panel2: #141414;
+      --ink: #ffffff;
+      --dim: #bcbcbc;
+      --dim2: #818181;
+      --dim3: #6a6a6a;
+      --line: rgba(255, 255, 255, 0.09);
+      --line2: rgba(255, 255, 255, 0.16);
+      --accent: #4e59f7;
+      --accent2: #6c7aff;
+      --red: #ff3535;
+      --blue: #3898ec;
+      --mono: 'DM Mono', monospace;
+      --sans: 'Inter Tight', 'Noto Sans SC', Arial, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-size: 16px;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, video { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    ::selection { background: var(--accent); color: #fff; }
+
+    /* language visibility */
+    .lang-en { display: none; }
+    body[data-lang="en"] .lang-zh { display: none; }
+    body[data-lang="en"] .lang-en { display: revert; }
+
+    /* ── blueprint grid background ── */
+    .grid-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+      background-size: 88px 88px;
+    }
+
+    .grid-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1.4px);
+      background-size: 88px 88px;
+      background-position: -0.5px -0.5px;
+    }
+
+    /* ── frame + scroll progress line ── */
+    .frame {
+      position: relative;
+      z-index: 1;
+      max-width: 1360px;
+      margin: 0 auto;
+      border-left: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      background: rgba(16, 16, 16, 0.65);
+    }
+
+    #progressLine {
+      position: fixed;
+      top: 0;
+      right: max(12px, calc((100vw - 1360px) / 2 - 14px));
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      z-index: 40;
+      box-shadow: 0 0 12px rgba(78, 89, 247, 0.7);
+    }
+
+    /* ── mono ui bits ── */
+    .mono {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim2);
+    }
+
+    .kicker {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 22px;
+    }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink);
+      border: 1px solid var(--line2);
+      padding: 14px 26px;
+      background: transparent;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
+    }
+
+    .btn:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    .btn.solid { background: var(--ink); color: #101010; border-color: var(--ink); }
+    .btn.solid:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* ── nav ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 64px;
+      background: rgba(16, 16, 16, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-logo { display: flex; align-items: center; gap: 10px; }
+    .nav-logo img { width: 26px; height: 26px; }
+    .nav-logo span {
+      font-family: var(--mono);
+      font-size: 17px;
+      font-weight: 500;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    .nav-links { display: flex; gap: 30px; list-style: none; }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: #fff; }
+    .nav-links a.nav-tab { color: var(--accent2); }
+    .nav-links a.nav-tab:hover { color: #fff; }
+
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+
+    .lang-toggle { display: flex; border: 1px solid var(--line2); }
+    .lang-btn {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      background: transparent;
+      color: var(--dim2);
+      border: 0;
+      padding: 7px 12px;
+      cursor: pointer;
+    }
+    .lang-btn.active { background: var(--ink); color: #101010; }
+
+    .nav-cta { padding: 10px 18px; }
+
+    .nav-hamburger { display: none; background: none; border: 1px solid var(--line2); width: 40px; height: 36px; cursor: pointer; flex-direction: column; align-items: center; justify-content: center; gap: 5px; }
+    .nav-hamburger span { display: block; width: 18px; height: 1.5px; background: #fff; }
+
+    /* ── ticker ── */
+    .ticker {
+      margin-top: 64px;
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 13px 0;
+      position: relative;
+      z-index: 2;
+      background: var(--bg);
+    }
+
+    .ticker-track {
+      display: inline-block;
+      animation: tick 46s linear infinite;
+    }
+
+    .ticker:hover .ticker-track { animation-play-state: paused; }
+
+    @keyframes tick {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dim2);
+      margin: 0 26px;
+    }
+
+    .ticker-item strong { color: #fff; font-weight: 500; }
+
+    /* ── reveal (blur-in like mach9) ── */
+    .rv {
+      opacity: 0;
+      filter: blur(10px);
+      transform: translateY(14px);
+      transition: opacity 0.9s ease, filter 0.9s ease, transform 0.9s ease;
+    }
+
+    .rv.in { opacity: 1; filter: blur(0); transform: none; }
+
+    /* ── hero ── */
+    .hero { padding: 96px 56px 72px; text-align: center; position: relative; }
+
+    .hero h1 {
+      font-weight: 500;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.14;
+      letter-spacing: -0.015em;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      justify-content: center;
+      margin: 34px auto 26px;
+      max-width: 760px;
+    }
+
+    .hero-divider .hline { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, var(--line2)); }
+    .hero-divider .hline.r { background: linear-gradient(270deg, transparent, var(--line2)); }
+
+    .hero-divider .mono { color: var(--accent2); white-space: nowrap; }
+
+    .hero-sub {
+      color: var(--dim);
+      font-size: 16.5px;
+      line-height: 1.7;
+      max-width: 640px;
+      margin: 0 auto 36px;
+    }
+
+    .hero-ctas { display: flex; gap: 14px; justify-content: center; margin-bottom: 64px; flex-wrap: wrap; }
+
+    /* hero montage */
+    .montage {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      max-width: 1150px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .montage-cell {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      aspect-ratio: 16 / 9;
+    }
+
+    .montage-cell video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.92;
+    }
+
+    .montage-tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.85);
+      background: rgba(0, 0, 0, 0.55);
+      padding: 4px 8px;
+      backdrop-filter: blur(4px);
+    }
+
+    .rv.d1 { transition-delay: 0.08s; }
+    .rv.d2 { transition-delay: 0.16s; }
+    .rv.d3 { transition-delay: 0.24s; }
+    .rv.d4 { transition-delay: 0.32s; }
+    .rv.d5 { transition-delay: 0.4s; }
+
+    /* ── section shell ── */
+    section.block { border-top: 1px solid var(--line); padding: 96px 56px; position: relative; }
+
+    .block h2 {
+      font-weight: 500;
+      font-size: clamp(32px, 3.6vw, 50px);
+      line-height: 1.14;
+      letter-spacing: -0.01em;
+      max-width: 720px;
+      margin-bottom: 18px;
+    }
+
+    .block .lede { color: var(--dim); font-size: 16.5px; line-height: 1.7; max-width: 620px; }
+
+    .chips { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 26px; }
+
+    .chip {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim);
+      border: 1px solid var(--line2);
+      padding: 8px 14px;
+    }
+
+    .caption {
+      color: var(--dim2);
+      font-size: 14.5px;
+      line-height: 1.65;
+      max-width: 560px;
+      margin-top: 22px;
+    }
+
+    .right-align { margin-left: auto; text-align: left; }
+    .right-align h2, .right-align .lede { margin-left: auto; }
+
+    /* ── 01 search demo ── */
+    .search-demo {
+      margin-top: 54px;
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.72);
+      padding: 30px;
+    }
+
+    .search-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      border: 1px solid var(--line2);
+      padding: 15px 18px;
+      background: #0a0a0a;
+    }
+
+    .search-bar svg { flex-shrink: 0; opacity: 0.6; }
+
+    .search-query {
+      font-family: var(--mono);
+      font-size: 14px;
+      color: #fff;
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .search-caret {
+      display: inline-block;
+      width: 8px;
+      height: 16px;
+      background: var(--accent2);
+      vertical-align: -2px;
+      margin-left: 2px;
+      animation: blink 0.9s steps(1) infinite;
+    }
+
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .search-modes { display: flex; gap: 8px; margin-left: auto; }
+
+    .mode {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      color: var(--dim3);
+      border: 1px solid var(--line);
+      padding: 5px 10px;
+      transition: all 0.3s;
+    }
+
+    .mode.on { color: #fff; border-color: var(--accent); background: rgba(78, 89, 247, 0.18); }
+
+    .search-dims { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0 22px; }
+
+    .dim {
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim3);
+      border: 1px solid transparent;
+      padding: 5px 10px;
+      transition: all 0.35s;
+    }
+
+    .dim.on { color: var(--accent2); border-color: rgba(108, 122, 255, 0.5); }
+
+    .search-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+
+    .result {
+      position: relative;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      opacity: 0.25;
+      filter: saturate(0.4) brightness(0.7);
+      transition: opacity 0.7s, filter 0.7s;
+    }
+
+    .result video { width: 100%; height: 100%; object-fit: cover; }
+
+    .result.hit { opacity: 1; filter: none; border-color: rgba(108, 122, 255, 0.55); }
+
+    .result-tag {
+      position: absolute;
+      left: 10px;
+      bottom: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: rgba(0, 0, 0, 0.62);
+      color: #fff;
+      padding: 4px 8px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.5s 0.25s, transform 0.5s 0.25s;
+      backdrop-filter: blur(4px);
+    }
+
+    .result.hit .result-tag { opacity: 1; transform: none; }
+
+    /* ── 02 workflow (scroll sequence) ── */
+    .wf-outer { height: 340vh; position: relative; margin-top: 54px; }
+
+    .wf-sticky {
+      position: sticky;
+      top: 104px;
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: 28px;
+      height: calc(100vh - 150px);
+      max-height: 660px;
+    }
+
+    .wf-steps {
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.72);
+      padding: 26px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .wf-steps-title {
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim2);
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 10px;
+    }
+
+    .wf-step { display: flex; align-items: center; gap: 13px; padding: 11px 4px; }
+
+    .wf-box {
+      width: 20px;
+      height: 20px;
+      border: 1.5px solid var(--line2);
+      flex-shrink: 0;
+      display: grid;
+      place-items: center;
+      transition: all 0.3s;
+    }
+
+    .wf-box svg { opacity: 0; transform: scale(0.4); transition: all 0.3s; }
+
+    .wf-step.done .wf-box { background: var(--accent); border-color: var(--accent); }
+    .wf-step.done .wf-box svg { opacity: 1; transform: none; }
+
+    .wf-step .wf-name { font-size: 15.5px; color: var(--dim3); transition: color 0.3s; }
+    .wf-step.done .wf-name, .wf-step.active .wf-name { color: #fff; }
+    .wf-step.active .wf-box { border-color: var(--accent2); box-shadow: 0 0 0 3px rgba(78, 89, 247, 0.25); }
+
+    .wf-arrow { font-family: var(--mono); font-size: 11px; color: var(--dim3); padding-left: 37px; }
+
+    .wf-stage { position: relative; border: 1px solid var(--line); background: var(--panel); overflow: hidden; }
+
+    .wf-shot {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+
+    .wf-shot.on { opacity: 1; }
+
+    .wf-shot img, .wf-shot video { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+    .wf-shot-label {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.65);
+      padding: 6px 10px;
+      backdrop-filter: blur(4px);
+    }
+
+    .wf-shot-label em { color: var(--accent2); font-style: normal; }
+
+    /* ── 03 collab ── */
+    .collab-stage {
+      position: relative;
+      margin-top: 54px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: var(--panel);
+    }
+
+    .collab-stage > img { width: 100%; opacity: 0.85; }
+
+    .cursor {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 3;
+      display: flex;
+      align-items: flex-start;
+      gap: 4px;
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .cursor svg { filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6)); }
+
+    .cursor-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 3px 8px;
+      margin-top: 12px;
+      white-space: nowrap;
+    }
+
+    .cursor.c1 { animation: path1 13s ease-in-out infinite; }
+    .cursor.c2 { animation: path2 17s ease-in-out infinite; }
+    .cursor.c3 { animation: path3 15s ease-in-out infinite; }
+
+    .cursor.c1 .cursor-label { background: var(--accent); }
+    .cursor.c2 .cursor-label { background: #b84a1b; }
+    .cursor.c3 .cursor-label { background: #2d7a4f; }
+
+    @keyframes path1 {
+      0%, 8% { transform: translate(8%, 18%); }
+      30%, 38% { transform: translate(42%, 52%); }
+      62%, 70% { transform: translate(22%, 74%); }
+      100% { transform: translate(8%, 18%); }
+    }
+
+    @keyframes path2 {
+      0%, 10% { transform: translate(72%, 62%); }
+      36%, 44% { transform: translate(54%, 24%); }
+      70%, 78% { transform: translate(80%, 38%); }
+      100% { transform: translate(72%, 62%); }
+    }
+
+    @keyframes path3 {
+      0%, 6% { transform: translate(34%, 58%); }
+      34%, 40% { transform: translate(64%, 72%); }
+      66%, 74% { transform: translate(46%, 30%); }
+      100% { transform: translate(34%, 58%); }
+    }
+
+    /* cursors use % of own size; wrap in a positioner */
+    .cursor-holder { position: absolute; inset: 0; z-index: 3; pointer-events: none; }
+    .cursor-holder .cursor { position: absolute; }
+    .cursor-holder .cursor.c1 { animation: cpath1 14s ease-in-out infinite; }
+    .cursor-holder .cursor.c2 { animation: cpath2 18s ease-in-out infinite; }
+    .cursor-holder .cursor.c3 { animation: cpath3 16s ease-in-out infinite; }
+
+    @keyframes cpath1 {
+      0%, 8% { left: 8%; top: 16%; }
+      30%, 38% { left: 40%; top: 48%; }
+      62%, 70% { left: 20%; top: 70%; }
+      100% { left: 8%; top: 16%; }
+    }
+
+    @keyframes cpath2 {
+      0%, 10% { left: 70%; top: 60%; }
+      36%, 44% { left: 52%; top: 22%; }
+      70%, 78% { left: 78%; top: 36%; }
+      100% { left: 70%; top: 60%; }
+    }
+
+    @keyframes cpath3 {
+      0%, 6% { left: 32%; top: 56%; }
+      34%, 40% { left: 60%; top: 70%; }
+      66%, 74% { left: 44%; top: 28%; }
+      100% { left: 32%; top: 56%; }
+    }
+
+    .stamp {
+      position: absolute;
+      z-index: 4;
+      font-family: var(--mono);
+      font-size: 10.5px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 10px;
+      background: rgba(0, 0, 0, 0.72);
+      border: 1px solid var(--line2);
+      color: #fff;
+      opacity: 0;
+      transform: translateY(8px);
+      backdrop-filter: blur(4px);
+    }
+
+    .stamp.show { animation: stampIn 5.4s ease forwards; }
+
+    .stamp b { font-weight: 500; }
+    .stamp .ok { color: #58c98a; }
+    .stamp .pend { color: var(--accent2); }
+
+    @keyframes stampIn {
+      0% { opacity: 0; transform: translateY(8px); }
+      8%, 82% { opacity: 1; transform: none; }
+      100% { opacity: 0; transform: translateY(-6px); }
+    }
+
+    .collab-log {
+      border: 1px solid var(--line);
+      border-top: 0;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 16px 22px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: var(--dim2);
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      min-height: 108px;
+    }
+
+    .collab-log .logline { opacity: 0; transform: translateY(4px); transition: opacity 0.5s, transform 0.5s; }
+    .collab-log .logline.on { opacity: 1; transform: none; }
+    .collab-log .logline .t { color: var(--dim3); margin-right: 12px; }
+    .collab-log .logline .who { color: #fff; }
+    .collab-log .logline .ok { color: #58c98a; }
+    .collab-log .logline .acc { color: var(--accent2); }
+
+    /* ── advantages gate ── */
+    .gate {
+      margin-top: 54px;
+      border: 1px solid var(--line2);
+      background: rgba(0, 0, 0, 0.72);
+      padding: 54px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: center;
+    }
+
+    .gate h3 { font-weight: 500; font-size: 26px; margin-bottom: 10px; }
+    .gate p { color: var(--dim); font-size: 15px; line-height: 1.7; max-width: 560px; }
+
+    .gate-lock {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 11.5px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 16px;
+    }
+
+    /* ── logos marquee ── */
+    .logos-marquee { overflow: hidden; margin-top: 46px; position: relative; }
+    .logos-track { display: inline-flex; align-items: center; gap: 72px; white-space: nowrap; animation: tick 38s linear infinite; padding-right: 72px; }
+    .logos-marquee:hover .logos-track { animation-play-state: paused; }
+
+    .lg {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--dim2);
+      transition: color 0.25s;
+      flex-shrink: 0;
+    }
+    .lg:hover { color: #fff; }
+    .lg span { font-size: 17px; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
+
+    .stat-row { display: flex; gap: 0; margin-top: 56px; border: 1px solid var(--line); }
+
+    .stat {
+      flex: 1;
+      padding: 30px 34px;
+      border-right: 1px solid var(--line);
+    }
+
+    .stat:last-child { border-right: 0; }
+    .stat strong { display: block; font-size: 38px; font-weight: 500; letter-spacing: -0.01em; margin-bottom: 8px; }
+    .stat span { font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.13em; text-transform: uppercase; color: var(--dim2); }
+
+    /* ── showcase ── */
+    .works { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 52px; }
+
+    .work {
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 26px 24px 30px;
+      transition: border-color 0.25s, transform 0.25s;
+      position: relative;
+    }
+
+    .work:hover { border-color: var(--accent); transform: translateY(-3px); }
+
+    .work .mono { display: block; margin-bottom: 34px; }
+    .work h4 { font-size: 19px; font-weight: 500; line-height: 1.35; margin-bottom: 8px; }
+    .work p { color: var(--dim2); font-size: 13.5px; }
+
+    /* ── team ── */
+    .team-group { margin-top: 56px; }
+
+    .team-group-label {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--dim2);
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+    }
+
+    .team-grid { display: grid; grid-template-columns: repeat(6, 1fr); }
+
+    .member {
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 16px 20px;
+      background: rgba(0, 0, 0, 0.4);
+    }
+
+    .member:nth-child(6n) { border-right: 0; }
+
+    .member img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: grayscale(1) contrast(1.05);
+      transition: filter 0.35s;
+      margin-bottom: 14px;
+    }
+
+    .member:hover img { filter: none; }
+
+    .member h5 { font-size: 14.5px; font-weight: 500; margin-bottom: 5px; }
+    .member p { font-size: 12px; color: var(--dim2); line-height: 1.5; }
+
+    .team-note { color: var(--dim2); font-size: 14px; margin-top: 18px; }
+
+    /* ── research ── */
+    .papers { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 52px; }
+
+    .paper {
+      border: 1px solid var(--line);
+      background: rgba(0, 0, 0, 0.6);
+      padding: 24px 22px 26px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s;
+    }
+
+    .paper:hover { border-color: var(--accent2); }
+
+    .paper .venue { color: var(--accent2); font-family: var(--mono); font-size: 11px; letter-spacing: 0.13em; text-transform: uppercase; }
+    .paper .award { color: var(--dim2); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; margin: 6px 0 22px; }
+    .paper h4 { font-size: 21px; font-weight: 500; margin-bottom: 10px; }
+    .paper p { color: var(--dim); font-size: 13.5px; line-height: 1.65; flex: 1; }
+    .paper a { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim2); margin-top: 20px; transition: color 0.2s; }
+    .paper a:hover { color: var(--accent2); }
+
+    /* ── raise ── */
+    .raise-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 60px; margin-top: 20px; align-items: start; }
+    .raise-copy { color: var(--dim); font-size: 15.5px; line-height: 1.8; }
+    .raise-copy p + p { margin-top: 16px; }
+
+    .raise-facts { border: 1px solid var(--line); }
+    .fact { display: flex; justify-content: space-between; gap: 20px; padding: 18px 22px; border-bottom: 1px solid var(--line); }
+    .fact:last-child { border-bottom: 0; }
+    .fact .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim2); }
+    .fact .v { font-size: 15px; text-align: right; }
+
+    /* ── cta band ── */
+    .cta-band { border-top: 1px solid var(--line); padding: 110px 56px; }
+    .cta-band h2 { font-weight: 500; font-size: clamp(32px, 4vw, 54px); letter-spacing: -0.01em; margin-bottom: 16px; }
+    .cta-band p { color: var(--dim); font-size: 16.5px; margin-bottom: 36px; }
+
+    /* ── footer ── */
+    footer { border-top: 1px solid var(--line); padding: 70px 56px 34px; }
+
+    .foot-top { display: flex; justify-content: space-between; gap: 40px; flex-wrap: wrap; }
+
+    .foot-brand .nav-logo span { font-size: 26px; }
+    .foot-brand p { color: var(--dim2); font-size: 14px; line-height: 1.7; max-width: 340px; margin-top: 18px; }
+
+    .foot-links { display: flex; flex-direction: column; gap: 16px; }
+    .foot-links a {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      transition: color 0.2s;
+    }
+    .foot-links a:hover { color: #fff; }
+
+    .foot-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 64px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--dim3);
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 1020px) {
+      .nav-links { display: none; position: absolute; top: 64px; left: 0; right: 0; background: #101010; border-bottom: 1px solid var(--line); flex-direction: column; padding: 20px 28px; gap: 18px; }
+      .nav-links.open { display: flex; }
+      .nav-hamburger { display: flex; }
+      .nav-cta { display: none; }
+      section.block, .hero, .cta-band, footer { padding-left: 24px; padding-right: 24px; }
+      .montage { grid-template-columns: repeat(2, 1fr); }
+      .works, .papers { grid-template-columns: repeat(2, 1fr); }
+      .team-grid { grid-template-columns: repeat(3, 1fr); }
+      .member:nth-child(6n) { border-right: 1px solid var(--line); }
+      .member:nth-child(3n) { border-right: 0; }
+      .gate { grid-template-columns: 1fr; padding: 34px 26px; }
+      .raise-grid { grid-template-columns: 1fr; gap: 34px; }
+      .wf-outer { height: auto; }
+      .wf-sticky { position: static; grid-template-columns: 1fr; height: auto; max-height: none; }
+      .wf-stage { aspect-ratio: 16 / 10; }
+      #progressLine { display: none; }
+    }
+
+    @media (max-width: 620px) {
+      .montage { grid-template-columns: 1fr; }
+      .works, .papers, .search-results { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: repeat(2, 1fr); }
+      .member:nth-child(3n) { border-right: 1px solid var(--line); }
+      .member:nth-child(2n) { border-right: 0; }
+      .stat-row { flex-direction: column; }
+      .stat { border-right: 0; border-bottom: 1px solid var(--line); }
+      .search-modes { display: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <script>
+    (function () {
+      var lang;
+      try {
+        var urlMatch = window.location.search.match(/[?&]lang=(zh|en)\b/i);
+        if (urlMatch) { lang = urlMatch[1].toLowerCase(); }
+        else if (localStorage.getItem('moodio-lang')) {
+          var stored = localStorage.getItem('moodio-lang');
+          if (stored === 'zh' || stored === 'en') lang = stored;
+        } else {
+          var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+          lang = browserLang.indexOf('zh') === 0 ? 'zh' : 'en';
+        }
+      } catch (e) { lang = 'en'; }
+      document.body.dataset.lang = lang;
+      document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+      window.__moodioInitialLang = lang;
+    })();
+  </script>
+
+  <div class="grid-bg"></div>
+  <div id="progressLine"></div>
+
+  <!-- ══ NAV ══ -->
+  <nav>
+    <a href="#" class="nav-logo"><img src="logo.png" alt="Moodio"><span>Moodio</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html"><span class="lang-zh">产品</span><span class="lang-en">Product</span></a></li>
+      <li><a href="advantages.html"><span class="lang-zh">核心优势</span><span class="lang-en">Advantages</span></a></li>
+      <li><a href="#adoption"><span class="lang-zh">研究影响力</span><span class="lang-en">Adoption</span></a></li>
+      <li><a href="#team"><span class="lang-zh">团队</span><span class="lang-en">Team</span></a></li>
+      <li><a href="#research"><span class="lang-zh">研究</span><span class="lang-en">Research</span></a></li>
+      <li><a href="#raise"><span class="lang-zh">融资</span><span class="lang-en">Raise</span></a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn" data-set-lang="zh">中文</button>
+        <button class="lang-btn" data-set-lang="en">EN</button>
+      </div>
+      <a href="mailto:zhiqiulin98@gmail.com" class="btn nav-cta"><span class="lang-zh">联系我们</span><span
+          class="lang-en">Get in touch</span></a>
+      <button class="nav-hamburger" id="navHamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <!-- ══ TICKER ══ -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <span class="ticker-item"><span class="lang-zh">年化营收</span><span class="lang-en">Annualized revenue</span>
+        <strong>$500K</strong></span><span class="ticker-item">·</span>
+      <span class="ticker-item"><span class="lang-zh">月环比增长</span><span class="lang-en">MoM growth</span>
+        <strong>100%</strong></span><span class="ticker-item">·</span>
+      <span class="ticker-item">HuggingFace <span class="lang-zh">下载</span><span class="lang-en">downloads</span>
+        <strong>2M+</strong></span><span class="ticker-item">·</span>
+      <span class="ticker-item"><span class="lang-zh">采用我们研究的实验室</span><span class="lang-en">Labs using our
+          research</span> <strong>100+</strong></span><span class="ticker-item">·</span>
+      <span class="ticker-item"><span class="lang-zh">合作专业创作者</span><span class="lang-en">Professional creators</span>
+        <strong>200+</strong></span><span class="ticker-item">·</span>
+      <span class="ticker-item"><span class="lang-zh">付费推广花费</span><span class="lang-en">Paid marketing spend</span>
+        <strong>$0</strong></span><span class="ticker-item">·</span>
+    </div>
+  </div>
+
+  <div class="frame">
+
+    <!-- ══ TRUSTED BY ══ -->
+    <section class="block" id="adoption">
+      <div class="kicker rv">01 · <span class="lang-zh">研究影响力</span><span class="lang-en">Research Adoption</span></div>
+      <h2 class="rv"><span class="lang-zh">前沿实验室，<br>跑在我们的研究上。</span><span class="lang-en">The frontier labs<br>run on our research.</span></h2>
+      <div class="logos-marquee rv d1">
+        <div class="logos-track" id="logosTrack">
+          <span class="lg"><span>Google DeepMind</span></span>
+          <span class="lg"><span>ByteDance</span></span>
+          <span class="lg"><span>xAI</span></span>
+          <span class="lg"><span class="lang-zh">可灵 Kling</span><span class="lang-en">Kling</span></span>
+          <span class="lg"><span>Midjourney</span></span>
+          <span class="lg"><span>Runway</span></span>
+          <span class="lg"><span>Luma</span></span>
+          <span class="lg"><span>Adobe</span></span>
+          <span class="lg"><span class="lang-zh">腾讯 Tencent</span><span class="lang-en">Tencent</span></span>
+          <span class="lg"><span>Microsoft</span></span>
+          <span class="lg"><span class="lang-zh">商汤 SenseTime</span><span class="lang-en">SenseTime</span></span>
+          <span class="lg"><span>Xiaomi</span></span>
+        </div>
+      </div>
+      <div class="stat-row rv d2">
+        <div class="stat"><strong>2M+</strong><span>HuggingFace <span class="lang-zh">下载</span><span
+              class="lang-en">downloads</span></span></div>
+        <div class="stat"><strong>100+</strong><span><span class="lang-zh">家业内实验室在用</span><span class="lang-en">industry
+              labs using our research</span></span></div>
+        <div class="stat"><strong>CVPR · NeurIPS · ECCV</strong><span><span class="lang-zh">顶会论文落地</span><span
+              class="lang-en">top-venue publications</span></span></div>
+      </div>
+    </section>
+
+    <!-- ══ TEAM ══ -->
+    <section class="block" id="team">
+      <div class="kicker rv">02 · <span class="lang-zh">团队</span><span class="lang-en">Team</span></div>
+      <h2 class="rv"><span class="lang-zh">研究者、电影人，<br>和真正能把产品做出来的工程师。</span><span class="lang-en">Researchers,
+          filmmakers, and engineers who ship.</span></h2>
+      <p class="lede rv d1"><span class="lang-zh">一支兼具完整 Agent / 模型训练技术深度与真实影视制作经验的团队。</span><span class="lang-en">Deep
+          expertise in full-stack agent and model training, combined with real-world film production
+          experience.</span></p>
+
+      <div class="team-group rv">
+        <div class="team-group-label"><span class="lang-zh">研究与工程</span><span class="lang-en">Research &amp;
+            Engineering</span></div>
+        <div class="team-grid">
+          <div class="member"><img src="team/林之秋.jpg" alt="Zhiqiu Lin" loading="lazy">
+            <h5>Zhiqiu Lin<span class="lang-zh"> · 林之秋</span></h5>
+            <p><span class="lang-zh">创始人 &amp; CEO · CMU 机器人研究所博士</span><span class="lang-en">Founder &amp; CEO · Ph.D.,
+                CMU Robotics Institute</span></p>
+          </div>
+          <div class="member"><img src="team/ruihuang.jpg" alt="Ruihuang Yang" loading="lazy">
+            <h5>Ruihuang Yang</h5>
+            <p><span class="lang-zh">首席 Agent 工程师 · 前字节跳动</span><span class="lang-en">Chief Agent Engineer ·
+                ex-ByteDance</span></p>
+          </div>
+          <div class="member"><img src="team/chancharik.jpg" alt="Chancharik Mitra" loading="lazy">
+            <h5>Chancharik Mitra</h5>
+            <p><span class="lang-zh">LLM 工程师 · MIT 博士</span><span class="lang-en">LLM Engineer · Ph.D., MIT</span></p>
+          </div>
+          <div class="member"><img src="team/ryan.jpg" alt="Ryan Rao" loading="lazy">
+            <h5>Ryan Rao</h5>
+            <p><span class="lang-zh">Agent 工程师 · Meta，前亚马逊</span><span class="lang-en">Agent Engineer · Meta,
+                ex-Amazon</span></p>
+          </div>
+          <div class="member"><img src="team/george.jpg" alt="George Liu" loading="lazy">
+            <h5>George Liu</h5>
+            <p><span class="lang-zh">Agent 工程师 · Databricks，前亚马逊</span><span class="lang-en">Agent Engineer ·
+                Databricks, ex-Amazon</span></p>
+          </div>
+          <div class="member"><img src="team/derek.jpg" alt="Derek Mu" loading="lazy">
+            <h5>Derek Mu</h5>
+            <p><span class="lang-zh">Agent 工程师 · 前亚马逊</span><span class="lang-en">Agent Engineer · ex-Amazon</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-group rv">
+        <div class="team-group-label"><span class="lang-zh">专业影视团队 · 产品与数据</span><span class="lang-en">Professional
+            Filmmakers · Product &amp; Data</span></div>
+        <div class="team-grid">
+          <div class="member"><img src="team/李彦儒.png" alt="Yanru Li" loading="lazy">
+            <h5>Yanru Li<span class="lang-zh"> · 李彦儒</span></h5>
+            <p><span class="lang-zh">制片人 · 天浩丽泽影业</span><span class="lang-en">Producer · Tianhao Lize Pictures</span>
+            </p>
+          </div>
+          <div class="member"><img src="team/郭家瑞.png" alt="Jiarui Guo" loading="lazy">
+            <h5>Jiarui Guo<span class="lang-zh"> · 郭家瑞</span></h5>
+            <p><span class="lang-zh">AIGC 总监</span><span class="lang-en">AIGC Director</span></p>
+          </div>
+          <div class="member"><img src="team/叶江天.png" alt="Jiangtian Ye" loading="lazy">
+            <h5>Jiangtian Ye<span class="lang-zh"> · 叶江天</span></h5>
+            <p><span class="lang-zh">总导演 · UCLA 电影学院</span><span class="lang-en">Lead Director · UCLA Film
+                School</span></p>
+          </div>
+          <div class="member"><img src="team/汪辰.png" alt="Chen Wang" loading="lazy">
+            <h5>Chen Wang<span class="lang-zh"> · 汪辰</span></h5>
+            <p><span class="lang-zh">AI 导演 · UCLA 电影学院摄影系</span><span class="lang-en">AI Director · UCLA
+                Cinematography</span></p>
+          </div>
+          <div class="member"><img src="team/李孟哲.png" alt="Mengzhe Li" loading="lazy">
+            <h5>Mengzhe Li<span class="lang-zh"> · 李孟哲</span></h5>
+            <p><span class="lang-zh">摄影指导 · 北京电影学院摄影系硕士</span><span class="lang-en">Director of Photography · MFA,
+                Beijing Film Academy</span></p>
+          </div>
+          <div class="member"><img src="team/Tiffany.jpg" alt="Tiffany Ling" loading="lazy">
+            <h5>Tiffany Ling</h5>
+            <p><span class="lang-zh">UI/UX 设计与产品 · Parsons · CMU</span><span class="lang-en">UI/UX Design &amp;
+                Product · Parsons · CMU</span></p>
+          </div>
+          <div class="member"><img src="team/yuhan huang.jpg" alt="Yuhan Huang" loading="lazy">
+            <h5>Yuhan Huang</h5>
+            <p><span class="lang-zh">数据标注负责人 · 布里斯托大学艺术硕士</span><span class="lang-en">Lead Data Annotator · MA,
+                University of Bristol</span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-group rv">
+        <div class="team-group-label"><span class="lang-zh">顾问</span><span class="lang-en">Advisors</span></div>
+        <div class="team-grid">
+          <div class="member"><img src="team/Ramanan-Deva-2020.jpg" alt="Deva Ramanan" loading="lazy">
+            <h5>Deva Ramanan</h5>
+            <p><span class="lang-zh">CMU 机器人研究所教授</span><span class="lang-en">Professor, CMU Robotics
+                Institute</span></p>
+          </div>
+          <div class="member"><img src="team/neubig-headshot-2021.jpg" alt="Graham Neubig" loading="lazy">
+            <h5>Graham Neubig</h5>
+            <p><span class="lang-zh">CMU 教授 · All Hands AI 首席科学家</span><span class="lang-en">Professor, CMU · Chief
+                Scientist, All Hands AI</span></p>
+          </div>
+          <div class="member"><img src="team/kevin.jpg" alt="Kevin Niu" loading="lazy">
+            <h5>Kevin Niu</h5>
+            <p><span class="lang-zh">Urus Entertainment CEO · 好莱坞战略顾问</span><span class="lang-en">CEO, Urus
+                Entertainment · Hollywood Strategic Advisor</span></p>
+          </div>
+        </div>
+      </div>
+      <p class="team-note rv"><span class="lang-zh">+ 一支 20 人的专业数据标注团队，负责电影级数据标注和 Agent 产品反馈。</span><span
+          class="lang-en">+ A 20-person team of professional data annotators driving cinematic data labeling and agent
+          product feedback.</span></p>
+    </section>
+
+    <!-- ══ RESEARCH ══ -->
+    <section class="block" id="research">
+      <div class="kicker rv">03 · <span class="lang-zh">研究基础</span><span class="lang-en">Research Foundation</span>
+      </div>
+      <h2 class="rv"><span class="lang-zh">先成为行业标杆。<br>再做成产品。</span><span class="lang-en">First the benchmark.<br>Then the product.</span></h2>
+      <p class="lede rv d1"><span class="lang-zh">我们的研究在视频理解和电影级生成评估上已是业内标杆，CVPR、NeurIPS、ECCV 均有论文落地。</span><span
+          class="lang-en">Our research sets the benchmark in video understanding and cinematic generation evaluation,
+          published at CVPR, NeurIPS, and ECCV.</span></p>
+      <div class="papers rv d2">
+        <div class="paper"><span class="venue">NeurIPS 2025</span><span class="award">Spotlight · <span
+              class="lang-zh">前 3%</span><span class="lang-en">Top 3%</span></span>
+          <h4>CameraBench</h4>
+          <p><span class="lang-zh">让模型看懂任意视频里的运镜。已被 Google DeepMind、xAI、可灵等前沿视频实验室采用。</span><span
+              class="lang-en">Understanding camera motion in any video. Adopted by Google DeepMind, xAI, Kling, and
+              frontier video labs.</span></p>
+          <a href="https://linzhiqiu.github.io/papers/camerabench/" target="_blank" rel="noopener"><span
+              class="lang-zh">阅读论文</span><span class="lang-en">Read paper</span> →</a>
+        </div>
+        <div class="paper"><span class="venue">CVPR 2026</span><span class="award">Highlight · <span
+              class="lang-zh">前 3%</span><span class="lang-en">Top 3%</span></span>
+          <h4>CHAI</h4>
+          <p><span class="lang-zh">人和 AI 协作标注视频。Moodio 的标注质量和检索精度就是从这套方法来的。</span><span class="lang-en">Building
+              precise video language with human-AI oversight. The framework behind Moodio's caption quality and
+              retrieval precision.</span></p>
+          <a href="https://linzhiqiu.github.io/" target="_blank" rel="noopener"><span
+              class="lang-zh">阅读论文</span><span class="lang-en">Read paper</span> →</a>
+        </div>
+        <div class="paper"><span class="venue">ECCV 2024</span><span class="award"><span class="lang-zh">被 Google
+              Imagen-3 采用</span><span class="lang-en">Adopted in Google Imagen-3</span></span>
+          <h4>VQAScore</h4>
+          <p><span class="lang-zh">文生图/视频的当前最强评估指标。Google DeepMind 把它列为 CLIPScore 最强替代方案。</span><span
+              class="lang-en">State-of-the-art metric for evaluating text-to-visual generation. Named by Google
+              DeepMind as the strongest replacement for CLIPScore.</span></p>
+          <a href="https://linzhiqiu.github.io/papers/vqascore/" target="_blank" rel="noopener"><span
+              class="lang-zh">阅读论文</span><span class="lang-en">Read paper</span> →</a>
+        </div>
+        <div class="paper"><span class="venue">CVPR 2024</span><span class="award"><span class="lang-zh">最佳论文 ·
+              SynData Workshop</span><span class="lang-en">Best Paper · SynData Workshop</span></span>
+          <h4>GenAI-Bench</h4>
+          <p><span class="lang-zh">评估文生视觉模型的行业基准，被 100+ 实验室用于模型评测与对齐。</span><span class="lang-en">The industry benchmark
+              for evaluating text-to-visual models, used by 100+ labs for evaluation and alignment.</span></p>
+          <a href="https://linzhiqiu.github.io/papers/genai_bench/" target="_blank" rel="noopener"><span
+              class="lang-zh">阅读论文</span><span class="lang-en">Read paper</span> →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RAISE ══ -->
+    <section class="block" id="raise">
+      <div class="kicker rv">04 · <span class="lang-zh">本轮融资</span><span class="lang-en">The Raise</span></div>
+      <h2 class="rv"><span class="lang-zh">本轮融资意向 $3–5M。</span><span class="lang-en">Round size: $3–5M.</span></h2>
+      <div class="raise-grid">
+        <div class="raise-copy rv d1">
+          <p><span class="lang-zh">产品在内测阶段，年化营收已经做到 $500K，月环比 100% 增长，仍未进行公开市场推广。目前服务 3 家专业影视团队（每家 5-10
+              人），半年内目标扩展到 30 家。</span><span class="lang-en">Product in private beta. $500K in annualized revenue, 100%
+              month-over-month growth, no public-facing marketing yet. Currently serving 3 professional film teams (5-10
+              people each), targeting 30 within 6 months.</span></p>
+          <p><span class="lang-zh">这一轮融资做两件事：把已经跑通的产品扩到更多工作室；把下一阶段的研究做透，让每家工作室的创作历史，变成他们自己的
+              Agent。</span><span class="lang-en">This raise does two things: take what's already working to more
+              studios, and finish the next research push, turning each studio's creative history into a creative twin
+              that's truly their own.</span></p>
+        </div>
+        <div class="raise-facts rv d2">
+          <div class="fact"><span class="k"><span class="lang-zh">轮次</span><span class="lang-en">Stage</span></span><span
+              class="v">Pre-Seed</span></div>
+          <div class="fact"><span class="k">Runway</span><span class="v">$3M = 18<span class="lang-zh"> 个月</span><span
+                class="lang-en">mo</span> · $5M = 24<span class="lang-zh"> 个月</span><span class="lang-en">mo</span></span>
+          </div>
+          <div class="fact"><span class="k"><span class="lang-zh">主体</span><span
+                class="lang-en">Entity</span></span><span class="v">Moodio Inc. · Delaware C-Corp</span></div>
+          <div class="fact"><span class="k"><span class="lang-zh">投资意向</span><span class="lang-en">Investor
+                inquiries</span></span><span class="v"><a href="mailto:zhiqiulin98@gmail.com"
+                style="color: var(--accent2);">zhiqiulin98@gmail.com</a></span></div>
+        </div>
+      </div>
+      <div class="stat-row rv d2">
+        <div class="stat"><strong>$500K</strong><span><span class="lang-zh">年化营收</span><span class="lang-en">Annualized
+              revenue</span></span></div>
+        <div class="stat"><strong>100%</strong><span><span class="lang-zh">月环比增长</span><span
+              class="lang-en">Month-over-month growth</span></span></div>
+        <div class="stat"><strong>$0</strong><span><span class="lang-zh">付费推广花费</span><span class="lang-en">Paid
+              marketing spend</span></span></div>
+      </div>
+    </section>
+
+
+    <!-- ══ CTA ══ -->
+    <section class="cta-band">
+      <h2 class="rv"><span class="lang-zh">我们在找<br>下一程的合伙人。</span><span class="lang-en">We're looking for partners<br>for what's next.</span></h2>
+      <p class="rv d1"><span class="lang-zh">Pre-Seed · $3–5M · Moodio Inc.（特拉华州 C-Corp）</span><span class="lang-en">Pre-Seed · $3–5M · Moodio Inc. (Delaware C-Corp)</span></p>
+      <div class="hero-ctas rv d2" style="justify-content: flex-start; margin-bottom: 0;">
+        <a href="mailto:zhiqiulin98@gmail.com" class="btn solid"><span class="lang-zh">联系我们 →</span><span
+            class="lang-en">Get in touch →</span></a>
+        <a href="https://app.moodio.art" target="_blank" rel="noopener" class="btn"><span
+            class="lang-zh">体验产品</span><span class="lang-en">Try the product</span></a>
+      </div>
+    </section>
+
+    <!-- ══ FOOTER ══ -->
+    <footer>
+      <div class="foot-top">
+        <div class="foot-brand">
+          <a href="#" class="nav-logo"><img src="logo.png" alt="Moodio" style="width: 34px; height: 34px;"><span>Moodio</span></a>
+          <p><span class="lang-zh">给专业影视团队的创意 Agent。研究驱动，从创意对齐到项目落地，一套走完。</span><span class="lang-en">The creative
+              agent for professional film teams. Research-driven, end-to-end.</span></p>
+        </div>
+        <div class="foot-links">
+          <a href="https://app.moodio.art" target="_blank" rel="noopener"><span class="lang-zh">进入 Moodio</span><span
+              class="lang-en">Launch App</span></a>
+          <a href="advantages.html"><span class="lang-zh">核心优势</span><span class="lang-en">Core Advantages</span></a>
+          <a href="#research"><span class="lang-zh">研究论文</span><span class="lang-en">Research Papers</span></a>
+          <a href="#team"><span class="lang-zh">团队</span><span class="lang-en">Team</span></a>
+        </div>
+        <div class="foot-links">
+          <a href="mailto:zhiqiulin98@gmail.com"><span class="lang-zh">投资意向交流</span><span class="lang-en">Investor
+              Inquiries</span></a>
+          <a href="mailto:zhiqiulin98@gmail.com"><span class="lang-zh">意见反馈</span><span
+              class="lang-en">Feedback</span></a>
+          <a href="https://linzhiqiu.github.io/" target="_blank" rel="noopener">LinkedIn / Twitter</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Moodio Inc. · <span class="lang-zh">特拉华州 C-Corp</span><span class="lang-en">Delaware
+            C-Corp</span></span>
+        <span>Beta</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /* ── LANG TOGGLE ── */
+    (function () {
+      const btns = document.querySelectorAll('[data-set-lang]');
+      function apply(lang) {
+        document.body.dataset.lang = lang;
+        document.documentElement.lang = lang === 'zh' ? 'zh-CN' : 'en';
+        try { localStorage.setItem('moodio-lang', lang); } catch (e) { }
+        btns.forEach(b => b.classList.toggle('active', b.dataset.setLang === lang));
+      }
+      window.applyLanguage = apply;
+      btns.forEach(b => b.addEventListener('click', () => apply(b.dataset.setLang)));
+      apply(window.__moodioInitialLang || 'en');
+    })();
+
+    /* ── HAMBURGER ── */
+    (function () {
+      const ham = document.getElementById('navHamburger');
+      const links = document.getElementById('navLinks');
+      if (!ham || !links) return;
+      ham.addEventListener('click', () => links.classList.toggle('open'));
+      links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+    })();
+
+    /* ── SCROLL PROGRESS LINE ── */
+    (function () {
+      const line = document.getElementById('progressLine');
+      function upd() {
+        const h = document.documentElement.scrollHeight - innerHeight;
+        line.style.height = (h > 0 ? (scrollY / h) * 100 : 0) + 'vh';
+      }
+      addEventListener('scroll', upd, { passive: true });
+      upd();
+    })();
+
+    /* ── REVEAL (blur-in) ── */
+    (function () {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12 });
+      document.querySelectorAll('.rv').forEach(el => io.observe(el));
+    })();
+
+    /* ── TICKER + LOGOS: duplicate content for seamless loop ── */
+    (function () {
+      ['tickerTrack', 'logosTrack'].forEach(id => {
+        const t = document.getElementById(id);
+        if (t) t.innerHTML += t.innerHTML;
+      });
+    })();
+
+    /* ── 01 SEARCH DEMO LOOP ── */
+    (function () {
+      const target = document.getElementById('typeTarget');
+      const demo = document.getElementById('searchDemo');
+      if (!target || !demo) return;
+      const modes = demo.querySelectorAll('.mode');
+      const dims = demo.querySelectorAll('.dim');
+      const results = demo.querySelectorAll('.result');
+      const tags = demo.querySelectorAll('.result-tag');
+
+      const SCRIPT = [
+        {
+          mode: 'text',
+          zh: '黄昏 逆光 人物特写 · 手持跟拍',
+          en: 'golden hour · backlit close-up · handheld tracking',
+          dims: ['mood', 'lighting', 'camera'],
+          tagsZh: ['运镜 · 手持跟拍', '灯光 · 逆光', '情绪 · 怅然'],
+          tagsEn: ['CAMERA · HANDHELD', 'LIGHTING · BACKLIT', 'MOOD · WISTFUL']
+        },
+        {
+          mode: 'image',
+          zh: '↑ 上传参考图 · 匹配构图与色彩',
+          en: '↑ reference image · match composition & color',
+          dims: ['composition', 'shotsize'],
+          tagsZh: ['构图 · 对称', '景别 · 全景', '色彩 · 低饱和'],
+          tagsEn: ['COMPOSITION · SYMMETRY', 'SHOT SIZE · WIDE', 'COLOR · MUTED']
+        },
+        {
+          mode: 'video',
+          zh: '▶ 参考视频 · Video as Prompt',
+          en: '▶ reference video · Video as Prompt',
+          dims: ['camera', 'era', 'weather'],
+          tagsZh: ['运镜 · 推轨', '时代 · 90s', '天气 · 雨夜'],
+          tagsEn: ['CAMERA · DOLLY-IN', 'ERA · 90s', 'WEATHER · RAIN']
+        }
+      ];
+
+      let step = 0, running = false;
+
+      function lang() { return document.body.dataset.lang === 'zh' ? 'zh' : 'en'; }
+
+      function typewrite(text, done) {
+        let i = 0;
+        target.textContent = '';
+        const iv = setInterval(() => {
+          target.textContent = text.slice(0, ++i);
+          if (i >= text.length) { clearInterval(iv); done && done(); }
+        }, 42);
+      }
+
+      function runStep() {
+        const s = SCRIPT[step % SCRIPT.length];
+        modes.forEach(m => m.classList.toggle('on', m.dataset.mode === s.mode));
+        dims.forEach(d => d.classList.remove('on'));
+        results.forEach(r => r.classList.remove('hit'));
+        typewrite(lang() === 'zh' ? s.zh : s.en, () => {
+          s.dims.forEach((key, i) => {
+            setTimeout(() => {
+              const el = demo.querySelector('.dim[data-d="' + key + '"]');
+              if (el) el.classList.add('on');
+            }, 300 + i * 260);
+          });
+          setTimeout(() => {
+            const t = lang() === 'zh' ? s.tagsZh : s.tagsEn;
+            results.forEach((r, i) => {
+              setTimeout(() => {
+                tags[i].textContent = t[i];
+                r.classList.add('hit');
+              }, i * 240);
+            });
+          }, 1100);
+          setTimeout(() => { step++; runStep(); }, 5200);
+        });
+      }
+
+      const io = new IntersectionObserver((es) => {
+        es.forEach(e => {
+          if (e.isIntersecting && !running) { running = true; runStep(); io.disconnect(); }
+        });
+      }, { threshold: 0.35 });
+      io.observe(demo);
+    })();
+
+    /* ── 02 WORKFLOW SCROLL SEQUENCE ── */
+    (function () {
+      const outer = document.getElementById('wfOuter');
+      if (!outer) return;
+      const steps = outer.querySelectorAll('.wf-step');
+      const shots = outer.querySelectorAll('.wf-shot');
+
+      function setStep(n) {
+        steps.forEach((s, i) => {
+          s.classList.toggle('done', i < n);
+          s.classList.toggle('active', i === n);
+        });
+        shots.forEach((s, i) => s.classList.toggle('on', i === Math.min(n, shots.length - 1)));
+      }
+
+      const mobile = () => matchMedia('(max-width: 1020px)').matches;
+
+      function onScroll() {
+        if (mobile()) return;
+        const r = outer.getBoundingClientRect();
+        const total = r.height - innerHeight;
+        const p = Math.min(1, Math.max(0, -r.top / total));
+        setStep(Math.min(3, Math.floor(p * 4)));
+      }
+
+      addEventListener('scroll', onScroll, { passive: true });
+      setStep(0);
+      onScroll();
+
+      /* on mobile, run as a timed loop instead */
+      let mIv = null;
+      function mobileLoop() {
+        if (mobile() && !mIv) {
+          let n = 0;
+          mIv = setInterval(() => { setStep(n % 4); n++; }, 2200);
+        } else if (!mobile() && mIv) { clearInterval(mIv); mIv = null; }
+      }
+      mobileLoop();
+      addEventListener('resize', mobileLoop);
+    })();
+
+    /* ── 03 COLLAB STAMPS + LOG LOOP ── */
+    (function () {
+      const stage = document.getElementById('collabStage');
+      const log = document.getElementById('collabLog');
+      if (!stage || !log) return;
+      const stamps = stage.querySelectorAll('.stamp');
+      const lines = log.querySelectorAll('.logline');
+      let started = false;
+
+      function cycle() {
+        stamps.forEach((s, i) => {
+          setTimeout(() => {
+            s.classList.remove('show');
+            void s.offsetWidth;
+            s.classList.add('show');
+          }, i * 2600);
+        });
+        lines.forEach((l, i) => {
+          setTimeout(() => l.classList.add('on'), 600 + i * 1500);
+        });
+        setTimeout(() => {
+          lines.forEach(l => l.classList.remove('on'));
+          setTimeout(cycle, 800);
+        }, 600 + lines.length * 1500 + 3800);
+      }
+
+      const io = new IntersectionObserver((es) => {
+        es.forEach(e => { if (e.isIntersecting && !started) { started = true; cycle(); io.disconnect(); } });
+      }, { threshold: 0.3 });
+      io.observe(stage);
+    })();
+  </script>
+</body>
+
+</html>
